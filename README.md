@@ -12,12 +12,14 @@ This project was tested on Ubuntu 20.04, but should work on most systems that ru
 ## Getting started
 1. make sure all [requirements](#Requirements-and-assumptions) are met
 2. clone this repository
-```
+```bash
 git clone https://github.com/MartijnBogaert/app-processendatabank
 ```
 3. run the project
-```
+```bash
 cd /path/to/mu-project
+```
+```bash
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
 ```
 
