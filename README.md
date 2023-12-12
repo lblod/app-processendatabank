@@ -1,30 +1,29 @@
-# mu-project
+# Processendatabank
+Backend for keeping track of processes in LOD format as well as their original BPMN forms, based on the mu.semte.ch microservices stack.
 
-Bootstrap a mu.semte.ch microservices environment in three easy steps.
+This repository is a [mu-project](https://github.com/mu-semtech/mu-project), it includes the minimal set of services required to run the processendatabank.
 
-## Quickstart an mu-project
+## Requirements and assumptions
+This project was tested on Ubuntu 20.04, but should work on most systems that run docker and docker-compose. A linux based system is recommended, but we welcome any feedback you might have when running this system on macOS or windows.
+- a recent version of [docker needs to be installed](https://docs.docker.com/get-docker/)
+- a recent version of [docker-compose needs to be installed](https://docs.docker.com/compose/install/)
+- some basic shell experience is recommended
 
-> [INFO]
-> This project was created by running `mu project new awesome-project-name`.  If read on GitHub under mu-semtech/mu-project then it is the template repository for a new project, use `mu project new` instead.
-
-Setting up your environment is done in three easy steps:
-1. First configure the running microservices and their names in `docker-compose.yml`
-2. Then, configure how requests are dispatched in `config/dispatcher.ex`
-3. Lastly, simply start the docker-compose.
-
-### Hooking things up with docker-compose
-
-Alter the `docker-compose.yml` file so it contains all microservices you need.  The example content should be clear, but you can find more information in the [Docker Compose documentation](https://docs.docker.com/compose/).  Don't remove the `identifier` and `db` container, they are respectively the entry-point and the database of your application.  Don't forget to link the necessary microservices to the dispatcher and the database to the microservices.
-
-### Configure the dispatcher
-
-Next, alter the file `config/dispatcher/dispatcher.ex` based on the example that is there by default.  Dispatch requests to the necessary microservices based on the names you used for the microservice.
-
-### Boot up the system
-
-Boot your microservices-enabled system using docker-compose.
-
-    cd /path/to/mu-project
-    docker-compose up
+## Getting started
+1. make sure all [requirements](#Requirements-and-assumptions) are met
+2. clone this repository
+```
+git clone https://github.com/MartijnBogaert/app-processendatabank
+```
+3. run the project
+```
+cd /path/to/mu-project
+docker-compose -f docker-compose.yml up
+```
 
 You can shut down using `docker-compose stop` and remove everything using `docker-compose rm`.
+
+## Overview of services
+- [mu-identifier](https://github.com/mu-semtech/mu-identifier)
+- [mu-dispatcher](https://github.com/mu-semtech/mu-dispatcher)
+- [mu-cl-resources](https://github.com/mu-semtech/mu-cl-resources)
