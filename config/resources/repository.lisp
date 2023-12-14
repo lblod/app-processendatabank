@@ -32,3 +32,13 @@
 ;; by them and that it shouldn't be used for permanent URIs.
 
 (add-prefix "ext" "http://mu.semte.ch/vocabularies/ext/")
+(add-prefix "bbo" "https://www.irit.fr/recherches/MELODI/ontologies/BBO#")
+(add-prefix "bboExtension" "https://www.teamingai-project.eg/BBOExtension#")
+(add-prefix "dc" "http://purl.org/dc/elements/1.1/")
+(add-prefix "ql" "http://semweb.mmlab.be/ns/ql#")
+(add-prefix "rami" "https://w3id.org/i40/rami#")
+(add-prefix "rdfs" "http://www.w3.org/2000/01/rdf-schema#")
+(add-prefix "rml" "http://semweb.mmlab.be/ns/rml#")
+(add-prefix "rr" "http://www.w3.org/ns/r2rml#")
+(add-prefix "teamingAI" "https://www.teamingai-project.eu/")
+(add-prefix "obo" "http://purl.obolibrary.org/obo/")
