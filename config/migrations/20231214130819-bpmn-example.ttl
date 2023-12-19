@@ -1,6 +1,5 @@
 @prefix bbo: <https://www.irit.fr/recherches/MELODI/ontologies/BBO#> .
 @prefix bboExtension: <https://www.teamingai-project.eg/BBOExtension#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
 @prefix rami: <https://w3id.org/i40/rami#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -9,86 +8,71 @@
 @prefix teamingAI: <https://www.teamingai-project.eu/> .
 
 <https://example.org/Activity_01recz5> a bbo:Task;
-  rdfs:subClassOf bbo:Task;
   bbo:name "activity-2";
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Activity_1jtx96i> a bbo:Task;
-  rdfs:subClassOf bbo:Task;
   bbo:name "activity-1";
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Activity_1nm0k0b> a bbo:Task;
-  rdfs:subClassOf bbo:Task;
   bbo:name "activity-3";
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
-<https://example.org/Event_08tckqm> rdfs:subClassOf bbo:EndEvent;
+<https://example.org/Event_08tckqm> a bbo:EndEvent;
+  bbo:has_sourceRef <https://example.org/Flow_19trwid>;
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Flow_07it9sn> a bbo:SequenceFlow;
-  rdfs:subClassOf bbo:SequenceFlow;
   bbo:has_sourceRef <https://example.org/Activity_1nm0k0b>;
   bbo:has_targetRef <https://example.org/Gateway_02c8x7p>;
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Flow_0dw9g69> a bbo:SequenceFlow;
-  rdfs:subClassOf bbo:SequenceFlow;
   bbo:has_sourceRef <https://example.org/Activity_1jtx96i>;
   bbo:has_targetRef <https://example.org/Gateway_1d0exz5>;
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Flow_0gt5lbb> a bbo:SequenceFlow;
-  rdfs:subClassOf bbo:SequenceFlow;
   bbo:has_sourceRef <https://example.org/Gateway_1d0exz5>;
   bbo:has_targetRef <https://example.org/Activity_1nm0k0b>;
   bbo:name "no";
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Flow_0nbpq1a> a bbo:SequenceFlow;
-  rdfs:subClassOf bbo:SequenceFlow;
   bbo:has_sourceRef <https://example.org/StartEvent_1>;
   bbo:has_targetRef <https://example.org/Activity_1jtx96i>;
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Flow_1490u8k> a bbo:SequenceFlow;
-  rdfs:subClassOf bbo:SequenceFlow;
   bbo:has_sourceRef <https://example.org/Gateway_1d0exz5>;
   bbo:has_targetRef <https://example.org/Activity_01recz5>;
   bbo:name "yes";
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Flow_19trwid> a bbo:SequenceFlow;
-  rdfs:subClassOf bbo:SequenceFlow;
   bbo:has_sourceRef <https://example.org/Gateway_02c8x7p>;
   bbo:has_targetRef <https://example.org/Event_08tckqm>;
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Flow_1u0454e> a bbo:SequenceFlow;
-  rdfs:subClassOf bbo:SequenceFlow;
   bbo:has_sourceRef <https://example.org/Activity_01recz5>;
   bbo:has_targetRef <https://example.org/Gateway_02c8x7p>;
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Gateway_02c8x7p> a bbo:ExclusiveGateway;
-  rdfs:subClassOf bbo:ExclusiveGateway;
   bbo:has_sourceRef <https://example.org/Flow_07it9sn>, <https://example.org/Flow_1u0454e>;
   bbo:has_targetRef <https://example.org/Flow_19trwid>;
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
 <https://example.org/Gateway_1d0exz5> a bbo:ExclusiveGateway;
-  rdfs:subClassOf bbo:ExclusiveGateway;
   bbo:has_sourceRef <https://example.org/Flow_0dw9g69>;
   bbo:has_targetRef <https://example.org/Flow_0gt5lbb>, <https://example.org/Flow_1490u8k>;
   bbo:name "gateway-1";
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
 
-<https://example.org/Process_0bmex78> a bbo:Process;
-  rdfs:subClassOf bbo:Process;
-  teamingAI:belongsToRAMILayer rami:Business;
-  teamingAI:belongsToView teamingAI:BusinessProcessManagementView .
+<https://example.org/Process_0bmex78> a bbo:Process .
 
 <https://example.org/StartEvent_1> a bbo:StartEvent;
-  rdfs:subClassOf bbo:StartEvent;
   bbo:has_targetRef <https://example.org/Flow_0nbpq1a>;
   teamingAI:belongsToProcess <https://example.org/Process_0bmex78> .
