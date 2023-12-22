@@ -38,6 +38,6 @@ services:
   resource:
     image: semtech/mu-cl-resources:1.22.2
     links:
-      - triplestore:database
+      - database:database
     volumes:
       - ./config/resources:/config
