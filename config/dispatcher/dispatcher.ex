@@ -18,6 +18,10 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://resource/"
   end
 
+  match "/processes/*path", @any do
+    Proxy.forward conn, path, "http://mapper/"
+  end
+
   match "/*_", %{ layer: :not_found } do
     send_resp( conn, 404, "Route not found.  See config/dispatcher.ex" )
   end
