@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@comake/rmlmapper-js": "^0.5.2"
+  }
+}
