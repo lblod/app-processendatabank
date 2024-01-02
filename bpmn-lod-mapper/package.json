@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@comake/rmlmapper-js": "^0.5.2"
+    "@comake/rmlmapper-js": "^0.5.2",
+    "multer": "^1.4.5-lts.1"
   }
 }

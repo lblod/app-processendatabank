@@ -1,9 +1,24 @@
 import { app } from "mu";
+import multer from "multer";
+import { readFile, unlink } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping } from "./rml-mapping.js";
-import { bpmn } from "./bpmn-example.js";
 
-app.get("/", async (req, res) => {
+const upload = multer({ dest: "uploads/" });
+
+app.post("/", upload.single("file"), async (req, res) => {
+  const filePath = req.file.path;
+
+  let bpmn = await readFile(filePath, "utf-8");
+  await unlink(filePath);
+
+  const triples = await mapBpmnToRdf(bpmn);
+  console.log(triples);
+
+  res.send("Hello world");
+});
+
+async function mapBpmnToRdf(bpmn) {
   const inputFiles = {
     "input.bpmn": bpmn,
   };
@@ -16,8 +31,5 @@ app.get("/", async (req, res) => {
     xpathLib: "xpath",
   };
 
-  const result = await RmlMapper.parseTurtle(mapping, inputFiles, options);
-  console.log(result);
-
-  res.send("Hello world");
-});
+  return await RmlMapper.parseTurtle(mapping, inputFiles, options);
+}
