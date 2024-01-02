@@ -1,4 +1,4 @@
-import { app } from "mu";
+import { app, update } from "mu";
 import multer from "multer";
 import { readFile, unlink } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
@@ -13,7 +13,8 @@ app.post("/", upload.single("file"), async (req, res) => {
   await unlink(filePath);
 
   const triples = await mapBpmnToRdf(bpmn);
-  console.log(triples);
+  const query = generateUpdateQuery(triples);
+  await update(query);
 
   res.send("Hello world");
 });
@@ -32,4 +33,8 @@ async function mapBpmnToRdf(bpmn) {
   };
 
   return await RmlMapper.parseTurtle(mapping, inputFiles, options);
+}
+
+function generateUpdateQuery(triples) {
+  return `INSERT DATA { ${triples} }`;
 }
