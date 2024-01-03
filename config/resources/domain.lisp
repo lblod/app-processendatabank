@@ -50,4 +50,19 @@
   :class (s-prefix "bbo:Task")
   :resource-base (s-url "https://example.org/")
   :on-path "tasks")
-  
+
+;; File resources (https://github.com/mu-semtech/file-service)
+
+(define-resource file ()
+  :class (s-prefix "nfo:FileDataObject")
+  :properties `((:name :string ,(s-prefix "nfo:fileName"))
+                (:format :string ,(s-prefix "dct:format"))
+                (:size :number ,(s-prefix "nfo:fileSize"))
+                (:extension :string ,(s-prefix "dbpedia:fileExtension"))
+                (:created :datetime ,(s-prefix "dct:created")))
+  :has-one `((file :via ,(s-prefix "nie:dataSource")
+                   :inverse t
+                   :as "download"))
+  :resource-base (s-url "http://data.example.com/files/")
+  :features `(include-uri)
+  :on-path "files")

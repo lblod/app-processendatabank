@@ -42,3 +42,7 @@
 (add-prefix "rr" "http://www.w3.org/ns/r2rml#")
 (add-prefix "teamingAI" "https://www.teamingai-project.eu/")
 (add-prefix "obo" "http://purl.obolibrary.org/obo/")
+(add-prefix "nfo" "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#")
+(add-prefix "nie" "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#")
+(add-prefix "dct" "http://purl.org/dc/terms/")
+(add-prefix "dbpedia" "http://dbpedia.org/ontology/")

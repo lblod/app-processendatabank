@@ -22,6 +22,22 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://mapper/"
   end
 
+  get "/files/:id/download", %{ layer: :services } do
+    Proxy.forward conn, [], "http://file/files/" <> id <> "/download"
+  end
+
+  post "/files/*path", %{ layer: :services } do
+    Proxy.forward conn, path, "http://file/files/"
+  end
+
+  delete "/files/*path", %{ accept: [ :json ], layer: :services } do
+    Proxy.forward conn, path, "http://file/files/"
+  end
+
+  get "/files/*path", %{ accept: [ :json ], layer: :services } do
+    Proxy.forward conn, path, "http://resource/files/"
+  end
+
   match "/*_", %{ layer: :not_found } do
     send_resp( conn, 404, "Route not found.  See config/dispatcher.ex" )
   end

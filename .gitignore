@@ -4,5 +4,7 @@
 !/data/db/toLoad
 !/data/db/toLoad/*
 
+/data/files/*
+
 docker-compose.override.yml
 

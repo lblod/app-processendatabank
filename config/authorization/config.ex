@@ -18,19 +18,28 @@ defmodule Acl.UserGroups.Config do
     # common.
     [
       # // PUBLIC
-      %GroupSpec{
+      %GroupSpec {
         name: "public",
         useage: [:read, :write],
         access: %AlwaysAccessible{},
-        graphs: [ %GraphSpec{
+        graphs: [
+                  %GraphSpec {
                     graph: "http://mu.semte.ch/graphs/public",
                     constraint: %ResourceFormatConstraint {
                       resource_prefix: "https://example.org/"
-                    } } ] },
+                    }
+                  },
+                  %GraphSpec {
+                    graph: "http://mu.semte.ch/graphs/public",
+                    constraint: %ResourceConstraint {
+                      resource_types: [ "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", ]
+                    }
+                  }
+                ]
+      },
 
       # // CLEANUP
-      #
-      %GraphCleanup{
+      %GraphCleanup {
         originating_graph: "http://mu.semte.ch/application",
         useage: [:write],
         name: "clean"
