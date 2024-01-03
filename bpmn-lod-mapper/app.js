@@ -12,14 +12,14 @@ app.post("/", upload.single("file"), async (req, res) => {
   let bpmn = await readFile(filePath, "utf-8");
   await unlink(filePath);
 
-  const triples = await mapBpmnToRdf(bpmn);
+  const triples = await translateToRdf(bpmn);
   const query = generateUpdateQuery(triples);
   await update(query);
 
-  res.send("Hello world");
+  res.send("Success!");
 });
 
-async function mapBpmnToRdf(bpmn) {
+async function translateToRdf(bpmn) {
   const inputFiles = {
     "input.bpmn": bpmn,
   };
