@@ -23,6 +23,10 @@ const allowedFileExtensions = [".bpmn", ".xml"];
 const upload = multer({ dest: "temp/" });
 
 app.post("/", upload.single("file"), async (req, res) => {
+  if (!req.get("x-rewrite-url")) {
+    return res.status(400).send("X-Rewrite-URL header is missing.");
+  }
+
   const tempFilePath = req.file.path;
   const uploadResourceName = req.file.originalname;
   const fileExtension = path.extname(uploadResourceName);
