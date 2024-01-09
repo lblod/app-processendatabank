@@ -1,6 +1,7 @@
 import {
   app,
   update,
+  query,
   uuid,
   sparqlEscapeUri,
   sparqlEscapeString,
@@ -14,6 +15,12 @@ import { mapping } from "./rml-mapping.js";
 import path from "path";
 import { existsSync, mkdirSync } from "fs";
 
+const muCore = "http://mu.semte.ch/vocabularies/core/";
+const nfo = "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#";
+const dct = "http://purl.org/dc/terms/";
+const dbpedia = "http://dbpedia.org/ontology/";
+const nie = "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#";
+
 const storageFolderPath = "/share/";
 if (!existsSync(storageFolderPath)) {
   mkdirSync(storageFolderPath);
@@ -23,7 +30,8 @@ const allowedFileExtensions = [".bpmn", ".xml"];
 const upload = multer({ dest: "temp/" });
 
 app.post("/", upload.single("file"), async (req, res) => {
-  if (!req.get("x-rewrite-url")) {
+  const rewriteUrl = req.get("x-rewrite-url");
+  if (!rewriteUrl) {
     return res.status(400).send("X-Rewrite-URL header is missing.");
   }
 
@@ -88,9 +96,42 @@ app.post("/", upload.single("file"), async (req, res) => {
         },
       },
       links: {
-        self: `${req.protocol}://${req.host}${req.get(
-          "x-rewrite-url"
-        )}/${uploadResourceUuid}`,
+        self: `${req.protocol}://${req.host}${rewriteUrl}/${uploadResourceUuid}`,
+      },
+    });
+});
+
+app.get("/:id", async (req, res) => {
+  const rewriteUrl = req.get("x-rewrite-url");
+  if (!rewriteUrl) {
+    return res.status(400).send("X-Rewrite-URL header is missing.");
+  }
+
+  const uploadResourceUuid = req.params.id;
+  const selectQuery = generateFileSelectQuery(uploadResourceUuid);
+  const result = await query(selectQuery);
+  const bindings = result.results.bindings;
+  if (bindings.length === 0) {
+    return res.status(404).send("Not Found");
+  }
+  const firstBinding = bindings[0];
+
+  return res
+    .status(200)
+    .contentType("application/vnd.api+json")
+    .json({
+      data: {
+        type: "files",
+        id: uploadResourceUuid,
+        attributes: {
+          name: firstBinding.name.value,
+          format: firstBinding.format.value,
+          size: firstBinding.size.value,
+          extension: firstBinding.extension.value,
+        },
+      },
+      links: {
+        self: `${req.protocol}://${req.host}${rewriteUrl}`,
       },
     });
 });
@@ -140,12 +181,6 @@ function generateFileUpdateQuery(
   fileResourceName,
   fileResourceUuid
 ) {
-  const muCore = "http://mu.semte.ch/vocabularies/core/";
-  const nfo = "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#";
-  const dct = "http://purl.org/dc/terms/";
-  const dbpedia = "http://dbpedia.org/ontology/";
-  const nie = "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#";
-
   const uploadResourceUri = `http://mu.semte.ch/services/file-service/files/${uploadResourceUuid}`;
   const fileResourceUri = `share://${fileResourceName}`;
   const now = new Date();
@@ -176,4 +211,16 @@ function generateFileUpdateQuery(
   triples += `<${dct}modified> ${sparqlEscapeDateTime(now)} .\n`;
 
   return generateUpdateQuery(triples);
+}
+
+function generateFileSelectQuery(uploadResourceUuid) {
+  let query = `SELECT ?uri ?name ?format ?size ?extension WHERE {\n`;
+  query += `?uri <${muCore}uuid> "${uploadResourceUuid}" ;\n`;
+  query += `<${nfo}fileName> ?name ;\n`;
+  query += `<${dct}format> ?format ;\n`;
+  query += `<${dbpedia}fileExtension> ?extension ;\n`;
+  query += `<${nfo}fileSize> ?size .\n`;
+  query += `}`;
+
+  return query;
 }
