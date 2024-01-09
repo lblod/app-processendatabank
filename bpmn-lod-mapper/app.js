@@ -1,4 +1,12 @@
-import { app, update, uuid } from "mu";
+import {
+  app,
+  update,
+  uuid,
+  sparqlEscapeUri,
+  sparqlEscapeString,
+  sparqlEscapeInt,
+  sparqlEscapeDateTime,
+} from "mu";
 import multer from "multer";
 import { readFile, unlink, rename } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
@@ -39,17 +47,25 @@ app.post("/", upload.single("file"), async (req, res) => {
     return res.status(error.statusCode || 500).send(error.message);
   }
 
-  const query = generateUpdateQuery(triples);
-  await update(query);
+  const bboQuery = generateUpdateQuery(triples);
+  await update(bboQuery);
 
   const uploadResourceUuid = uuid();
-  const uploadResourceUri = `http://mu.semte.ch/services/file-service/files/${uploadResourceUuid}`;
   const fileFormat = req.file.mimetype;
   const fileSize = req.file.size;
   const fileResourceUuid = uuid();
   const fileResourceName = fileResourceUuid + fileExtension;
-  const fileResourceUri = `share://${fileResourceName}`;
-  const now = new Date().toISOString();
+
+  const fileQuery = generateFileUpdateQuery(
+    uploadResourceName,
+    uploadResourceUuid,
+    fileFormat,
+    fileSize,
+    fileExtension,
+    fileResourceName,
+    fileResourceUuid
+  );
+  await update(fileQuery);
 
   await rename(tempFilePath, storageFolderPath + fileResourceName);
 
@@ -109,4 +125,51 @@ async function translateToRdf(bpmn) {
 
 function generateUpdateQuery(triples) {
   return `INSERT DATA { ${triples} }`;
+}
+
+function generateFileUpdateQuery(
+  uploadResourceName,
+  uploadResourceUuid,
+  fileFormat,
+  fileSize,
+  fileExtension,
+  fileResourceName,
+  fileResourceUuid
+) {
+  const muCore = "http://mu.semte.ch/vocabularies/core/";
+  const nfo = "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#";
+  const dct = "http://purl.org/dc/terms/";
+  const dbpedia = "http://dbpedia.org/ontology/";
+  const nie = "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#";
+
+  const uploadResourceUri = `http://mu.semte.ch/services/file-service/files/${uploadResourceUuid}`;
+  const fileResourceUri = `share://${fileResourceName}`;
+  const now = new Date();
+
+  let triples = `${sparqlEscapeUri(
+    uploadResourceUri
+  )} a <${nfo}FileDataObject> ;\n`;
+  triples += `<${nfo}fileName> ${sparqlEscapeString(uploadResourceName)} ;\n`;
+  triples += `<${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
+  triples += `<${dct}format> ${sparqlEscapeString(fileFormat)} ;\n`;
+  triples += `<${nfo}fileSize> ${sparqlEscapeInt(fileSize)} ;\n`;
+  triples += `<${dbpedia}fileExtension> ${sparqlEscapeString(
+    fileExtension
+  )} ;\n`;
+  triples += `<${dct}created> ${sparqlEscapeDateTime(now)} ;\n`;
+  triples += `<${dct}modified> ${sparqlEscapeDateTime(now)} .\n`;
+
+  triples += `${sparqlEscapeUri(fileResourceUri)} a <${nfo}FileDataObject> ;\n`;
+  triples += `<${nie}dataSource> ${sparqlEscapeUri(uploadResourceUri)} ;\n`;
+  triples += `<${nfo}fileName> ${sparqlEscapeString(fileResourceName)} ;\n`;
+  triples += `<${muCore}uuid> ${sparqlEscapeString(fileResourceUuid)} ;\n`;
+  triples += `<${dct}format> ${sparqlEscapeString(fileFormat)} ;\n`;
+  triples += `<${nfo}fileSize> ${sparqlEscapeInt(fileSize)} ;\n`;
+  triples += `<${dbpedia}fileExtension> ${sparqlEscapeString(
+    fileExtension
+  )} ;\n`;
+  triples += `<${dct}created> ${sparqlEscapeDateTime(now)} ;\n`;
+  triples += `<${dct}modified> ${sparqlEscapeDateTime(now)} .\n`;
+
+  return generateUpdateQuery(triples);
 }
