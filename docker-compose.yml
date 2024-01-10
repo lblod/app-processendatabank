@@ -41,9 +41,9 @@ services:
       - database:database
     volumes:
       - ./config/resources:/config
-  mapper:
+  bpmn:
     image: semtech/mu-javascript-template
     environment:
       NODE_ENV: "development"
     volumes:
-      - ./bpmn-lod-mapper:/app
+      - ./bpmn-file-service:/app

@@ -11,7 +11,7 @@ import {
 import multer from "multer";
 import { readFile, unlink, rename } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
-import { mapping } from "./bbo-mapping.js";
+import { mapping as bboMapping } from "./bbo-mapping.js";
 import path from "path";
 import { existsSync, mkdirSync } from "fs";
 
@@ -30,6 +30,7 @@ const allowedFileExtensions = [".bpmn", ".xml"];
 const upload = multer({ dest: "temp/" });
 
 app.post("/", upload.single("file"), async (req, res) => {
+  console.log("hallo")
   const rewriteUrl = req.get("x-rewrite-url");
   if (!rewriteUrl) {
     return res.status(400).send("X-Rewrite-URL header is missing.");
@@ -86,7 +87,7 @@ app.post("/", upload.single("file"), async (req, res) => {
     .contentType("application/vnd.api+json")
     .json({
       data: {
-        type: "files",
+        type: "bpmn-files",
         id: uploadResourceUuid,
         attributes: {
           name: uploadResourceName,
@@ -121,7 +122,7 @@ app.get("/:id", async (req, res) => {
     .contentType("application/vnd.api+json")
     .json({
       data: {
-        type: "files",
+        type: "bpmn-files",
         id: uploadResourceUuid,
         attributes: {
           name: firstBinding.name.value,
@@ -188,7 +189,7 @@ async function translateToRdf(bpmn) {
     xpathLib: "xpath",
   };
 
-  const triples = await RmlMapper.parseTurtle(mapping, inputFiles, options);
+  const triples = await RmlMapper.parseTurtle(bboMapping, inputFiles, options);
   if (!triples || triples.trim().length === 0) {
     const error = new Error(
       "Invalid content: The provided file does not contain valid content."
