@@ -97,7 +97,7 @@ app.post("/", upload.single("file"), async (req, res) => {
         },
       },
       links: {
-        self: `${req.protocol}://${req.host}${rewriteUrl}/${uploadResourceUuid}`,
+        self: `${req.protocol}://${req.hostname}${rewriteUrl}/${uploadResourceUuid}`,
       },
     });
 });
@@ -132,7 +132,7 @@ app.get("/:id", async (req, res) => {
         },
       },
       links: {
-        self: `${req.protocol}://${req.host}${rewriteUrl}`,
+        self: `${req.protocol}://${req.hostname}${rewriteUrl}`,
       },
     });
 });
