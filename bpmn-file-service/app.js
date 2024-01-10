@@ -12,7 +12,6 @@ import multer from "multer";
 import { readFile, unlink, rename } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping as bboMapping } from "./bbo-mapping.js";
-import { mapping as uuidMapping } from "./uuid-mapping.js";
 import path from "path";
 import { existsSync, mkdirSync } from "fs";
 
@@ -189,9 +188,7 @@ async function translateToRdf(bpmn) {
     xpathLib: "xpath",
   };
 
-  const bboTriples = await RmlMapper.parseTurtle(bboMapping, inputFiles, options);
-  const uuidTriples = await RmlMapper.parseTurtle(uuidMapping, inputFiles, options);
-  const triples = bboTriples + uuidTriples
+  const triples = await RmlMapper.parseTurtle(bboMapping, inputFiles, options);
   if (!triples || triples.trim().length === 0) {
     const error = new Error(
       "Invalid content: The provided file does not contain valid content."

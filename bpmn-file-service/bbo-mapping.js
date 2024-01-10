@@ -7,6 +7,21 @@ export const mapping = `
 @prefix rml: <http://semweb.mmlab.be/ns/rml#> .
 @prefix rr: <http://www.w3.org/ns/r2rml#> .
 @prefix teamingAI: <https://www.teamingai-project.eu/> .
+@prefix fnml:   <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno: 	<https://w3id.org/function/ontology#> .
+@prefix idlab-fn: <http://example.com/idlab/function/> .
+@prefix muCore: <http://mu.semte.ch/vocabularies/core/>.
+
+<#UuidMapping>
+    rr:predicate muCore:uuid;
+    rr:objectMap [
+        fnml:functionValue [
+            rr:predicateObjectMap [
+                rr:predicate fno:executes ;
+                rr:objectMap [ rr:constant idlab-fn:random ]
+            ] ;
+        ]
+    ].
 
 teamingAI:AssociationMapping
     a rr:TriplesMap;
@@ -22,7 +37,8 @@ teamingAI:AssociationMapping
         rr:class bboExtension:Association
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -49,7 +65,8 @@ teamingAI:BoundaryEventMapping
         rr:class bbo:BoundaryEvent
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:attachedToRef;
         rr:objectMap [ rr:template "{@attachedToRef}" ]
     ],
@@ -84,7 +101,8 @@ teamingAI:BusinessRuleTaskMapping
         rr:class bbo:BusinessRuleTask
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -107,7 +125,8 @@ teamingAI:CollaborationMapping
         rr:class bboExtension:Collaboration
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
@@ -126,7 +145,8 @@ teamingAI:DataInputAssociationMapping
         rr:class bboExtension:DataInputAssociation
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -157,7 +177,8 @@ teamingAI:DataObjectMapping
         rr:class bboExtension:DataObject
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
@@ -176,7 +197,8 @@ teamingAI:DataObjectReferenceMapping
         rr:class bboExtension:DataObjectReference
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -203,7 +225,8 @@ teamingAI:DataOutputAssociationMapping
         rr:class bboExtension:DataOutputAssociation
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -230,7 +253,8 @@ teamingAI:DataStoreReferenceMapping
         rr:class bboExtension:DataStoreReference
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -253,7 +277,8 @@ teamingAI:EndEventMapping
         rr:class bbo:EndEvent
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -280,7 +305,8 @@ teamingAI:ErrorEventDefinitionMapping
         rr:class bbo:ErrorEventDefinition
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
@@ -299,7 +325,8 @@ teamingAI:ErrorMapping
         rr:class bbo:Error
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ].
@@ -318,7 +345,8 @@ teamingAI:ExlusiveGatewayMapping
         rr:class bbo:ExclusiveGateway
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -353,7 +381,8 @@ teamingAI:InclusiveGatewayMapping
         rr:class bbo:InclusiveGateway
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -388,7 +417,8 @@ teamingAI:IntermediateThrowMapping
         rr:class bbo:IntermediateThrowEvent
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -423,7 +453,8 @@ teamingAI:LaneMapping
         rr:class bboExtension:Lane
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -450,7 +481,8 @@ teamingAI:LaneSetMapping
         rr:class bboExtension:LaneSet
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
@@ -469,7 +501,8 @@ teamingAI:ManualTask
         rr:class bbo:ManualTask
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -492,7 +525,8 @@ teamingAI:MessageEventDefinitionMapping
         rr:class bbo:MessageEventDefinition
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
@@ -511,7 +545,8 @@ teamingAI:MessageFlowMapping
         rr:class bboExtension:MessageFlow
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -542,7 +577,8 @@ teamingAI:ParallelGatewayMapping
         rr:class bbo:ParallelGateway
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:DefaultSequenceFlow;
         rr:objectMap [ rr:template "{@default}" ]
     ],
@@ -577,7 +613,8 @@ teamingAI:ParticipantMapping
         rr:class bboExtension:Participant
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -602,7 +639,9 @@ teamingAI:ProcessMapping
     rr:subjectMap [
         rr:template "{@id}";
         rr:class bbo:Process
-    ].
+    ];
+
+    rr:predicateObjectMap <#UuidMapping>.
 
 teamingAI:PropertyMapping
     a rr:TriplesMap;
@@ -618,7 +657,8 @@ teamingAI:PropertyMapping
         rr:class bbo:Property
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -641,7 +681,8 @@ teamingAI:ReceiveTaskMapping
         rr:class bbo:ReceiveTask
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -664,7 +705,8 @@ teamingAI:ScriptTaskMapping
         rr:class bbo:ScriptTask
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -687,7 +729,8 @@ teamingAI:SendTaskMapping
         rr:class bbo:SendTask
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -710,7 +753,8 @@ teamingAI:SequenceFlowMapping
         rr:class bbo:SequenceFlow
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:has_sourceRef;
         rr:objectMap [ rr:template "{@sourceRef}" ]
     ],
@@ -741,7 +785,8 @@ teamingAI:ServiceTaskMapping
         rr:class bbo:ServiceTask
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -764,7 +809,8 @@ teamingAI:StartEventMapping
         rr:class bbo:StartEvent
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:has_targetRef;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
@@ -791,7 +837,8 @@ teamingAI:SubProcessMapping
         rr:class bbo:SubProcess
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToRAMILayer;
         rr:objectMap [ rr:constant rami:Business ]
     ],
@@ -814,7 +861,8 @@ teamingAI:TaskMapping
         rr:class bbo:Task
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
@@ -837,7 +885,8 @@ teamingAI:TextAnnotationMapping
         rr:class bboExtension:TextAnnotation
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
@@ -860,7 +909,8 @@ teamingAI:UserTaskMapping
         rr:class bbo:UserTask
     ];
 
-    rr:predicateObjectMap [
+    rr:predicateObjectMap <#UuidMapping>,
+    [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
     ],
