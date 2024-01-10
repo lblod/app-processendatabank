@@ -22,10 +22,6 @@ const dbpedia = "http://dbpedia.org/ontology/";
 const nie = "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#";
 
 const storageFolderPath = "/share/";
-if (!existsSync(storageFolderPath)) {
-  mkdirSync(storageFolderPath);
-}
-
 const allowedFileExtensions = [".bpmn", ".xml"];
 const upload = multer({ dest: "temp/" });
 
@@ -80,6 +76,9 @@ app.post("/", upload.single("file"), async (req, res) => {
   );
   await update(fileQuery);
 
+  if (!existsSync(storageFolderPath)) {
+    mkdirSync(storageFolderPath);
+  }
   await rename(tempFilePath, storageFolderPath + fileResourceName);
 
   return res
