@@ -13,7 +13,7 @@ import { readFile, unlink, rename } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping } from "./rml-mapping.js";
 import path from "path";
-import { existsSync, mkdirSync } from "fs";
+import { exists, existsSync, mkdirSync } from "fs";
 
 const muCore = "http://mu.semte.ch/vocabularies/core/";
 const nfo = "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#";
@@ -136,6 +136,38 @@ app.get("/:id", async (req, res) => {
     });
 });
 
+app.get("/:id/download", async (req, res) => {
+  const uploadResourceUuid = req.params.id;
+  const selectQuery = generateUploadResourceUriSelectQuery(uploadResourceUuid);
+  const result = await query(selectQuery);
+  const bindings = result.results.bindings;
+  if (bindings.length === 0) {
+    return res.status(404).send("Not Found");
+  }
+  const uploadResourceUri = bindings[0].fileUrl.value;
+
+  const filePath = uploadResourceUri.replace("share://", storageFolderPath);
+  if (!existsSync(filePath)) {
+    return res
+      .status(500)
+      .send(
+        "Could not find file in path. Check if the physical file is available on the server and if this service has the right mountpoint."
+      );
+  }
+
+  const fileName = req.query.name || path.basename(filePath);
+  const disposition =
+    req.header("content-disposition")?.toLowerCase() === "inline"
+      ? "inline"
+      : "attachment";
+
+  res.setHeader(
+    "Content-Disposition",
+    `${disposition}; filename="${fileName}"`
+  );
+  return res.sendFile(filePath);
+});
+
 async function translateToRdf(bpmn) {
   if (!bpmn || bpmn.trim().length === 0) {
     const error = new Error(
@@ -215,11 +247,20 @@ function generateFileUpdateQuery(
 
 function generateFileSelectQuery(uploadResourceUuid) {
   let query = `SELECT ?uri ?name ?format ?size ?extension WHERE {\n`;
-  query += `?uri <${muCore}uuid> "${uploadResourceUuid}" ;\n`;
+  query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
   query += `<${nfo}fileName> ?name ;\n`;
   query += `<${dct}format> ?format ;\n`;
   query += `<${dbpedia}fileExtension> ?extension ;\n`;
   query += `<${nfo}fileSize> ?size .\n`;
+  query += `}`;
+
+  return query;
+}
+
+function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
+  let query = `SELECT ?fileUrl WHERE {\n`;
+  query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} .\n`;
+  query += `?fileUrl <${nie}dataSource> ?uri .\n`;
   query += `}`;
 
   return query;
