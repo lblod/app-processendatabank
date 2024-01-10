@@ -13,7 +13,7 @@ import { readFile, unlink, rename } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping } from "./rml-mapping.js";
 import path from "path";
-import { exists, existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync } from "fs";
 
 const muCore = "http://mu.semte.ch/vocabularies/core/";
 const nfo = "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#";
