@@ -11,7 +11,7 @@ import {
 import multer from "multer";
 import { readFile, unlink, rename } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
-import { mapping } from "./rml-mapping.js";
+import { mapping } from "./bbo-mapping.js";
 import path from "path";
 import { existsSync, mkdirSync } from "fs";
 
