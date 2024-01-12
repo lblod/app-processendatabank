@@ -8,6 +8,7 @@ import {
   sparqlEscapeInt,
   sparqlEscapeDateTime,
 } from "mu";
+import cors from "cors"
 import multer from "multer";
 import { readFile, unlink, rename } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
@@ -24,6 +25,8 @@ const nie = "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#";
 const storageFolderPath = "/share/";
 const allowedFileExtensions = [".bpmn", ".xml"];
 const upload = multer({ dest: "temp/" });
+
+app.use(cors());
 
 app.post("/", upload.single("file"), async (req, res) => {
   console.log("hallo")
