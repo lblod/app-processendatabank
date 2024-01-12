@@ -104,6 +104,42 @@ app.post("/", upload.single("file"), async (req, res) => {
     });
 });
 
+app.get("/", async (req, res) => {
+  const rewriteUrl = req.get("x-rewrite-url");
+  if (!rewriteUrl) {
+    return res.status(400).send("X-Rewrite-URL header is missing.");
+  }
+
+  const selectQuery = generateFileSelectQuery();
+  const result = await query(selectQuery)
+  const bindings = result.results.bindings;
+
+  console.log(bindings)
+
+  return res
+    .status(200)
+    .contentType("application/vnd.api+json")
+    .json({
+      data: bindings.map(binding => ({
+        type: "bpmn-files",
+        id: binding.uuid.value,
+        attributes: {
+          name: binding.name.value,
+          format: binding.format.value,
+          size: binding.size.value,
+          extension: binding.extension.value,
+        },
+        links: {
+          self: `${req.protocol}://${req.hostname}${rewriteUrl}/${binding.uuid.value}`,
+        },
+      })),
+      links: {
+        self: `${req.protocol}://${req.hostname}${rewriteUrl}`,
+      },
+    });
+
+})
+
 app.get("/:id", async (req, res) => {
   const rewriteUrl = req.get("x-rewrite-url");
   if (!rewriteUrl) {
@@ -249,12 +285,23 @@ function generateFileUpdateQuery(
 }
 
 function generateFileSelectQuery(uploadResourceUuid) {
-  let query = `SELECT ?uri ?name ?format ?size ?extension WHERE {\n`;
-  query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
+  let query = `SELECT * WHERE {\n`;
+
+  if (uploadResourceUuid) {
+    query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
+  } else {
+    query += `?uri <${muCore}uuid> ?uuid ;\n`;
+  }
+
   query += `<${nfo}fileName> ?name ;\n`;
   query += `<${dct}format> ?format ;\n`;
   query += `<${dbpedia}fileExtension> ?extension ;\n`;
   query += `<${nfo}fileSize> ?size .\n`;
+
+  if (!uploadResourceUuid) {
+    query += `FILTER NOT EXISTS { ?uri <${nie}dataSource> ?source  }\n`
+  }
+
   query += `}`;
 
   return query;
