@@ -29,7 +29,6 @@ const upload = multer({ dest: "temp/" });
 app.use(cors());
 
 app.post("/", upload.single("file"), async (req, res) => {
-  console.log("hallo")
   const rewriteUrl = req.get("x-rewrite-url");
   if (!rewriteUrl) {
     return res.status(400).send("X-Rewrite-URL header is missing.");
@@ -113,8 +112,6 @@ app.get("/", async (req, res) => {
   const selectQuery = generateFileSelectQuery();
   const result = await query(selectQuery)
   const bindings = result.results.bindings;
-
-  console.log(bindings)
 
   return res
     .status(200)
