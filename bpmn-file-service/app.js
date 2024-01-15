@@ -113,7 +113,8 @@ app.get("/", async (req, res) => {
     return res.status(400).send("X-Rewrite-URL header is missing.");
   }
 
-  const selectQuery = generateFileSelectQuery();
+  const nameFilter = req.query.name;
+  const selectQuery = generateFilesSelectQuery(nameFilter);
   const result = await query(selectQuery)
   const bindings = result.results.bindings;
 
@@ -285,24 +286,31 @@ function generateFileUpdateQuery(
   return generateUpdateQuery(triples);
 }
 
-function generateFileSelectQuery(uploadResourceUuid) {
+function generateFilesSelectQuery(nameFilter) {
   let query = `SELECT * WHERE {\n`;
-
-  if (uploadResourceUuid) {
-    query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
-  } else {
-    query += `?uri <${muCore}uuid> ?uuid ;\n`;
-  }
-
+  query += `?uri <${muCore}uuid> ?uuid ;\n`;
   query += `<${nfo}fileName> ?name ;\n`;
   query += `<${dct}format> ?format ;\n`;
   query += `<${dbpedia}fileExtension> ?extension ;\n`;
   query += `<${nfo}fileSize> ?size .\n`;
+  query += `FILTER NOT EXISTS { ?uri <${nie}dataSource> ?source  }\n`
 
-  if (!uploadResourceUuid) {
-    query += `FILTER NOT EXISTS { ?uri <${nie}dataSource> ?source  }\n`
+  if (nameFilter) {
+    query += `FILTER(CONTAINS(LCASE(?name), ${sparqlEscapeString(nameFilter.toLowerCase())}))\n`
   }
 
+  query += `}`;
+
+  return query;
+}
+
+function generateFileSelectQuery(uploadResourceUuid) {
+  let query = `SELECT * WHERE {\n`;
+  query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
+  query += `<${nfo}fileName> ?name ;\n`;
+  query += `<${dct}format> ?format ;\n`;
+  query += `<${dbpedia}fileExtension> ?extension ;\n`;
+  query += `<${nfo}fileSize> ?size .\n`;
   query += `}`;
 
   return query;
