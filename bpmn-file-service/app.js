@@ -49,10 +49,13 @@ app.post("/", upload.single("file"), async (req, res) => {
       );
   }
 
+  const uploadResourceUuid = uuid();
+  const uploadResourceUri = `https://example.org/services/bpmn-file-service/files/${uploadResourceUuid}`;
+
   const bpmn = await readFile(tempFilePath, "utf-8");
   let triples;
   try {
-    triples = await translateToRdf(bpmn);
+    triples = await translateToRdf(bpmn, uploadResourceUri);
   } catch (error) {
     await unlink(tempFilePath);
     return res.status(error.statusCode || 500).send(error.message);
@@ -61,13 +64,13 @@ app.post("/", upload.single("file"), async (req, res) => {
   const bboQuery = generateUpdateQuery(triples);
   await update(bboQuery);
 
-  const uploadResourceUuid = uuid();
   const fileFormat = req.file.mimetype;
   const fileSize = req.file.size;
   const fileResourceUuid = uuid();
   const fileResourceName = fileResourceUuid + fileExtension;
 
   const fileQuery = generateFileUpdateQuery(
+    uploadResourceUri,
     uploadResourceName,
     uploadResourceUuid,
     fileFormat,
@@ -205,7 +208,7 @@ app.get("/:id/download", async (req, res) => {
   return res.sendFile(filePath);
 });
 
-async function translateToRdf(bpmn) {
+async function translateToRdf(bpmn, uploadResourceUri) {
   if (!bpmn || bpmn.trim().length === 0) {
     const error = new Error(
       "Invalid content: The provided file does not contain any content."
@@ -225,7 +228,7 @@ async function translateToRdf(bpmn) {
     xpathLib: "xpath",
   };
 
-  const triples = await RmlMapper.parseTurtle(bboMapping, inputFiles, options);
+  const triples = await RmlMapper.parseTurtle(bboMapping(uploadResourceUri), inputFiles, options);
   if (!triples || triples.trim().length === 0) {
     const error = new Error(
       "Invalid content: The provided file does not contain valid content."
@@ -242,6 +245,7 @@ function generateUpdateQuery(triples) {
 }
 
 function generateFileUpdateQuery(
+  uploadResourceUri,
   uploadResourceName,
   uploadResourceUuid,
   fileFormat,
@@ -250,7 +254,6 @@ function generateFileUpdateQuery(
   fileResourceName,
   fileResourceUuid
 ) {
-  const uploadResourceUri = `https://example.org/services/bpmn-file-service/files/${uploadResourceUuid}`;
   const fileResourceUri = `share://${fileResourceName}`;
   const now = new Date();
 

@@ -1,4 +1,4 @@
-export const mapping = `
+export const mapping = (uploadResourceUri) => `
 @prefix bbo: <https://www.irit.fr/recherches/MELODI/ontologies/BBO#> .
 @prefix bboExtension: <https://www.teamingai-project.eg/BBOExtension#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#> .
@@ -11,6 +11,7 @@ export const mapping = `
 @prefix fno: 	<https://w3id.org/function/ontology#> .
 @prefix idlab-fn: <http://example.com/idlab/function/> .
 @prefix muCore: <http://mu.semte.ch/vocabularies/core/>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
 
 <#UuidMapping>
     rr:predicate muCore:uuid;
@@ -641,7 +642,11 @@ teamingAI:ProcessMapping
         rr:class bbo:Process
     ];
 
-    rr:predicateObjectMap <#UuidMapping>.
+    rr:predicateObjectMap <#UuidMapping>,
+    [
+        rr:predicate prov:wasDerivedFrom;
+        rr:objectMap [ rr:template "${uploadResourceUri}" ]
+    ].
 
 teamingAI:PropertyMapping
     a rr:TriplesMap;
