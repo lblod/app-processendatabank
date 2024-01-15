@@ -10,7 +10,7 @@ import {
 } from "mu";
 import cors from "cors"
 import multer from "multer";
-import { readFile, unlink, rename } from "fs/promises";
+import { readFile, unlink, copyFile } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping as bboMapping } from "./bbo-mapping.js";
 import path from "path";
@@ -81,7 +81,8 @@ app.post("/", upload.single("file"), async (req, res) => {
   if (!existsSync(storageFolderPath)) {
     mkdirSync(storageFolderPath);
   }
-  await rename(tempFilePath, storageFolderPath + fileResourceName);
+  await copyFile(tempFilePath, storageFolderPath + fileResourceName);
+  await unlink(tempFilePath);
 
   return res
     .status(201)
@@ -249,7 +250,7 @@ function generateFileUpdateQuery(
   fileResourceName,
   fileResourceUuid
 ) {
-  const uploadResourceUri = `http://mu.semte.ch/services/file-service/files/${uploadResourceUuid}`;
+  const uploadResourceUri = `https://example.org/services/bpmn-file-service/files/${uploadResourceUuid}`;
   const fileResourceUri = `share://${fileResourceName}`;
   const now = new Date();
 

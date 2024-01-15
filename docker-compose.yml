@@ -47,3 +47,4 @@ services:
       NODE_ENV: "development"
     volumes:
       - ./bpmn-file-service:/app
+      - ./data/bpmn-files:/share
