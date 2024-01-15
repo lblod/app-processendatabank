@@ -194,7 +194,7 @@ app.get("/:id/download", async (req, res) => {
       );
   }
 
-  const fileName = req.query.name || path.basename(filePath);
+  const fileName = bindings[0].fileName.value;
   const disposition =
     req.header("content-disposition")?.toLowerCase() === "inline"
       ? "inline"
@@ -308,8 +308,9 @@ function generateFileSelectQuery(uploadResourceUuid) {
 }
 
 function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
-  let query = `SELECT ?fileUrl WHERE {\n`;
-  query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} .\n`;
+  let query = `SELECT ?fileUrl ?fileName WHERE {\n`;
+  query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
+  query += `<${nfo}fileName> ?fileName .\n`
   query += `?fileUrl <${nie}dataSource> ?uri .\n`;
   query += `}`;
 
