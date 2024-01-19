@@ -8,7 +8,7 @@ import {
   sparqlEscapeInt,
   sparqlEscapeDateTime,
 } from "mu";
-import cors from "cors"
+import cors from "cors";
 import multer from "multer";
 import { readFile, unlink, copyFile } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
@@ -115,14 +115,14 @@ app.get("/", async (req, res) => {
 
   const nameFilter = req.query.name;
   const selectQuery = generateFilesSelectQuery(nameFilter);
-  const result = await query(selectQuery)
+  const result = await query(selectQuery);
   const bindings = result.results.bindings;
 
   return res
     .status(200)
     .contentType("application/vnd.api+json")
     .json({
-      data: bindings.map(binding => ({
+      data: bindings.map((binding) => ({
         type: "bpmn-file",
         id: binding.uuid.value,
         attributes: {
@@ -139,8 +139,7 @@ app.get("/", async (req, res) => {
         self: `${req.protocol}://${req.hostname}${rewriteUrl}`,
       },
     });
-
-})
+});
 
 app.get("/:id", async (req, res) => {
   const rewriteUrl = req.get("x-rewrite-url");
@@ -169,6 +168,8 @@ app.get("/:id", async (req, res) => {
           format: firstBinding.format.value,
           size: firstBinding.size.value,
           extension: firstBinding.extension.value,
+          created: firstBinding.created.value,
+          modified: firstBinding.modified.value,
         },
       },
       links: {
@@ -229,7 +230,11 @@ async function translateToRdf(bpmn, uploadResourceUri) {
     xpathLib: "xpath",
   };
 
-  const triples = await RmlMapper.parseTurtle(bboMapping(uploadResourceUri), inputFiles, options);
+  const triples = await RmlMapper.parseTurtle(
+    bboMapping(uploadResourceUri),
+    inputFiles,
+    options
+  );
   if (!triples || triples.trim().length === 0) {
     const error = new Error(
       "Invalid content: The provided file does not contain valid content."
@@ -293,10 +298,12 @@ function generateFilesSelectQuery(nameFilter) {
   query += `<${dct}format> ?format ;\n`;
   query += `<${dbpedia}fileExtension> ?extension ;\n`;
   query += `<${nfo}fileSize> ?size .\n`;
-  query += `FILTER NOT EXISTS { ?uri <${nie}dataSource> ?source  }\n`
+  query += `FILTER NOT EXISTS { ?uri <${nie}dataSource> ?source  }\n`;
 
   if (nameFilter) {
-    query += `FILTER(CONTAINS(LCASE(?name), ${sparqlEscapeString(nameFilter.toLowerCase())}))\n`
+    query += `FILTER(CONTAINS(LCASE(?name), ${sparqlEscapeString(
+      nameFilter.toLowerCase()
+    )}))\n`;
   }
 
   query += `}`;
@@ -310,7 +317,9 @@ function generateFileSelectQuery(uploadResourceUuid) {
   query += `<${nfo}fileName> ?name ;\n`;
   query += `<${dct}format> ?format ;\n`;
   query += `<${dbpedia}fileExtension> ?extension ;\n`;
-  query += `<${nfo}fileSize> ?size .\n`;
+  query += `<${nfo}fileSize> ?size ;\n`;
+  query += `<${dct}created> ?created ;\n`;
+  query += `<${dct}modified> ?modified .\n`;
   query += `}`;
 
   return query;
@@ -319,7 +328,7 @@ function generateFileSelectQuery(uploadResourceUuid) {
 function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
   let query = `SELECT ?fileUrl ?fileName WHERE {\n`;
   query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
-  query += `<${nfo}fileName> ?fileName .\n`
+  query += `<${nfo}fileName> ?fileName .\n`;
   query += `?fileUrl <${nie}dataSource> ?uri .\n`;
   query += `}`;
 
