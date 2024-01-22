@@ -35,8 +35,9 @@ app.post("/", upload.single("file"), async (req, res) => {
   }
 
   const tempFilePath = req.file.path;
-  const uploadResourceName = req.file.originalname;
+  let uploadResourceName = req.file.originalname;
   const fileExtension = path.extname(uploadResourceName);
+  uploadResourceName = uploadResourceName.replace(fileExtension, "");
 
   if (!allowedFileExtensions.includes(fileExtension.toLowerCase())) {
     await unlink(tempFilePath);
@@ -198,6 +199,7 @@ app.get("/:id/download", async (req, res) => {
   }
 
   const fileName = bindings[0].fileName.value;
+  const extension = bindings[0].extension.value;
   const disposition =
     req.header("content-disposition")?.toLowerCase() === "inline"
       ? "inline"
@@ -205,7 +207,7 @@ app.get("/:id/download", async (req, res) => {
 
   res.setHeader(
     "Content-Disposition",
-    `${disposition}; filename="${fileName}"`
+    `${disposition}; filename="${fileName}${extension}"`
   );
   return res.sendFile(filePath);
 });
@@ -326,9 +328,10 @@ function generateFileSelectQuery(uploadResourceUuid) {
 }
 
 function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
-  let query = `SELECT ?fileUrl ?fileName WHERE {\n`;
+  let query = `SELECT * WHERE {\n`;
   query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
-  query += `<${nfo}fileName> ?fileName .\n`;
+  query += `<${nfo}fileName> ?fileName ;\n`;
+  query += `<${dbpedia}fileExtension> ?extension .\n`;
   query += `?fileUrl <${nie}dataSource> ?uri .\n`;
   query += `}`;
 
