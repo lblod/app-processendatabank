@@ -10,6 +10,12 @@
 ;; docker-compose stop; docker-compose rm; docker-compose up
 ;; after altering this file.
 
+(define-resource file ()
+  :class (s-prefix "nfo:FileDataObject")
+  :properties `((:name :string ,(s-prefix "nfo:fileName")))
+  :resource-base (s-url "https://example.org/services/bpmn-file-service/files/")
+  :on-path "files")
+
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
 
 (define-resource thing ()
@@ -23,30 +29,46 @@
                 (:type :string ,(s-prefix "bbo:type")))
   :on-path "things")
 
-;; (define-resource activity (thing flowNode)
-;;   :class (s-prefix "bbo:Activity")
-;;   :properties `((:completion-quantity :integer ,(s-prefix "bbo:completionQuantity"))
-;;                 (:is-for-compensation :boolean ,(s-prefix "bbo:isForCompensation"))
-;;                 (:start-quantity :integer ,(s-prefix "bbo:startQuantity")))
-;;   :resource-base (s-url "https://example.org/")
-;;   :on-path "activities")
-
-;; (define-resource flowElement (thing)
-;;   :class (s-prefix "bbo:FlowElement")
-;;   :resource-base (s-url "https://example.org/")
-;;   :on-path "flow-elements")
-
-;; (define-resource flowNode (thing flowElement)
-;;   :class (s-prefix "bbo:FlowNode")
-;;   :resource-base (s-url "https://example.org/")
-;;   :on-path "flow-nodes")
-
-;; (define-resource task (thing activity)
-;;   :class (s-prefix "bbo:Task")
-;;   :resource-base (s-url "https://example.org/")
-;;   :on-path "tasks")
+(define-resource process (thing)
+  :class (s-prefix "bbo:Process")
+  :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
+                    :as "derivations"))
+  :resource-base (s-url "https://example.org/")
+  :on-path "processes")
 
 (define-resource task (thing)
   :class (s-prefix "bbo:Task")
+  :has-many `((process :via ,(s-prefix "teamingAI:belongsToProcess")
+                       :as "processes"))
   :resource-base (s-url "https://example.org/")
   :on-path "tasks")
+
+(define-resource sendTask (task)
+  :class (s-prefix "bbo:SendTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "send-tasks")
+
+(define-resource manualTask (task)
+  :class (s-prefix "bbo:ManualTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "manual-tasks")
+
+(define-resource businessRuleTask (task)
+  :class (s-prefix "bbo:BusinessRuleTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "business-rule-tasks")
+
+(define-resource userTask (task)
+  :class (s-prefix "bbo:UserTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "user-tasks")
+
+(define-resource receiveTask (task)
+  :class (s-prefix "bbo:ReceiveTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "receive-tasks")
+
+(define-resource scriptTask (task)
+  :class (s-prefix "bbo:ScriptTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "script-tasks")
