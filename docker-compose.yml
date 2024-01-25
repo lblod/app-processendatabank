@@ -5,6 +5,7 @@ services:
     image: semtech/mu-identifier:1.10.1
     environment:
       SESSION_COOKIE_SECURE: "on"
+      DEFAULT_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER: "*"
     links:
       - dispatcher:dispatcher
   dispatcher:
