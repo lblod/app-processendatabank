@@ -12,15 +12,15 @@ export const mapping = (uploadResourceUri) => `
 @prefix idlab-fn: <http://example.com/idlab/function/> .
 @prefix muCore: <http://mu.semte.ch/vocabularies/core/>.
 @prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 
-<#UuidMapping>
-    rr:predicate muCore:uuid;
-    rr:objectMap [
-        fnml:functionValue [
-            rr:predicateObjectMap [
-                rr:predicate fno:executes ;
-                rr:objectMap [ rr:constant idlab-fn:random ]
-            ] ;
+<#UuidFunctionMapping>
+    fnml:functionValue [
+        rr:subjectMap <#UuidFunctionMapping>;
+
+    rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ rr:constant idlab-fn:random ]
         ]
     ].
 
@@ -33,12 +33,16 @@ teamingAI:AssociationMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:association']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:Association
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:Association ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -61,12 +65,16 @@ teamingAI:BoundaryEventMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:boundaryEvent']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:BoundaryEvent
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:BoundaryEvent ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:attachedToRef;
         rr:objectMap [ rr:template "{@attachedToRef}" ]
@@ -97,12 +105,16 @@ teamingAI:BusinessRuleTaskMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:businessRuleTask']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:BusinessRuleTask
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:BusinessRuleTask ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -121,12 +133,16 @@ teamingAI:CollaborationMapping
         rml:iterator "/*[name()='bpmn:definitions']//*[name()='bpmn:collaboration']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:Collaboration
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:Collaboration ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -141,12 +157,16 @@ teamingAI:DataInputAssociationMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:dataInputAssociation']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:DataInputAssociation
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:DataInputAssociation ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -173,12 +193,16 @@ teamingAI:DataObjectMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:dataObject']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:DataObject
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:DataObject ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -193,12 +217,16 @@ teamingAI:DataObjectReferenceMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:dataObjectReference']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:DataObjectReference
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:DataObjectReference ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -221,12 +249,16 @@ teamingAI:DataOutputAssociationMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:dataOutputAssociation']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:DataOutputAssociation
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:DataOutputAssociation ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -249,12 +281,16 @@ teamingAI:DataStoreReferenceMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:dataStoreReference']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:DataStoreReference
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:DataStoreReference ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -273,12 +309,16 @@ teamingAI:EndEventMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:endEvent']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:EndEvent
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:EndEvent ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -301,12 +341,16 @@ teamingAI:ErrorEventDefinitionMapping
         rml:iterator "//*[name()='bpmn:errorEventDefinition']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:ErrorEventDefinition
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ErrorEventDefinition ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -321,12 +365,16 @@ teamingAI:ErrorMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:error']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:Error
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Error ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -341,12 +389,16 @@ teamingAI:ExlusiveGatewayMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:exclusiveGateway']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:ExclusiveGateway
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ExclusiveGateway ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -377,12 +429,16 @@ teamingAI:InclusiveGatewayMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:inclusiveGateway']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:InclusiveGateway
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:InclusiveGateway ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -413,12 +469,16 @@ teamingAI:IntermediateThrowMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:intermediateThrowEvent']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:IntermediateThrowEvent
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:IntermediateThrowEvent ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -449,12 +509,16 @@ teamingAI:LaneMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:laneSet']/*[name()='bpmn:lane']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:Lane
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:Lane ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -477,18 +541,22 @@ teamingAI:LaneSetMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:laneSet']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:LaneSet
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:LaneSet ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
 
-teamingAI:ManualTask
+teamingAI:ManualTaskMapping
     a rr:TriplesMap;
 
     rml:logicalSource [
@@ -497,12 +565,16 @@ teamingAI:ManualTask
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:manualTask']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:ManualTask
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ManualTask ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -521,12 +593,16 @@ teamingAI:MessageEventDefinitionMapping
         rml:iterator "//*[name()='bpmn:messageEventDefinition']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:MessageEventDefinition
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:MessageEventDefinition ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -541,12 +617,16 @@ teamingAI:MessageFlowMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:collaboration']/*[name()='bpmn:messageFlow']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:MessageFlow
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:MessageFlow ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -573,12 +653,16 @@ teamingAI:ParallelGatewayMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:parallelGateway']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:ParallelGateway
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ParallelGateway ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:DefaultSequenceFlow;
         rr:objectMap [ rr:template "{@default}" ]
@@ -609,12 +693,16 @@ teamingAI:ParticipantMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:collaboration']/*[name()='bpmn:participant']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:Participant
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:Participant ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -637,12 +725,16 @@ teamingAI:ProcessMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:Process
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Process ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate prov:wasDerivedFrom;
         rr:objectMap [ rr:template "${uploadResourceUri}" ]
@@ -657,12 +749,16 @@ teamingAI:PropertyMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']//*[name()='bpmn:property']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:Property
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Property ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -681,12 +777,16 @@ teamingAI:ReceiveTaskMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:receiveTask']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:ReceiveTask
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ReceiveTask ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -705,12 +805,16 @@ teamingAI:ScriptTaskMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:scriptTask']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:ScriptTask
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ScriptTask ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -729,12 +833,16 @@ teamingAI:SendTaskMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:sendTask']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:SendTask
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:SendTask ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -753,12 +861,16 @@ teamingAI:SequenceFlowMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:sequenceFlow']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:SequenceFlow
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:SequenceFlow ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:has_sourceRef;
         rr:objectMap [ rr:template "{@sourceRef}" ]
@@ -785,12 +897,16 @@ teamingAI:ServiceTaskMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:serviceTask']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:ServiceTask
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ServiceTask ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -809,12 +925,16 @@ teamingAI:StartEventMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:startEvent']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:StartEvent
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:StartEvent ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:has_targetRef;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
@@ -837,12 +957,16 @@ teamingAI:SubProcessMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:subProcess']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:SubProcess
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:SubProcess ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToRAMILayer;
         rr:objectMap [ rr:constant rami:Business ]
@@ -861,12 +985,16 @@ teamingAI:TaskMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:task']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:Task
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
@@ -885,12 +1013,16 @@ teamingAI:TextAnnotationMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:textAnnotation']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bboExtension:TextAnnotation
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bboExtension:TextAnnotation ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate teamingAI:belongsToProcess;
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
@@ -909,12 +1041,16 @@ teamingAI:UserTaskMapping
         rml:iterator "/*[name()='bpmn:definitions']/*[name()='bpmn:process']/*[name()='bpmn:userTask']"
     ];
 
-    rr:subjectMap [
-        rr:template "{@id}";
-        rr:class bbo:UserTask
-    ];
+    rr:subjectMap <#UuidFunctionMapping>;
 
-    rr:predicateObjectMap <#UuidMapping>,
+    rr:predicateObjectMap [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:UserTask ]
+    ],
+    [
+        rr:predicate muCore:uuid;
+        rr:objectMap <#UuidFunctionMapping>
+    ],
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
