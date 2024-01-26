@@ -14,7 +14,7 @@
   :class (s-prefix "nfo:FileDataObject")
   :properties `((:name :string ,(s-prefix "nfo:fileName")))
   :resource-base (s-url "https://example.org/services/bpmn-file-service/files/")
-  :on-path "files")
+  :on-path "bpmn-files")
 
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
 
