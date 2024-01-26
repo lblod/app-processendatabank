@@ -90,7 +90,7 @@ app.post("/", upload.single("file"), async (req, res) => {
     .contentType("application/vnd.api+json")
     .json({
       data: {
-        type: "bpmn-file",
+        type: "bpmn-files",
         id: uploadResourceUuid,
         attributes: {
           name: uploadResourceName,
@@ -121,7 +121,7 @@ app.get("/", async (req, res) => {
     .contentType("application/vnd.api+json")
     .json({
       data: bindings.map((binding) => ({
-        type: "bpmn-file",
+        type: "bpmn-files",
         id: binding.uuid.value,
         attributes: {
           name: binding.name.value,
@@ -159,7 +159,7 @@ app.get("/:id", async (req, res) => {
     .contentType("application/vnd.api+json")
     .json({
       data: {
-        type: "bpmn-file",
+        type: "bpmn-files",
         id: uploadResourceUuid,
         attributes: {
           name: firstBinding.name.value,
