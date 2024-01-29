@@ -25,6 +25,18 @@ const storageFolderPath = "/share/";
 const allowedFileExtensions = [".bpmn", ".xml"];
 const upload = multer({ dest: "temp/" });
 
+/**
+ * POST `/` - Upload a BPMN file
+ * Description: This endpoint allows for the uploading of BPMN (.bpmn, .xml) files.
+ * Headers:
+ *  - x-rewrite-url: Required. Used for generating resource links.
+ * Body:
+ *  - multipart/form-data with a file field.
+ * Response:
+ *  - 201 Created: Successfully created and stored the file.
+ *  - 400 Bad Request: If the required x-rewrite-url header is missing or if the file extension is not allowed.
+ *  - 500 Internal Server Error: In case of unexpected server errors.
+ */
 app.post("/", upload.single("file"), async (req, res) => {
   const rewriteUrl = req.get("x-rewrite-url");
   if (!rewriteUrl) {
@@ -105,6 +117,18 @@ app.post("/", upload.single("file"), async (req, res) => {
     });
 });
 
+/**
+ * GET `/` - List all BPMN files
+ * Description: Retrieve a list of all uploaded BPMN files.
+ * Headers:
+ *  - x-rewrite-url: Required. Used for generating resource links.
+ * Query Parameters:
+ *  - name: Optional. Filter files by name.
+ * Response:
+ *  - 200 OK: Successfully retrieved the list of files.
+ *  - 400 Bad Request: If the x-rewrite-url header is missing.
+ *  - 500 Internal Server Error: In case of unexpected server errors.
+ */
 app.get("/", async (req, res) => {
   const rewriteUrl = req.get("x-rewrite-url");
   if (!rewriteUrl) {
@@ -139,6 +163,19 @@ app.get("/", async (req, res) => {
     });
 });
 
+/**
+ * GET `/:id` - Retrieve a specific BPMN file
+ * Description: Get detailed information about a specific BPMN file by its UUID.
+ * Headers:
+ *  - x-rewrite-url: Required. Used for generating resource links.
+ * Path Parameters:
+ *  - id: Required. UUID of the BPMN file.
+ * Response:
+ *  - 200 OK: Successfully retrieved file details.
+ *  - 400 Bad Request: If the x-rewrite-url header is missing.
+ *  - 404 Not Found: If no file matches the given UUID.
+ *  - 500 Internal Server Error: In case of unexpected server errors.
+ */
 app.get("/:id", async (req, res) => {
   const rewriteUrl = req.get("x-rewrite-url");
   if (!rewriteUrl) {
@@ -176,6 +213,20 @@ app.get("/:id", async (req, res) => {
     });
 });
 
+/**
+ * GET `/:id/download` - Download a BPMN file
+ * Description: Download a specific BPMN file by its UUID.
+ * Headers:
+ *  - x-rewrite-url: Required. Used for generating resource links.
+ *  - content-disposition: Optional. Determines the Content-Disposition header in the response (inline or attachment).
+ * Path Parameters:
+ *  - id: Required. UUID of the BPMN file.
+ * Response:
+ *  - 200 OK: Successfully retrieved the file for download.
+ *  - 400 Bad Request: If the x-rewrite-url header is missing.
+ *  - 404 Not Found: If no file matches the given UUID.
+ *  - 500 Internal Server Error: If the file exists in the database but is missing in the server storage.
+ */
 app.get("/:id/download", async (req, res) => {
   const uploadResourceUuid = req.params.id;
   const selectQuery = generateUploadResourceUriSelectQuery(uploadResourceUuid);
