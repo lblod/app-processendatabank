@@ -115,7 +115,7 @@ app.post("/", upload.single("file"), async (req, res) => {
  * Headers:
  *  - x-rewrite-url: Required. Used for generating resource links.
  * Query Parameters:
- *  - name: Optional. Filter files by name.
+ *  - filter: Optional. Filter files by name. Supports both `filter[name]=value` and `filter=value` formats.
  * Response:
  *  - 200 OK: Successfully retrieved the list of files.
  *  - 400 Bad Request: If the x-rewrite-url header is missing.
@@ -127,7 +127,14 @@ app.get("/", async (req, res) => {
     return res.status(400).send("X-Rewrite-URL header is missing.");
   }
 
-  const nameFilter = req.query.name;
+  let nameFilter;
+  const filterParam = req.query.filter;
+  if (typeof filterParam === "object" && filterParam.name) {
+    nameFilter = filterParam.name;
+  } else if (typeof filterParam === "string") {
+    nameFilter = filterParam;
+  }
+
   const selectQuery = generateFilesSelectQuery(nameFilter);
   const result = await query(selectQuery);
   const bindings = result.results.bindings;
