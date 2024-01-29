@@ -1,3 +1,8 @@
+;;;;
+;; NOTE
+;; docker-compose stop; docker-compose rm; docker-compose up
+;; after altering this file.
+
 (in-package :mu-cl-resources)
 
 (setf *include-count-in-paginated-responses* t)
@@ -5,41 +10,38 @@
 (setf sparql:*experimental-no-application-graph-for-sudo-select-queries* t)
 (setf *cache-model-properties-p* t)
 
-;;;;
-;; NOTE
-;; docker-compose stop; docker-compose rm; docker-compose up
-;; after altering this file.
+;; -------------------------------------------------------------------------------------
 
-(define-resource file ()
+(define-resource bpmnFile ()
   :class (s-prefix "nfo:FileDataObject")
-  :properties `((:name :string ,(s-prefix "nfo:fileName")))
+  :properties `((:name :string ,(s-prefix "nfo:fileName"))
+                (:format :string ,(s-prefix "dct:format"))
+                (:size :number ,(s-prefix "nfo:fileSize"))
+                (:extension :string ,(s-prefix "dbpedia:fileExtension"))
+                (:created :datetime ,(s-prefix "dct:created"))
+                (:modified :datetime ,(s-prefix "dct:modified")))
   :resource-base (s-url "https://example.org/services/bpmn-file-service/files/")
   :on-path "bpmn-files")
 
+(define-resource bpmnElement ()
+  :properties `((:name :string ,(s-prefix "bbo:name")))
+  :has-many `((process :via ,(s-prefix "teamingAI:belongsToProcess")
+                       :as "processes"))
+  :on-path "bpmn-elements")
+
+;; -------------------------------------------------------------------------------------
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
+;; -------------------------------------------------------------------------------------
 
-(define-resource thing ()
-  :properties `((:name :string ,(s-prefix "bbo:name"))
-                (:created-on :string ,(s-prefix "bbo:createdOn"))
-                (:max-value :string ,(s-prefix "bbo:maxValue"))
-                (:id :string ,(s-prefix "bbo:id"))
-                (:value :string ,(s-prefix "bbo:value"))
-                (:min-value :string ,(s-prefix "bbo:minValue"))
-                (:process-type :string ,(s-prefix "bbo:processType"))
-                (:type :string ,(s-prefix "bbo:type")))
-  :on-path "things")
-
-(define-resource process (thing)
+(define-resource process (bpmnElement)
   :class (s-prefix "bbo:Process")
-  :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
+  :has-many `((bpmnFile :via ,(s-prefix "prov:wasDerivedFrom")
                     :as "derivations"))
   :resource-base (s-url "https://example.org/")
   :on-path "processes")
 
-(define-resource task (thing)
+(define-resource task (bpmnElement)
   :class (s-prefix "bbo:Task")
-  :has-many `((process :via ,(s-prefix "teamingAI:belongsToProcess")
-                       :as "processes"))
   :resource-base (s-url "https://example.org/")
   :on-path "tasks")
 

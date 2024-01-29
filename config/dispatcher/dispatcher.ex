@@ -14,7 +14,11 @@ defmodule Dispatcher do
 
   define_layers [ :static, :services, :fall_back, :not_found ]
 
-  match "/process-steps/*path", @json do
+  match "/bpmn-elements", @json do
+    Proxy.forward conn, [], "http://resource/bpmn-elements"
+  end
+
+  match "/bpmn-elements/*path", @json do
     Proxy.forward conn, path, "http://resource/"
   end
 
