@@ -33,7 +33,7 @@
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
 ;; -------------------------------------------------------------------------------------
 
-(define-resource process (bpmnElement)
+(define-resource process ()
   :class (s-prefix "bbo:Process")
   :has-many `((bpmnFile :via ,(s-prefix "prov:wasDerivedFrom")
                     :as "derivations"))
