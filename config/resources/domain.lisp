@@ -35,6 +35,20 @@
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
 ;; -------------------------------------------------------------------------------------
 
+(define-resource process ()
+  :class (s-prefix "bbo:Process")
+  :has-many `((bpmnFile :via ,(s-prefix "prov:wasDerivedFrom")
+                    :as "derivations"))
+  :resource-base (s-url "https://example.org/")
+  :on-path "processes")
+
+;; Tasks
+
+(define-resource task (bpmnElement)
+  :class (s-prefix "bbo:Task")
+  :resource-base (s-url "https://example.org/")
+  :on-path "tasks")
+
 (define-resource businessRuleTask (task)
   :class (s-prefix "bbo:BusinessRuleTask")
   :resource-base (s-url "https://example.org/")
@@ -45,14 +59,7 @@
   :resource-base (s-url "https://example.org/")
   :on-path "manual-tasks")
 
-(define-resource process ()
-  :class (s-prefix "bbo:Process")
-  :has-many `((bpmnFile :via ,(s-prefix "prov:wasDerivedFrom")
-                    :as "derivations"))
-  :resource-base (s-url "https://example.org/")
-  :on-path "processes")
-
-  (define-resource receiveTask (task)
+(define-resource receiveTask (task)
   :class (s-prefix "bbo:ReceiveTask")
   :resource-base (s-url "https://example.org/")
   :on-path "receive-tasks")
@@ -67,10 +74,10 @@
   :resource-base (s-url "https://example.org/")
   :on-path "send-tasks")
 
-(define-resource task (bpmnElement)
-  :class (s-prefix "bbo:Task")
+(define-resource serviceTask (task)
+  :class (s-prefix "bbo:ServiceTask")
   :resource-base (s-url "https://example.org/")
-  :on-path "tasks")
+  :on-path "service-tasks")
 
 (define-resource userTask (task)
   :class (s-prefix "bbo:UserTask")
