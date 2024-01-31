@@ -10,6 +10,8 @@
 (setf sparql:*experimental-no-application-graph-for-sudo-select-queries* t)
 (setf *cache-model-properties-p* t)
 
+(defparameter *default-page-size* 20)
+
 ;; -------------------------------------------------------------------------------------
 
 (define-resource bpmnFile ()
@@ -33,6 +35,16 @@
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
 ;; -------------------------------------------------------------------------------------
 
+(define-resource businessRuleTask (task)
+  :class (s-prefix "bbo:BusinessRuleTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "business-rule-tasks")
+
+(define-resource manualTask (task)
+  :class (s-prefix "bbo:ManualTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "manual-tasks")
+
 (define-resource process ()
   :class (s-prefix "bbo:Process")
   :has-many `((bpmnFile :via ,(s-prefix "prov:wasDerivedFrom")
@@ -40,32 +52,7 @@
   :resource-base (s-url "https://example.org/")
   :on-path "processes")
 
-(define-resource task (bpmnElement)
-  :class (s-prefix "bbo:Task")
-  :resource-base (s-url "https://example.org/")
-  :on-path "tasks")
-
-(define-resource sendTask (task)
-  :class (s-prefix "bbo:SendTask")
-  :resource-base (s-url "https://example.org/")
-  :on-path "send-tasks")
-
-(define-resource manualTask (task)
-  :class (s-prefix "bbo:ManualTask")
-  :resource-base (s-url "https://example.org/")
-  :on-path "manual-tasks")
-
-(define-resource businessRuleTask (task)
-  :class (s-prefix "bbo:BusinessRuleTask")
-  :resource-base (s-url "https://example.org/")
-  :on-path "business-rule-tasks")
-
-(define-resource userTask (task)
-  :class (s-prefix "bbo:UserTask")
-  :resource-base (s-url "https://example.org/")
-  :on-path "user-tasks")
-
-(define-resource receiveTask (task)
+  (define-resource receiveTask (task)
   :class (s-prefix "bbo:ReceiveTask")
   :resource-base (s-url "https://example.org/")
   :on-path "receive-tasks")
@@ -74,3 +61,18 @@
   :class (s-prefix "bbo:ScriptTask")
   :resource-base (s-url "https://example.org/")
   :on-path "script-tasks")
+
+(define-resource sendTask (task)
+  :class (s-prefix "bbo:SendTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "send-tasks")
+
+(define-resource task (bpmnElement)
+  :class (s-prefix "bbo:Task")
+  :resource-base (s-url "https://example.org/")
+  :on-path "tasks")
+
+(define-resource userTask (task)
+  :class (s-prefix "bbo:UserTask")
+  :resource-base (s-url "https://example.org/")
+  :on-path "user-tasks")
