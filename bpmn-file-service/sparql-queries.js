@@ -81,6 +81,7 @@ export function generateFilesSelectQuery(nameFilter) {
 export function generateFileSelectQuery(uploadResourceUuid) {
   // prettier-ignore
    return `
+      ${PREFIXES}
       SELECT * WHERE {
           ?uri mu:uuid ${sparqlEscapeString(uploadResourceUuid)} ;
                nfo:fileName ?name ;
