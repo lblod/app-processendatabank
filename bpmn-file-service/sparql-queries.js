@@ -25,7 +25,7 @@ export function generateFileUpdateQuery(
   fileSize,
   fileExtension,
   fileResourceName,
-  fileResourceUuid,
+  fileResourceUuid
 ) {
   const fileResourceUri = `share://${fileResourceName}`;
   const now = new Date();
@@ -69,7 +69,7 @@ export function generateFilesSelectQuery(nameFilter) {
 
   if (nameFilter) {
     query += `FILTER(CONTAINS(LCASE(?name), ${sparqlEscapeString(
-      nameFilter.toLowerCase(),
+      nameFilter.toLowerCase()
     )}))\n`;
   }
 
@@ -80,7 +80,7 @@ export function generateFilesSelectQuery(nameFilter) {
 
 export function generateFileSelectQuery(uploadResourceUuid) {
   // prettier-ignore
-   return `
+  return `
       ${PREFIXES}
       SELECT * WHERE {
           ?uri mu:uuid ${sparqlEscapeString(uploadResourceUuid)} ;
@@ -91,7 +91,6 @@ export function generateFileSelectQuery(uploadResourceUuid) {
                dct:created ?created ;
                dct:modified ?modified .
       }`;
-
 }
 
 export function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
@@ -104,5 +103,4 @@ export function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
              dbpedia:fileExtension ?extension .
         ?fileUrl nie:dataSource ?uri .
     }`;
-
 }
