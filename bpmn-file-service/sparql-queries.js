@@ -5,11 +5,13 @@ import {
   sparqlEscapeDateTime,
 } from "mu";
 
-const muCore = "http://mu.semte.ch/vocabularies/core/";
-const nfo = "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#";
-const dct = "http://purl.org/dc/terms/";
-const dbpedia = "http://dbpedia.org/ontology/";
-const nie = "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#";
+const PREFIXES = `
+   PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
+   PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>
+   PREFIX dct: <http://purl.org/dc/terms/>
+   PREFIX dbpedia: <http://dbpedia.org/ontology/>
+   PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
+`;
 
 export function generateUpdateQuery(triples) {
   return `INSERT DATA { ${triples} }`;
@@ -28,42 +30,42 @@ export function generateFileUpdateQuery(
   const fileResourceUri = `share://${fileResourceName}`;
   const now = new Date();
 
-  let triples = `${sparqlEscapeUri(
-    uploadResourceUri
-  )} a <${nfo}FileDataObject> ;\n`;
-  triples += `<${nfo}fileName> ${sparqlEscapeString(uploadResourceName)} ;\n`;
-  triples += `<${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
-  triples += `<${dct}format> ${sparqlEscapeString(fileFormat)} ;\n`;
-  triples += `<${nfo}fileSize> ${sparqlEscapeInt(fileSize)} ;\n`;
-  triples += `<${dbpedia}fileExtension> ${sparqlEscapeString(
-    fileExtension
-  )} ;\n`;
-  triples += `<${dct}created> ${sparqlEscapeDateTime(now)} ;\n`;
-  triples += `<${dct}modified> ${sparqlEscapeDateTime(now)} .\n`;
-
-  triples += `${sparqlEscapeUri(fileResourceUri)} a <${nfo}FileDataObject> ;\n`;
-  triples += `<${nie}dataSource> ${sparqlEscapeUri(uploadResourceUri)} ;\n`;
-  triples += `<${nfo}fileName> ${sparqlEscapeString(fileResourceName)} ;\n`;
-  triples += `<${muCore}uuid> ${sparqlEscapeString(fileResourceUuid)} ;\n`;
-  triples += `<${dct}format> ${sparqlEscapeString(fileFormat)} ;\n`;
-  triples += `<${nfo}fileSize> ${sparqlEscapeInt(fileSize)} ;\n`;
-  triples += `<${dbpedia}fileExtension> ${sparqlEscapeString(
-    fileExtension
-  )} ;\n`;
-  triples += `<${dct}created> ${sparqlEscapeDateTime(now)} ;\n`;
-  triples += `<${dct}modified> ${sparqlEscapeDateTime(now)} .\n`;
-
-  return generateUpdateQuery(triples);
+  // prettier-ignore
+  return `
+    ${PREFIXES}
+    INSERT DATA {
+      ${sparqlEscapeUri(uploadResourceUri)} a nfo:FileDataObject ;
+          nfo:fileName ${sparqlEscapeString(uploadResourceName)} ;
+          mu:uuid ${sparqlEscapeString(uploadResourceUuid)} ;
+          dct:format ${sparqlEscapeString(fileFormat)} ;
+          nfo:fileSize ${sparqlEscapeInt(fileSize)} ;
+          dbpedia:fileExtension ${sparqlEscapeString(fileExtension)} ;
+          dct:created ${sparqlEscapeDateTime(now)} ;
+          dct:modified ${sparqlEscapeDateTime(now)} .
+      ${sparqlEscapeUri(fileResourceUri)} a nfo:FileDataObject ;
+          nie:dataSource ${sparqlEscapeUri(uploadResourceUri)} ;
+          nfo:fileName ${sparqlEscapeString(fileResourceName)} ;
+          muCore:uuid ${sparqlEscapeString(fileResourceUuid)} ;
+          dct:format ${sparqlEscapeString(fileFormat)} ;
+          nfo:fileSize ${sparqlEscapeInt(fileSize)} ;
+          dbpedia:fileExtension ${sparqlEscapeString(fileExtension)} ;
+          dct:created ${sparqlEscapeDateTime(now)} ;
+          dct:modified ${sparqlEscapeDateTime(now)} .
+    }`;
 }
 
 export function generateFilesSelectQuery(nameFilter) {
-  let query = `SELECT * WHERE {\n`;
-  query += `?uri <${muCore}uuid> ?uuid ;\n`;
-  query += `<${nfo}fileName> ?name ;\n`;
-  query += `<${dct}format> ?format ;\n`;
-  query += `<${dbpedia}fileExtension> ?extension ;\n`;
-  query += `<${nfo}fileSize> ?size .\n`;
-  query += `FILTER NOT EXISTS { ?uri <${nie}dataSource> ?source  }\n`;
+  // prettier-ignore
+  let query = `
+    ${PREFIXES}
+    SELECT * WHERE {
+        ?uri mu:uuid ?uuid ;
+             nfo:fileName ?name ;
+             dct:format ?format ;
+             dbpedia:fileExtension ?extension ;
+             nfo:fileSize ?size .
+        FILTER NOT EXISTS { ?uri nie:dataSource ?source  }
+    `;
 
   if (nameFilter) {
     query += `FILTER(CONTAINS(LCASE(?name), ${sparqlEscapeString(
@@ -77,26 +79,28 @@ export function generateFilesSelectQuery(nameFilter) {
 }
 
 export function generateFileSelectQuery(uploadResourceUuid) {
-  let query = `SELECT * WHERE {\n`;
-  query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
-  query += `<${nfo}fileName> ?name ;\n`;
-  query += `<${dct}format> ?format ;\n`;
-  query += `<${dbpedia}fileExtension> ?extension ;\n`;
-  query += `<${nfo}fileSize> ?size ;\n`;
-  query += `<${dct}created> ?created ;\n`;
-  query += `<${dct}modified> ?modified .\n`;
-  query += `}`;
-
-  return query;
+  // prettier-ignore
+  return `
+      ${PREFIXES}
+      SELECT * WHERE {
+          ?uri mu:uuid ${sparqlEscapeString(uploadResourceUuid)} ;
+               nfo:fileName ?name ;
+               dct:format ?format ;
+               dbpedia:fileExtension ?extension ;
+               nfo:fileSize ?size ;
+               dct:created ?created ;
+               dct:modified ?modified .
+      }`;
 }
 
 export function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
-  let query = `SELECT * WHERE {\n`;
-  query += `?uri <${muCore}uuid> ${sparqlEscapeString(uploadResourceUuid)} ;\n`;
-  query += `<${nfo}fileName> ?fileName ;\n`;
-  query += `<${dbpedia}fileExtension> ?extension .\n`;
-  query += `?fileUrl <${nie}dataSource> ?uri .\n`;
-  query += `}`;
-
-  return query;
+  // prettier-ignore
+  return `
+    ${PREFIXES}
+    SELECT * WHERE {
+        ?uri mu:uuid ${sparqlEscapeString(uploadResourceUuid)};
+             nfo:fileName ?fileName ;
+             dbpedia:fileExtension ?extension .
+        ?fileUrl nie:dataSource ?uri .
+    }`;
 }
