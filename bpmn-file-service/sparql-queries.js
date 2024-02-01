@@ -45,7 +45,7 @@ export function generateFileUpdateQuery(
       ${sparqlEscapeUri(fileResourceUri)} a nfo:FileDataObject ;
           nie:dataSource ${sparqlEscapeUri(uploadResourceUri)} ;
           nfo:fileName ${sparqlEscapeString(fileResourceName)} ;
-          muCore:uuid ${sparqlEscapeString(fileResourceUuid)} ;
+          mu:uuid ${sparqlEscapeString(fileResourceUuid)} ;
           dct:format ${sparqlEscapeString(fileFormat)} ;
           nfo:fileSize ${sparqlEscapeInt(fileSize)} ;
           dbpedia:fileExtension ${sparqlEscapeString(fileExtension)} ;
