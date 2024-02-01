@@ -65,8 +65,6 @@ services:
       - triplestore:database
     volumes:
       - ./config/migrations:/data/migrations
-    environment:
-      MU_APPLICATION_GRAPH: "http://mu.semte.ch/graphs/public"
   resource:
     logging: *default-logging
     labels:
