@@ -25,12 +25,6 @@ defmodule Acl.UserGroups.Config do
         graphs: [
                   %GraphSpec {
                     graph: "http://mu.semte.ch/graphs/public",
-                    constraint: %ResourceFormatConstraint {
-                      resource_prefix: "https://example.org/"
-                    }
-                  },
-                  %GraphSpec {
-                    graph: "http://mu.semte.ch/graphs/public",
                     constraint: %ResourceConstraint {
                       resource_types: [ "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", ]
                     }

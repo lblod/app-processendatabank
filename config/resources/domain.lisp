@@ -14,16 +14,20 @@
 
 ;; -------------------------------------------------------------------------------------
 
-(define-resource bpmnFile ()
+(define-resource file ()
   :class (s-prefix "nfo:FileDataObject")
   :properties `((:name :string ,(s-prefix "nfo:fileName"))
                 (:format :string ,(s-prefix "dct:format"))
                 (:size :number ,(s-prefix "nfo:fileSize"))
                 (:extension :string ,(s-prefix "dbpedia:fileExtension"))
                 (:created :datetime ,(s-prefix "dct:created"))
-                (:modified :datetime ,(s-prefix "dct:modified")))
-  :resource-base (s-url "https://example.org/services/bpmn-file-service/files/")
-  :on-path "bpmn-files")
+                (:created :datetime ,(s-prefix "dct:modified")))
+  :has-one `((file :via ,(s-prefix "nie:dataSource")
+                   :inverse t
+                   :as "download"))
+  :resource-base (s-url "http://data.lblod.info/files/")
+  :features `(include-uri)
+  :on-path "files")
 
 (define-resource bpmnElement ()
   :properties `((:name :string ,(s-prefix "bbo:name")))
@@ -37,7 +41,7 @@
 
 (define-resource process ()
   :class (s-prefix "bbo:Process")
-  :has-many `((bpmnFile :via ,(s-prefix "prov:wasDerivedFrom")
+  :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
                     :as "derivations"))
   :resource-base (s-url "https://example.org/")
   :on-path "processes")

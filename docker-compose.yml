@@ -75,6 +75,12 @@ services:
       - database:database
     volumes:
       - ./config/resources:/config
+  file:
+    image: semtech/mu-file-service:3.3.2
+    links:
+      - database:database
+    volumes:
+      - ./data/files:/share
   bpmn:
     logging: *default-logging
     labels:
