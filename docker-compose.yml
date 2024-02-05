@@ -89,5 +89,5 @@ services:
     environment:
       NODE_ENV: "development"
     volumes:
-      - ./bpmn-file-service:/app
-      - ./data/bpmn-files:/share
+      - /home/nbittich/lblod/bpmn-service:/app
+      - ./data/files:/share

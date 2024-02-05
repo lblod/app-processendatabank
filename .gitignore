@@ -7,4 +7,5 @@
 /data/bpmn-files/*
 
 docker-compose.override.yml
-
+.env
+/data/files/*

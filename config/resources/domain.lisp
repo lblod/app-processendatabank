@@ -33,6 +33,8 @@
   :properties `((:name :string ,(s-prefix "bbo:name")))
   :has-many `((process :via ,(s-prefix "teamingAI:belongsToProcess")
                        :as "processes"))
+  :resource-base (s-url "http://data.lblod.info/bpmn-elements/")
+
   :on-path "bpmn-elements")
 
 ;; -------------------------------------------------------------------------------------
@@ -43,47 +45,47 @@
   :class (s-prefix "bbo:Process")
   :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
                     :as "derivations"))
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/processes/")
   :on-path "processes")
 
 ;; Tasks
 
 (define-resource task (bpmnElement)
   :class (s-prefix "bbo:Task")
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/tasks/")
   :on-path "tasks")
 
 (define-resource businessRuleTask (task)
   :class (s-prefix "bbo:BusinessRuleTask")
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/business-rule-tasks/")
   :on-path "business-rule-tasks")
 
 (define-resource manualTask (task)
   :class (s-prefix "bbo:ManualTask")
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/manual-tasks/")
   :on-path "manual-tasks")
 
 (define-resource receiveTask (task)
   :class (s-prefix "bbo:ReceiveTask")
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/receive-tasks/")
   :on-path "receive-tasks")
 
 (define-resource scriptTask (task)
   :class (s-prefix "bbo:ScriptTask")
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/script-tasks/")
   :on-path "script-tasks")
 
 (define-resource sendTask (task)
   :class (s-prefix "bbo:SendTask")
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/send-tasks/")
   :on-path "send-tasks")
 
 (define-resource serviceTask (task)
   :class (s-prefix "bbo:ServiceTask")
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/service-tasks/")
   :on-path "service-tasks")
 
 (define-resource userTask (task)
   :class (s-prefix "bbo:UserTask")
-  :resource-base (s-url "https://example.org/")
+  :resource-base (s-url "http://data.lblod.info/user-tasks/")
   :on-path "user-tasks")
