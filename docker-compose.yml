@@ -85,9 +85,6 @@ services:
     logging: *default-logging
     labels:
       - "logging=true"
-    image: semtech/mu-javascript-template
-    environment:
-      NODE_ENV: "development"
+    image: lblod/bpmn-service
     volumes:
-      - /home/nbittich/lblod/bpmn-service:/app
       - ./data/files:/share
