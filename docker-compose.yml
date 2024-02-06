@@ -80,14 +80,18 @@ services:
     volumes:
       - ./config/resources:/config
     restart: always
+  file:
+    image: semtech/mu-file-service:3.3.2
+    links:
+      - database:database
+    volumes:
+      - ./data/files:/share
+    restart: always
   bpmn:
     logging: *default-logging
     labels:
       - "logging=true"
-    image: semtech/mu-javascript-template
-    environment:
-      NODE_ENV: "development"
+    image: lblod/bpmn-service
     volumes:
-      - ./bpmn-file-service:/app
-      - ./data/bpmn-files:/share
+      - ./data/files:/share
     restart: always
