@@ -13,8 +13,8 @@ services:
       - ./config/frontend/add-x-frame-options-header.conf:/config/add-x-frame-options.conf
     labels:
       - "logging=true"
-    restart: always
     logging: *default-logging
+    restart: always
   identifier:
     image: semtech/mu-identifier:1.10.1
     labels:
@@ -22,9 +22,9 @@ services:
     logging: *default-logging
     environment:
       SESSION_COOKIE_SECURE: "on"
-      DEFAULT_ACCESS_CONTROL_ALLOW_ORIGIN_HEADER: "*"
     links:
       - dispatcher:dispatcher
+    restart: always
   dispatcher:
     image: semtech/mu-dispatcher:2.1.0-beta.2
     logging: *default-logging
@@ -34,6 +34,7 @@ services:
       - resource:resource
     volumes:
       - ./config/dispatcher:/config
+    restart: always
   database:
     logging: *default-logging
     labels:
@@ -44,6 +45,7 @@ services:
       MU_SPARQL_ENDPOINT: "http://triplestore:8890/sparql"
     volumes:
       - ./config/authorization:/config
+    restart: always
   triplestore:
     logging: *default-logging
     labels:
@@ -55,6 +57,7 @@ services:
     volumes:
       - ./data/db:/data
       - ./config/virtuoso/virtuoso.ini:/data/virtuoso.ini
+    restart: always
   migrations:
     logging: *default-logging
     labels:
@@ -65,6 +68,7 @@ services:
       - triplestore:database
     volumes:
       - ./config/migrations:/data/migrations
+    restart: always
   resource:
     logging: *default-logging
     labels:
@@ -75,12 +79,14 @@ services:
       - database:database
     volumes:
       - ./config/resources:/config
+    restart: always
   file:
     image: semtech/mu-file-service:3.3.2
     links:
       - database:database
     volumes:
       - ./data/files:/share
+    restart: always
   bpmn:
     logging: *default-logging
     labels:
@@ -88,3 +94,4 @@ services:
     image: lblod/bpmn-service
     volumes:
       - ./data/files:/share
+    restart: always
