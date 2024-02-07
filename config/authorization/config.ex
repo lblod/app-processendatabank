@@ -26,27 +26,27 @@ defmodule Acl.UserGroups.Config do
                   %GraphSpec {
                     graph: "http://mu.semte.ch/graphs/public",
                     constraint: %ResourceConstraint {
-                      resource_types: [ 
+                      resource_types: [
                         "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject",
-                        "https://www.teamingai-project.eg/BBOExtension#LaneSet",
-                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#SequenceFlow",
-                        "https://www.teamingai-project.eg/BBOExtension#Lane",
-                        "https://www.teamingai-project.eg/BBOExtension#DataObject",
-                        "https://www.teamingai-project.eg/BBOExtension#Collaboration",
-                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ManualTask",
-                        "https://www.teamingai-project.eg/BBOExtension#Participant",
-                        "https://www.teamingai-project.eg/BBOExtension#DataObjectReference",
+                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#BusinessRuleTask",
                         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#EndEvent",
                         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ExclusiveGateway",
-                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#BusinessRuleTask",
-                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#UserTask",
-                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#SendTask",
-                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ServiceTask",
+                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ManualTask",
+                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Process",
                         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ReceiveTask",
                         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ScriptTask",
-                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Task",
-                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Process",
+                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#SendTask",
+                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#SequenceFlow",
+                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ServiceTask",
                         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#StartEvent",
+                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Task",
+                        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#UserTask",
+                        "https://www.teamingai-project.eg/BBOExtension#Collaboration",
+                        "https://www.teamingai-project.eg/BBOExtension#DataObject",
+                        "https://www.teamingai-project.eg/BBOExtension#DataObjectReference",
+                        "https://www.teamingai-project.eg/BBOExtension#Lane",
+                        "https://www.teamingai-project.eg/BBOExtension#LaneSet",
+                        "https://www.teamingai-project.eg/BBOExtension#Participant",
                       ]
                     }
                   }
