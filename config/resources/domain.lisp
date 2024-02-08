@@ -159,6 +159,13 @@
   :resource-base (s-url "http://data.lblod.info/start-events/")
   :on-path "start-events")
 
+(define-resource subProcess (bpmnElement)
+  :class (s-prefix "bbo:SubProcess")
+  :properties `((:ramiLayer :uri ,(s-prefix "teamingAI:belongsToRAMILayer"))
+                (:view :uri ,(s-prefix "teamingAI:belongsToView")))
+  :resource-base (s-url "http://data.lblod.info/sub-processes/")
+  :on-path "sub-processes")
+
 (define-resource task (bpmnElement)
   :class (s-prefix "bbo:Task")
   :resource-base (s-url "http://data.lblod.info/tasks/")
