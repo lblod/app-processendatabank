@@ -13,15 +13,27 @@ defmodule Dispatcher do
 
   define_layers [ :api_services, :api, :frontend, :not_found ]
 
-  match "/bpmn-elements",  %{ accept: [:json], layer: :api} do
-    Proxy.forward conn, [], "http://resource/bpmn-elements"
+  get "/files/:id/download", %{ layer: :api_services } do
+    Proxy.forward conn, [], "http://file/files/" <> id <> "/download"
   end
 
-  match "/bpmn-elements/*path", %{ accept: [:json], layer: :api}  do
-    Proxy.forward conn, path, "http://resource/"
+  post "/files/*path", %{ layer: :api_services } do
+    Proxy.forward conn, path, "http://file/files/"
   end
 
-  match "/bpmn-files/*path",  %{ accept: [:any], layer: :api} do
+  delete "/files/*path", %{ accept: [ :json ], layer: :api_services } do
+    Proxy.forward conn, path, "http://file/files/"
+  end
+
+  get "/files/*path", %{ accept: [ :json ], layer: :api_services } do
+    Proxy.forward conn, path, "http://resource/files/"
+  end
+
+  match "/bpmn-elements",  %{ accept: [:json], layer: :api_services} do
+    Proxy.forward conn, [], "http://resource/bpmn-elements/"
+  end
+
+  match "/bpmn/*path",  %{ accept: [:any], layer: :api} do
     Proxy.forward conn, path, "http://bpmn/"
   end
 
