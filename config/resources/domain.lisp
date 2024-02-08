@@ -66,6 +66,11 @@
   :resource-base (s-url "http://data.lblod.info/error-event-defintions/")
   :on-path "error-event-defintions")
 
+(define-resource error (bpmnElement)
+  :class (s-prefix "bbo:Error")
+  :resource-base (s-url "http://data.lblod.info/errors/")
+  :on-path "errors")
+
 (define-resource manualTask (task)
   :class (s-prefix "bbo:ManualTask")
   :resource-base (s-url "http://data.lblod.info/manual-tasks/")
