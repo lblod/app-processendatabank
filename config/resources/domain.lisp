@@ -30,7 +30,8 @@
   :on-path "files")
 
 (define-resource bpmnElement ()
-  :properties `((:name :string ,(s-prefix "bbo:name")))
+  :properties `((:name :string ,(s-prefix "bbo:name"))
+                (:classification :uri ,(s-prefix "rdf:type")))
   :has-many `((process :via ,(s-prefix "teamingAI:belongsToProcess")
                        :as "processes"))
   :resource-base (s-url "http://data.lblod.info/bpmn-elements/")

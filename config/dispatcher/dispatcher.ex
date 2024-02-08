@@ -30,13 +30,8 @@ defmodule Dispatcher do
   end
 
   match "/bpmn-elements",  %{ accept: [:json], layer: :api_services} do
-    Proxy.forward conn, [], "http://resource/bpmn-elements"
+    Proxy.forward conn, [], "http://resource/bpmn-elements/"
   end
-
-  match "/bpmn-elements/*path",  %{ accept: [:json], layer: :api_services} do
-    Proxy.forward conn, path, "http://resource/"
-  end
-
 
   match "/bpmn/*path",  %{ accept: [:any], layer: :api} do
     Proxy.forward conn, path, "http://bpmn/"
