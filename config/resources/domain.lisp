@@ -120,6 +120,12 @@
   :resource-base (s-url "http://data.lblod.info/processes/")
   :on-path "processes")
 
+(define-resource property (bpmnElement)
+  :class (s-prefix "bbo:Property")
+  :properties `((:propertyElement :string ,(s-prefix "bbo:has_property_element")))
+  :resource-base (s-url "http://data.lblod.info/properties/")
+  :on-path "properties")
+
 (define-resource receiveTask (task)
   :class (s-prefix "bbo:ReceiveTask")
   :resource-base (s-url "http://data.lblod.info/receive-tasks/")
