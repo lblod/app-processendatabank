@@ -141,6 +141,13 @@
   :resource-base (s-url "http://data.lblod.info/send-tasks/")
   :on-path "send-tasks")
 
+(define-resource sequenceFlow (bpmnElement)
+  :class (s-prefix "bbo:SequenceFlow")
+  :properties `((:source :string ,(s-prefix "bbo:has_sourceRef"))
+                (:target :string ,(s-prefix "bbo:has_targetRef")))
+  :resource-base (s-url "http://data.lblod.info/sequence-flows/")
+  :on-path "sequence-flows")
+
 (define-resource serviceTask (task)
   :class (s-prefix "bbo:ServiceTask")
   :resource-base (s-url "http://data.lblod.info/service-tasks/")
