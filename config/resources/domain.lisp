@@ -42,6 +42,18 @@
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
 ;; -------------------------------------------------------------------------------------
 
+(define-resource process ()
+  :class (s-prefix "bbo:Process")
+  :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
+                    :as "derivations"))
+  :resource-base (s-url "http://data.lblod.info/processes/")
+  :on-path "processes")
+
+  (define-resource task (bpmnElement)
+  :class (s-prefix "bbo:Task")
+  :resource-base (s-url "http://data.lblod.info/tasks/")
+  :on-path "tasks")
+
 (define-resource boundaryEvent (bpmnElement)
   :class (s-prefix "bbo:BoundaryEvent")
   :properties `((:reference :string ,(s-prefix "bbo:attachedToRef"))
@@ -113,13 +125,6 @@
   :resource-base (s-url "http://data.lblod.info/parallel-gateways/")
   :on-path "parallel-gateways")
 
-(define-resource process ()
-  :class (s-prefix "bbo:Process")
-  :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
-                    :as "derivations"))
-  :resource-base (s-url "http://data.lblod.info/processes/")
-  :on-path "processes")
-
 (define-resource property (bpmnElement)
   :class (s-prefix "bbo:Property")
   :properties `((:propertyElement :string ,(s-prefix "bbo:has_property_element")))
@@ -165,11 +170,6 @@
                 (:view :uri ,(s-prefix "teamingAI:belongsToView")))
   :resource-base (s-url "http://data.lblod.info/sub-processes/")
   :on-path "sub-processes")
-
-(define-resource task (bpmnElement)
-  :class (s-prefix "bbo:Task")
-  :resource-base (s-url "http://data.lblod.info/tasks/")
-  :on-path "tasks")
 
 (define-resource userTask (task)
   :class (s-prefix "bbo:UserTask")
