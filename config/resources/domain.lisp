@@ -87,6 +87,14 @@
   :resource-base (s-url "http://data.lblod.info/inclusive-gateways/")
   :on-path "inclusive-gateways")
 
+(define-resource intermediateThrowEvent (bpmnElement)
+  :class (s-prefix "bbo:IntermediateThrowEvent")
+  :properties `((:eventDefinition :string ,(s-prefix "bbo:has_eventDefinition"))
+                (:outgoing :string ,(s-prefix "bbo:has_outgoing"))
+                (:incoming :string ,(s-prefix "bbo:has_incoming")))
+  :resource-base (s-url "http://data.lblod.info/intermediate-throw-events/")
+  :on-path "intermediate-throw-events")
+
 (define-resource manualTask (task)
   :class (s-prefix "bbo:ManualTask")
   :resource-base (s-url "http://data.lblod.info/manual-tasks/")
