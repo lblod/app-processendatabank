@@ -175,3 +175,80 @@
   :class (s-prefix "bbo:UserTask")
   :resource-base (s-url "http://data.lblod.info/user-tasks/")
   :on-path "user-tasks")
+
+;; -------------------------------------------------------------------------------------
+;; BBO Extension
+;; -------------------------------------------------------------------------------------
+
+(define-resource association (bpmnElement)
+  :class (s-prefix "bboExtension:Association")
+  :properties `((:source :string ,(s-prefix "bbo:has_sourceRef"))
+                (:target :string ,(s-prefix "bbo:has_targetRef")))
+  :resource-base (s-url "http://data.lblod.info/associations/")
+  :on-path "associations")
+
+(define-resource collaboration (bpmnElement)
+  :class (s-prefix "bboExtension:Collaboration")
+  :resource-base (s-url "http://data.lblod.info/collaborations/")
+  :on-path "collaborations")
+
+(define-resource dataInputAssociation (bpmnElement)
+  :class (s-prefix "bboExtension:DataInputAssociation")
+  :properties `((:source :string ,(s-prefix "bbo:has_sourceRef"))
+                (:target :string ,(s-prefix "bbo:has_targetRef"))
+                (:dataInputFor :string ,(s-prefix "bboExtension:is_dataInputFor")))
+  :resource-base (s-url "http://data.lblod.info/data-input-associations/")
+  :on-path "data-input-associations")
+
+(define-resource dataObject (bpmnElement)
+  :class (s-prefix "bboExtension:DataObject")
+  :resource-base (s-url "http://data.lblod.info/data-objects/")
+  :on-path "data-objects")
+
+(define-resource dataObjectReference (bpmnElement)
+  :class (s-prefix "bboExtension:DataObjectReference")
+  :properties `((:reference :string ,(s-prefix "bboExtension:dataObjectRef")))
+  :resource-base (s-url "http://data.lblod.info/data-object-references/")
+  :on-path "data-object-references")
+
+(define-resource dataOutputAssociation (bpmnElement)
+  :class (s-prefix "bboExtension:DataOutputAssociation")
+  :properties `((:target :string ,(s-prefix "bbo:has_targetRef"))
+                (:dataOutputFrom :string ,(s-prefix "bboExtension:is_dataOutputFrom")))
+  :resource-base (s-url "http://data.lblod.info/data-output-associations/")
+  :on-path "data-output-associations")
+
+(define-resource dataStoreReference (bpmnElement)
+  :class (s-prefix "bboExtension:DataStoreReference")
+  :resource-base (s-url "http://data.lblod.info/data-store-references/")
+  :on-path "data-store-references")
+
+(define-resource lane (bpmnElement)
+  :class (s-prefix "bboExtension:Lane")
+  :properties `((:activity :string ,(s-prefix "bbo:has_activity")))
+  :resource-base (s-url "http://data.lblod.info/lanes/")
+  :on-path "lanes")
+
+(define-resource laneSet (bpmnElement)
+  :class (s-prefix "bboExtension:LaneSet")
+  :resource-base (s-url "http://data.lblod.info/lane-sets/")
+  :on-path "lane-sets")
+
+(define-resource messageFlow (bpmnElement)
+  :class (s-prefix "bboExtension:MessageFlow")
+  :properties `((:source :string ,(s-prefix "bbo:has_sourceRef"))
+                (:target :string ,(s-prefix "bbo:has_targetRef")))
+  :resource-base (s-url "http://data.lblod.info/message-flows/")
+  :on-path "message-flows")
+
+(define-resource participant (bpmnElement)
+  :class (s-prefix "bboExtension:Participant")
+  :properties `((:process :string ,(s-prefix "bboExtension:processRef")))
+  :resource-base (s-url "http://data.lblod.info/participants/")
+  :on-path "participants")
+
+(define-resource textAnnotation (bpmnElement)
+  :class (s-prefix "bboExtension:TextAnnotation")
+  :properties `((:comment :string ,(s-prefix "rdfs:comment")))
+  :resource-base (s-url "http://data.lblod.info/text-annotations/")
+  :on-path "text-annotations")
