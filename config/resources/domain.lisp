@@ -55,6 +55,12 @@
   :resource-base (s-url "http://data.lblod.info/business-rule-tasks/")
   :on-path "business-rule-tasks")
 
+(define-resource endEvent (bpmnElement)
+  :class (s-prefix "bbo:EndEvent")
+  :properties `((:incoming :string ,(s-prefix "bbo:has_incoming")))
+  :resource-base (s-url "http://data.lblod.info/end-events/")
+  :on-path "end-events")
+
 (define-resource manualTask (task)
   :class (s-prefix "bbo:ManualTask")
   :resource-base (s-url "http://data.lblod.info/manual-tasks/")
