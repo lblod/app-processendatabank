@@ -100,6 +100,11 @@
   :resource-base (s-url "http://data.lblod.info/manual-tasks/")
   :on-path "manual-tasks")
 
+(define-resource messageEventDefinition (bpmnElement)
+  :class (s-prefix "bbo:MessageEventDefinition")
+  :resource-base (s-url "http://data.lblod.info/message-event-definitions/")
+  :on-path "message-event-definitions")
+
 (define-resource parallelGateway (bpmnElement)
   :class (s-prefix "bbo:ParallelGateway")
   :properties `((:defaultElement :string ,(s-prefix "bbo:has_defaultElement"))
