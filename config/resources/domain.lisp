@@ -153,6 +153,12 @@
   :resource-base (s-url "http://data.lblod.info/service-tasks/")
   :on-path "service-tasks")
 
+(define-resource startEvent (bpmnElement)
+  :class (s-prefix "bbo:StartEvent")
+  :properties `((:outgoing :string ,(s-prefix "bbo:has_outgoing")))
+  :resource-base (s-url "http://data.lblod.info/start-events/")
+  :on-path "start-events")
+
 (define-resource task (bpmnElement)
   :class (s-prefix "bbo:Task")
   :resource-base (s-url "http://data.lblod.info/tasks/")
