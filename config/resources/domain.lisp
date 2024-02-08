@@ -42,6 +42,15 @@
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
 ;; -------------------------------------------------------------------------------------
 
+(define-resource boundaryEvent (bpmnElement)
+  :class (s-prefix "bbo:BoundaryEvent")
+  :properties `((:name :string ,(s-prefix "bbo:attachedToRef"))
+                (:name :string ,(s-prefix "bbo:has_outgoing"))
+                (:name :string ,(s-prefix "bbo:has_eventDefinition")))
+  :resource-base (s-url "http://data.lblod.info/boundary-events/")
+  :on-path "boundary-events")
+
+
 (define-resource businessRuleTask (task)
   :class (s-prefix "bbo:BusinessRuleTask")
   :resource-base (s-url "http://data.lblod.info/business-rule-tasks/")
