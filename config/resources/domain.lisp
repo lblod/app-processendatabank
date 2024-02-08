@@ -42,20 +42,6 @@
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
 ;; -------------------------------------------------------------------------------------
 
-(define-resource process ()
-  :class (s-prefix "bbo:Process")
-  :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
-                    :as "derivations"))
-  :resource-base (s-url "http://data.lblod.info/processes/")
-  :on-path "processes")
-
-;; Tasks
-
-(define-resource task (bpmnElement)
-  :class (s-prefix "bbo:Task")
-  :resource-base (s-url "http://data.lblod.info/tasks/")
-  :on-path "tasks")
-
 (define-resource businessRuleTask (task)
   :class (s-prefix "bbo:BusinessRuleTask")
   :resource-base (s-url "http://data.lblod.info/business-rule-tasks/")
@@ -65,6 +51,13 @@
   :class (s-prefix "bbo:ManualTask")
   :resource-base (s-url "http://data.lblod.info/manual-tasks/")
   :on-path "manual-tasks")
+
+(define-resource process ()
+  :class (s-prefix "bbo:Process")
+  :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
+                    :as "derivations"))
+  :resource-base (s-url "http://data.lblod.info/processes/")
+  :on-path "processes")
 
 (define-resource receiveTask (task)
   :class (s-prefix "bbo:ReceiveTask")
@@ -85,6 +78,11 @@
   :class (s-prefix "bbo:ServiceTask")
   :resource-base (s-url "http://data.lblod.info/service-tasks/")
   :on-path "service-tasks")
+
+(define-resource task (bpmnElement)
+  :class (s-prefix "bbo:Task")
+  :resource-base (s-url "http://data.lblod.info/tasks/")
+  :on-path "tasks")
 
 (define-resource userTask (task)
   :class (s-prefix "bbo:UserTask")
