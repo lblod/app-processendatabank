@@ -44,12 +44,11 @@
 
 (define-resource boundaryEvent (bpmnElement)
   :class (s-prefix "bbo:BoundaryEvent")
-  :properties `((:name :string ,(s-prefix "bbo:attachedToRef"))
-                (:name :string ,(s-prefix "bbo:has_outgoing"))
-                (:name :string ,(s-prefix "bbo:has_eventDefinition")))
+  :properties `((:reference :string ,(s-prefix "bbo:attachedToRef"))
+                (:outgoing :string ,(s-prefix "bbo:has_outgoing"))
+                (:eventDefinition :string ,(s-prefix "bbo:has_eventDefinition")))
   :resource-base (s-url "http://data.lblod.info/boundary-events/")
   :on-path "boundary-events")
-
 
 (define-resource businessRuleTask (task)
   :class (s-prefix "bbo:BusinessRuleTask")
