@@ -22,6 +22,7 @@ services:
     logging: *default-logging
     environment:
       SESSION_COOKIE_SECURE: "on"
+      DEFAULT_MU_AUTH_ALLOWED_GROUPS_HEADER: '[{"variables":[],"name":"public"},{"variables":[],"name":"clean"}]'
     links:
       - dispatcher:dispatcher
     restart: always
@@ -39,7 +40,6 @@ services:
     logging: *default-logging
     labels:
       - "logging=true"
-
     image: semtech/mu-authorization:0.6.0-beta.5
     environment:
       MU_SPARQL_ENDPOINT: "http://triplestore:8890/sparql"
@@ -53,7 +53,7 @@ services:
     image: redpencil/virtuoso:1.2.0-rc.1
     environment:
       SPARQL_UPDATE: "true"
-      DEFAULT_GRAPH: "http://mu.semte.ch/graphs/public" #"http://mu.semte.ch/application"
+      DEFAULT_GRAPH: "http://mu.semte.ch/application"
     volumes:
       - ./data/db:/data
       - ./config/virtuoso/virtuoso.ini:/data/virtuoso.ini
