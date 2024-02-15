@@ -1,0 +1,18 @@
+PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+
+INSERT DATA {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    <http://data.lblod.info/id/bestuurseenheden/b1d6b706-3ac7-4bd4-9ae9-b1f8d9e1dcfe> a besluit:Bestuurseenheid ;
+       mu:uuid "b1d6b706-3ac7-4bd4-9ae9-b1f8d9e1dcfe" ;
+       skos:prefLabel "Antwerpen" ;
+       dcterms:identifier "OVO000001" .
+    
+    <http://data.lblod.info/id/bestuurseenheden/b02bde57-3f6b-42e9-a7ce-9d975cba8cc9> a besluit:Bestuurseenheid ;
+       mu:uuid "b02bde57-3f6b-42e9-a7ce-9d975cba8cc9" ;
+       skos:prefLabel "Leuven" ;
+       dcterms:identifier "OVO000002" .
+  }
+}
