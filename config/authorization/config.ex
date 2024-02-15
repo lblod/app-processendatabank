@@ -9,6 +9,13 @@ alias Acl.GroupSpec, as: GroupSpec
 alias Acl.GroupSpec.GraphCleanup, as: GraphCleanup
 
 defmodule Acl.UserGroups.Config do
+  @public_type [
+    "http://www.w3.org/ns/org#Role",
+    "http://data.vlaanderen.be/ns/besluit#Bestuurseenheid",
+    "http://xmlns.com/foaf/0.1/Person",
+    "http://xmlns.com/foaf/0.1/OnlineAccount"
+  ]
+
   @bpmn_element_type [
     "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Activity",
     "https://www.irit.fr/recherches/MELODI/ontologies/BBO#BoundaryEvent",
@@ -111,7 +118,7 @@ defmodule Acl.UserGroups.Config do
           %GraphSpec {
             graph: "http://mu.semte.ch/graphs/public",
             constraint: %ResourceConstraint {
-              resource_types: []
+              resource_types: @public_type
             }
           },
           %GraphSpec {
