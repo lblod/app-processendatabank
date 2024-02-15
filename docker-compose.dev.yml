@@ -7,3 +7,8 @@ services:
   triplestore:
     ports:
       - "8890:8890"
+  mock-login:
+    image: lblod/mock-login-service:latest
+    links:
+      - database:database
+    restart: "no"
