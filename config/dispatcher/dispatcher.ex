@@ -45,6 +45,18 @@ defmodule Dispatcher do
   # login
   ###############################################################
 
+  match "/accounts", %{ accept: [:json], layer: :api} do
+    Proxy.forward conn, [], "http://resource/accounts/"
+  end
+
+  match "/accounts/*path", %{ accept: [:json], layer: :api} do
+    Proxy.forward conn, path, "http://accountdetail/accounts/"
+  end
+
+  match "/groups/*path", %{ accept: [:json], layer: :api} do
+    Proxy.forward conn, path, "http://resource/groups/"
+  end
+
   match "/mock/sessions/*path", %{ accept: [:any], layer: :api} do
     Proxy.forward conn, path, "http://mock-login/sessions/"
   end

@@ -93,3 +93,11 @@ services:
     volumes:
       - ./data/files:/share
     restart: always
+  accountdetail:
+    image: lblod/account-detail-service:0.1.0
+    labels:
+      - "logging=true"
+    links:
+      - database:database
+    restart: always
+    logging: *default-logging
