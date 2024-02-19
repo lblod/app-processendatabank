@@ -1,0 +1,33 @@
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX mu:<http://mu.semte.ch/vocabularies/core/>
+PREFIX ext:<http://mu.semte.ch/vocabularies/ext/>
+
+INSERT DATA {
+  GRAPH <http://mu.semte.ch/graphs/organizations/b1d6b706-3ac7-4bd4-9ae9-b1f8d9e1dcfe> {
+    <http://data.lblod.info/id/persoon/1fb08ec8-bb32-4c21-9e7b-4f2d9bf5a7c0> a foaf:Person ;
+      mu:uuid "1fb08ec8-bb32-4c21-9e7b-4f2d9bf5a7c0" ;
+      foaf:firstName "MockGebruiker" ;
+      foaf:familyName "Antwerpen" ;
+      foaf:member <http://data.lblod.info/id/bestuurseenheden/b1d6b706-3ac7-4bd4-9ae9-b1f8d9e1dcfe> ;
+      foaf:account <http://data.lblod.info/id/account/85449a54-2f24-4f0f-9ff0-9c1042640fbb> .
+    <http://data.lblod.info/id/account/85449a54-2f24-4f0f-9ff0-9c1042640fbb> a foaf:OnlineAccount ;
+      mu:uuid "85449a54-2f24-4f0f-9ff0-9c1042640fbb" ;
+      foaf:accountServiceHomepage <https://github.com/lblod/mock-login-service>;
+      ext:sessionRole "ABBOpenProcesHuisAntwerp-editor".
+  }
+
+  GRAPH <http://mu.semte.ch/graphs/organizations/b02bde57-3f6b-42e9-a7ce-9d975cba8cc9> {
+    <http://data.lblod.info/id/persoon/157a7496-e3af-46bb-89e4-625a07b8e6c0> a foaf:Person ;
+      mu:uuid "157a7496-e3af-46bb-89e4-625a07b8e6c0" ;
+      foaf:firstName "MockGebruiker" ;
+      foaf:familyName "Leuven" ;
+      foaf:member <http://data.lblod.info/id/bestuurseenheden/b02bde57-3f6b-42e9-a7ce-9d975cba8cc9> ;
+      foaf:account <http://data.lblod.info/id/account/145e6935-bceb-4d16-91af-0d096d49814b> .
+    <http://data.lblod.info/id/account/145e6935-bceb-4d16-91af-0d096d49814b> a foaf:OnlineAccount ;
+      mu:uuid "145e6935-bceb-4d16-91af-0d096d49814b" ;
+      foaf:accountServiceHomepage <https://github.com/lblod/mock-login-service>;
+      ext:sessionRole "ABBOpenProcesHuisLeuven-editor".
+  }
+}
