@@ -74,7 +74,7 @@ defmodule Acl.UserGroups.Config do
     PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
     SELECT distinct ?session_group ?session_role WHERE {
       <SESSION_ID> ext:sessionGroup/mu:uuid ?session_group;
-                   ext:activeSessionRole ?session_role.
+                   ext:sessionRole ?session_role.
       FILTER( ?session_role = \"#{group_string}\" )
     }"
   end
