@@ -13,6 +13,18 @@ defmodule Dispatcher do
 
   define_layers [ :api_services, :api, :frontend, :not_found ]
 
+  match "/bpmn-elements",  %{ accept: [:json], layer: :api } do
+    Proxy.forward conn, [], "http://resource/bpmn-elements/"
+  end
+
+  post "/bpmn",  %{ accept: [:any], layer: :api } do
+    Proxy.forward conn, [], "http://bpmn/"
+  end
+
+  ###############################################################
+  # files
+  ###############################################################
+
   get "/files/:id/download", %{ layer: :api_services } do
     Proxy.forward conn, [], "http://file/files/" <> id <> "/download"
   end
@@ -29,16 +41,28 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://resource/files/"
   end
 
-  match "/bpmn-elements",  %{ accept: [:json], layer: :api_services} do
-    Proxy.forward conn, [], "http://resource/bpmn-elements/"
+  ###############################################################
+  # login
+  ###############################################################
+
+  match "/accounts", %{ accept: [:json], layer: :api} do
+    Proxy.forward conn, [], "http://resource/accounts/"
   end
 
-  match "/bpmn/*path",  %{ accept: [:any], layer: :api} do
-    Proxy.forward conn, path, "http://bpmn/"
+  match "/accounts/*path", %{ accept: [:json], layer: :api} do
+    Proxy.forward conn, path, "http://accountdetail/accounts/"
+  end
+
+  match "/groups/*path", %{ accept: [:json], layer: :api} do
+    Proxy.forward conn, path, "http://resource/groups/"
+  end
+
+  match "/mock/sessions/*path", %{ accept: [:any], layer: :api} do
+    Proxy.forward conn, path, "http://mock-login/sessions/"
   end
 
   ###############################################################
-  # frontend layer
+  # frontend
   ###############################################################
 
   match "/assets/*path", %{ layer: :api } do
@@ -57,7 +81,11 @@ defmodule Dispatcher do
     Proxy.forward conn, [], "http://frontend/index.html"
   end
 
-  match "/*_", %{ layer: :not_found } do
-    send_resp( conn, 404, "Route not found.  See config/dispatcher.ex" )
+  ###############################################################
+  # errors
+  ###############################################################
+
+  match "/*_path", %{ accept: [:any], layer: :not_found} do
+    send_resp( conn, 404, "{\"error\": {\"code\": 404}")
   end
 end

@@ -1,8 +1,3 @@
-;;;;
-;; NOTE
-;; docker-compose stop; docker-compose rm; docker-compose up
-;; after altering this file.
-
 (in-package :mu-cl-resources)
 
 (setf *include-count-in-paginated-responses* t)
@@ -11,6 +6,8 @@
 (setf *cache-model-properties-p* t)
 
 (defparameter *default-page-size* 20)
+
+(read-domain-file "auth.json")
 
 ;; -------------------------------------------------------------------------------------
 
