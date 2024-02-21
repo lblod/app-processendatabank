@@ -1,11 +1,13 @@
 (in-package :mu-cl-resources)
 
-(setf *include-count-in-paginated-responses* t)
-(setf *supply-cache-headers-p* t)
-(setf sparql:*experimental-no-application-graph-for-sudo-select-queries* t)
-(setf *cache-model-properties-p* t)
-
+(defparameter *include-count-in-paginated-responses* t)
+(defparameter sparql:*experimental-no-application-graph-for-sudo-select-queries* t)
 (defparameter *default-page-size* 20)
+
+; Caching
+(defparameter *cache-model-properties* t)
+(defparameter *cache-count-queries* t)
+(defparameter *supply-cache-headers-p* t)
 
 (read-domain-file "auth.json")
 
@@ -46,7 +48,7 @@
   :resource-base (s-url "http://data.lblod.info/processes/")
   :on-path "processes")
 
-  (define-resource task (bpmnElement)
+(define-resource task (bpmnElement)
   :class (s-prefix "bbo:Task")
   :resource-base (s-url "http://data.lblod.info/tasks/")
   :on-path "tasks")
