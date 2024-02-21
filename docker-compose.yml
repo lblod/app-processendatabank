@@ -82,6 +82,9 @@ services:
     restart: always
   cache:
     image: semtech/mu-cache
+    environment:
+      LOG_CACHE_KEYS: "true"
+      LOG_CLEAR_KEYS: "true"
     links:
       - resource:backend
     labels:
