@@ -78,6 +78,14 @@ services:
     volumes:
       - ./config/resources:/config
     restart: always
+  deltanotifier:
+    image: semtech/mu-delta-notifier
+    volumes:
+      - ./config/delta:/config
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
   file:
     image: semtech/mu-file-service:3.3.2
     links:
