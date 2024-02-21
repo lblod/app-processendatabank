@@ -73,11 +73,21 @@ services:
     labels:
       - "logging=true"
     image: semtech/mu-cl-resources:1.22.2
+    environment:
+      CACHE_CLEAR_PATH: "http://cache/.mu/clear-keys"
     links:
       - database:database
     volumes:
       - ./config/resources:/config
     restart: always
+  cache:
+    image: semtech/mu-cache
+    links:
+      - resource:backend
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
   deltanotifier:
     image: semtech/mu-delta-notifier
     volumes:
