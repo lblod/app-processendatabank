@@ -38,7 +38,7 @@ defmodule Dispatcher do
   end
 
   get "/files/*path", %{ accept: [ :json ], layer: :api_services } do
-    Proxy.forward conn, path, "http://resource/files/"
+    Proxy.forward conn, path, "http://cache/files/"
   end
 
   ###############################################################
@@ -46,7 +46,7 @@ defmodule Dispatcher do
   ###############################################################
 
   match "/accounts", %{ accept: [:json], layer: :api} do
-    Proxy.forward conn, [], "http://resource/accounts/"
+    Proxy.forward conn, [], "http://cache/accounts/"
   end
 
   match "/accounts/*path", %{ accept: [:json], layer: :api} do
@@ -54,7 +54,7 @@ defmodule Dispatcher do
   end
 
   match "/groups/*path", %{ accept: [:json], layer: :api} do
-    Proxy.forward conn, path, "http://resource/groups/"
+    Proxy.forward conn, path, "http://cache/groups/"
   end
 
   match "/mock/sessions/*path", %{ accept: [:any], layer: :api} do
