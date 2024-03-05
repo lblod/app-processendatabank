@@ -30,6 +30,16 @@
         "variables": [],
         "name": "public"
       }
+    ],
+    [
+      {
+        "variables": [],
+        "name": "clean"
+      },
+      {
+        "variables": [],
+        "name": "public"
+      }
     ]
   ],
   "default_settings": {
@@ -98,7 +108,25 @@
         ],
         "classification": [
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
-        ]
+        ],
+        "processes": {
+          "via": "https://www.teamingai-project.eu/belongsToProcess",
+          "rdf_type": "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Process",
+          "properties": {
+            "name": [
+              "http://www.w3.org/ns/prov#wasDerivedFrom",
+              "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName"
+            ],
+            "created": [
+              "http://www.w3.org/ns/prov#wasDerivedFrom",
+              "http://purl.org/dc/terms/created"
+            ],
+            "modified": [
+              "http://www.w3.org/ns/prov#wasDerivedFrom",
+              "http://purl.org/dc/terms/modified"
+            ]
+          }
+        }
       },
       "mappings": {
         "properties": {
@@ -119,6 +147,21 @@
                 "normalizer": "custom_sort_normalizer"
               }
             }
+          },
+          "processes.name": {
+            "type": "text",
+            "fields": {
+              "field": {
+                "type": "keyword",
+                "normalizer": "custom_sort_normalizer"
+              }
+            }
+          },
+          "processes.created": {
+            "type": "date"
+          },
+          "processes.modified": {
+            "type": "date"
           }
         }
       }
