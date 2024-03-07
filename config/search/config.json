@@ -124,6 +124,11 @@
             "modified": [
               "http://www.w3.org/ns/prov#wasDerivedFrom",
               "http://purl.org/dc/terms/modified"
+            ],
+            "fileId": [
+              "http://www.w3.org/ns/prov#wasDerivedFrom",
+              "^http://www.semanticdesktop.org/ontologies/2007/01/19/nie#dataSource",
+              "http://mu.semte.ch/vocabularies/core/uuid"
             ]
           }
         }
@@ -131,6 +136,15 @@
       "mappings": {
         "properties": {
           "name": {
+            "type": "text",
+            "fields": {
+              "field": {
+                "type": "keyword",
+                "normalizer": "custom_sort_normalizer"
+              }
+            }
+          },
+          "fileId": {
             "type": "text",
             "fields": {
               "field": {
