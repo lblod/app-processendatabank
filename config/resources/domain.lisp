@@ -24,7 +24,9 @@
                 (:modified :datetime ,(s-prefix "dct:modified")))
   :has-one `((file :via ,(s-prefix "nie:dataSource")
                    :inverse t
-                   :as "download"))
+                   :as "download")
+             (group :via ,(s-prefix "schema:publisher")
+                    :as "group"))
   :resource-base (s-url "http://data.lblod.info/files/")
   :features `(include-uri)
   :on-path "files")
