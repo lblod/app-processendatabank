@@ -26,7 +26,7 @@
                    :inverse t
                    :as "download")
              (group :via ,(s-prefix "schema:publisher")
-                    :as "group"))
+                    :as "publisher"))
   :resource-base (s-url "http://data.lblod.info/files/")
   :features `(include-uri)
   :on-path "files")
