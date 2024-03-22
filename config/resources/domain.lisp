@@ -21,7 +21,8 @@
                 (:size :number ,(s-prefix "nfo:fileSize"))
                 (:extension :string ,(s-prefix "dbpedia:fileExtension"))
                 (:created :datetime ,(s-prefix "dct:created"))
-                (:modified :datetime ,(s-prefix "dct:modified")))
+                (:modified :datetime ,(s-prefix "dct:modified"))
+                (:archived :boolean ,(s-prefix "ext:isArchived")))
   :has-one `((file :via ,(s-prefix "nie:dataSource")
                    :inverse t
                    :as "download")
