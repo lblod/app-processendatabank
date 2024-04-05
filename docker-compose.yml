@@ -97,7 +97,7 @@ services:
     restart: always
     logging: *default-logging
   file:
-    image: semtech/mu-file-service:3.3.2
+    image: semtech/mu-file-service:feature-validate-readable-metadata
     labels:
       - "logging=true"
     logging: *default-logging
@@ -105,6 +105,8 @@ services:
       - database:database
     volumes:
       - ./data/files:/share
+    environment:
+      VALIDATE_READABLE_METADATA: "true"
     restart: always
   bpmn:
     logging: *default-logging
