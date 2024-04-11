@@ -1,0 +1,87 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://lblod.data.gift/concepts/00cbc3c9-b2a8-4474-bbe9-c3a977f3feaf>
+  rdf:type skos:Concept ;
+  skos:prefLabel "association"@en ;
+  skos:prefLabel "associatie"@nl ;
+  skos:hiddenLabel "association"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/ff8338d3-c491-413c-aae3-2a57dc3f75f5>
+  rdf:type skos:Concept ;
+  skos:prefLabel "collaboration"@en ;
+  skos:prefLabel "samenwerking"@nl ;
+  skos:hiddenLabel "collaboration"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/7a53a259-0e26-4688-8137-be50458264ec>
+  rdf:type skos:Concept ;
+  skos:prefLabel "data input association"@en ;
+  skos:prefLabel "data-inputassociatie"@nl ;
+  skos:hiddenLabel "data-input-association"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/3e0a146b-b483-40e7-a901-3144d5be2ee2>
+  rdf:type skos:Concept ;
+  skos:prefLabel "data object"@en ;
+  skos:prefLabel "dataobject"@nl ;
+  skos:hiddenLabel "data-object"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/ad8ee890-12a8-4a8a-bb23-10b3b2403df0>
+  rdf:type skos:Concept ;
+  skos:prefLabel "data object reference"@en ;
+  skos:prefLabel "dataobjectreferentie"@nl ;
+  skos:hiddenLabel "data-object-reference"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/63da1337-6cd7-441c-a5c1-940f2fbd0f34>
+  rdf:type skos:Concept ;
+  skos:prefLabel "data output association"@en ;
+  skos:prefLabel "dataoutputassociatie"@nl ;
+  skos:hiddenLabel "data-output-assocation"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/b5de5008-7aeb-41c5-a2f2-26f1d4ca6d49>
+  rdf:type skos:Concept ;
+  skos:prefLabel "data store reference"@en ;
+  skos:prefLabel "dataopslagreferentie"@nl ;
+  skos:hiddenLabel "data-store-reference"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/003fb962-c26b-468d-9baa-7a03d84c9322>
+  rdf:type skos:Concept ;
+  skos:prefLabel "lane"@en ;
+  skos:prefLabel "baan"@nl ;
+  skos:hiddenLabel "lane"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/73c4071b-a618-49df-8119-573a1e21e652>
+  rdf:type skos:Concept ;
+  skos:prefLabel "lane set"@en ;
+  skos:prefLabel "baanset"@nl ;
+  skos:hiddenLabel "lane-set"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/28b6c81b-e493-4dc4-b700-d062cc08e86a>
+  rdf:type skos:Concept ;
+  skos:prefLabel "message flow"@en ;
+  skos:prefLabel "berichtenstroom"@nl ;
+  skos:hiddenLabel "message-flow"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/9a54f457-bfc3-46ba-93db-560eaaa183d3>
+  rdf:type skos:Concept ;
+  skos:prefLabel "participant"@en ;
+  skos:prefLabel "deelnemer"@nl ;
+  skos:hiddenLabel "participant"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
+<http://lblod.data.gift/concepts/05dfacae-2772-458f-a54e-b996b0499501>
+  rdf:type skos:Concept ;
+  skos:prefLabel "text annotation"@en ;
+  skos:prefLabel "tekstannotatie"@nl ;
+  skos:hiddenLabel "text-annotation"@en ;
+  skos:topConceptOf <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> ;
+  skos:inScheme <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e> .
