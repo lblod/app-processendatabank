@@ -17,3 +17,5 @@
 (add-prefix "dbpedia" "http://dbpedia.org/ontology/")
 (add-prefix "prov" "http://www.w3.org/ns/prov#")
 (add-prefix "schema" "https://schema.org/")
+(add-prefix "skos" "http://www.w3.org/2004/02/skos/core#")
+(add-prefix "org" "http://www.w3.org/ns/org#")
