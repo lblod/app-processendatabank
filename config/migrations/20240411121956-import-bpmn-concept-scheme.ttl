@@ -1,6 +1,8 @@
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 <http://lblod.data.gift/concept-schemes/d4259f0b-6d6e-4a46-b9e1-114b774e0f1e>
+  mu:uuid "d4259f0b-6d6e-4a46-b9e1-114b774e0f1e" ;
   rdf:type skos:ConceptScheme ;
   skos:prefLabel "BPMN element type"@en .
