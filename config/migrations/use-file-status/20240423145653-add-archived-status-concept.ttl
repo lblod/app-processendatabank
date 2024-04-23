@@ -1,0 +1,14 @@
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://lblod.data.gift/concept-schemes/cb0a8d0d-450e-4506-b9bf-d704e045d905>
+    mu:uuid "cb0a8d0d-450e-4506-b9bf-d704e045d905" ;
+    rdf:type skos:ConceptScheme ;
+    skos:prefLabel "The statuses of an lpdc conceptual service instance" .
+<http://lblod.data.gift/concepts/concept-status/gearchiveerd>
+    mu:uuid "658b1835-29ec-4ea9-95ae-aaf1202ff9c8" ;
+    rdf:type skos:Concept ;
+    skos:prefLabel "Conceptual service instance was archived"@nl ;
+    skos:inScheme <http://lblod.data.gift/concept-schemes/cb0a8d0d-450e-4506-b9bf-d704e045d905>;
+    skos:topConceptOf <http://lblod.data.gift/concept-schemes/cb0a8d0d-450e-4506-b9bf-d704e045d905> .
