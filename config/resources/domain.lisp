@@ -22,7 +22,7 @@
                 (:extension :string ,(s-prefix "dbpedia:fileExtension"))
                 (:created :datetime ,(s-prefix "dct:created"))
                 (:modified :datetime ,(s-prefix "dct:modified"))
-                (:archived :boolean ,(s-prefix "ext:isArchived")))
+                (:status :url ,(s-prefix "adms:status")))
   :has-one `((file :via ,(s-prefix "nie:dataSource")
                    :inverse t
                    :as "download")
