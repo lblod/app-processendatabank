@@ -128,7 +128,7 @@ services:
   # MU SEARCH
   ################################################################################
   search:
-    image: semtech/mu-search:0.9.1
+    image: nbittich/mu-search:experimental-dense-vector
     links:
       - database:database
     restart: always
@@ -137,13 +137,22 @@ services:
     logging: *default-logging
     volumes:
       - ./config/search:/config
+  hq:
+    image: elastichq/elasticsearch-hq
+    ports:
+      - 5000:5000
   elasticsearch:
+    ports:
+      - 9200:9200
     labels:
       - "logging=true"
     logging: *default-logging
-    image: semtech/mu-search-elastic-backend:1.0.1
-    volumes:
-      - ./data/elasticsearch/:/usr/share/elasticsearch/data
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.0
+    # volumes:
+    #   - ./data/elasticsearch/:/usr/share/elasticsearch/data
     environment:
-      - discovery.type=single-node
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx4096m"
+      - "xpack.security.enabled=false"
+      - "xpack.security.enrollment.enabled=false"
     restart: always

@@ -2,6 +2,7 @@
   "automatic_index_updates": true,
   "persist_indexes": true,
   "number_of_threads": 4,
+  "enable_raw_dsl_endpoint": true,
   "eager_indexing_groups": [
     [
       {
@@ -176,6 +177,31 @@
           },
           "processes.modified": {
             "type": "date"
+          }
+        }
+      }
+    },
+    {
+      "type": "dense-vector-example",
+      "on_path": "dense-vector-examples",
+      "rdf_type": "http://bittich.be/DenseVector",
+      "properties": {
+        "price": "http://bittich.be/price",
+        "title_vector": {
+          "via": "http://bittich.be/vector",
+          "dense_vector": true
+        }
+      },
+      "mappings": {
+        "properties": {
+          "price": {
+            "type": "integer"
+          },
+          "title_vector": {
+            "type": "dense_vector",
+            "dims": 3,
+            "index": true,
+            "similarity": "cosine"
           }
         }
       }
