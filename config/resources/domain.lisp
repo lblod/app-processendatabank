@@ -36,7 +36,7 @@
   :properties `((:name :string ,(s-prefix "bbo:name")))
   :has-many `((process :via ,(s-prefix "teamingAI:belongsToProcess")
                        :as "processes"))
-  :has-one `((bpmnElementType :via ,(s-prefix "org:classification")
+  :has-one `((bpmnElementType :via ,(s-prefix "dct:type")
                               :as "type"))
   :resource-base (s-url "http://data.lblod.info/bpmn-elements/")
   :on-path "bpmn-elements")

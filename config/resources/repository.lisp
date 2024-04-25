@@ -3,7 +3,7 @@
 (add-prefix "ext" "http://mu.semte.ch/vocabularies/ext/")
 (add-prefix "bbo" "https://www.irit.fr/recherches/MELODI/ontologies/BBO#")
 (add-prefix "bboExtension" "https://www.teamingai-project.eg/BBOExtension#")
-(add-prefix "dc" "http://purl.org/dc/elements/1.1/")
+(add-prefix "dct" "http://purl.org/dc/terms/")
 (add-prefix "ql" "http://semweb.mmlab.be/ns/ql#")
 (add-prefix "rami" "https://w3id.org/i40/rami#")
 (add-prefix "rdfs" "http://www.w3.org/2000/01/rdf-schema#")
@@ -18,4 +18,3 @@
 (add-prefix "prov" "http://www.w3.org/ns/prov#")
 (add-prefix "schema" "https://schema.org/")
 (add-prefix "skos" "http://www.w3.org/2004/02/skos/core#")
-(add-prefix "org" "http://www.w3.org/ns/org#")
