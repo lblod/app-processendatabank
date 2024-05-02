@@ -22,7 +22,7 @@
                 (:extension :string ,(s-prefix "dbpedia:fileExtension"))
                 (:created :datetime ,(s-prefix "dct:created"))
                 (:modified :datetime ,(s-prefix "dct:modified"))
-                (:archived :boolean ,(s-prefix "ext:isArchived")))
+                (:status :url ,(s-prefix "adms:status")))
   :has-one `((file :via ,(s-prefix "nie:dataSource")
                    :inverse t
                    :as "download")
@@ -33,13 +33,20 @@
   :on-path "files")
 
 (define-resource bpmnElement ()
-  :properties `((:name :string ,(s-prefix "bbo:name"))
-                (:classification :uri ,(s-prefix "rdf:type")))
+  :properties `((:name :string ,(s-prefix "bbo:name")))
   :has-many `((process :via ,(s-prefix "teamingAI:belongsToProcess")
                        :as "processes"))
+  :has-one `((bpmnElementType :via ,(s-prefix "dct:type")
+                              :as "type"))
   :resource-base (s-url "http://data.lblod.info/bpmn-elements/")
-
   :on-path "bpmn-elements")
+
+(define-resource bpmnElementType ()
+  :class (s-prefix "skos:Concept")
+  :properties `((:label :language-string ,(s-prefix "skos:prefLabel"))
+                (:key :language-string ,(s-prefix "skos:hiddenLabel")))
+  :resource-base (s-url "http://lblod.data.gift/concepts/")
+  :on-path "bpmn-element-types")
 
 ;; -------------------------------------------------------------------------------------
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
