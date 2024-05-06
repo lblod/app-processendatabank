@@ -14,7 +14,14 @@ defmodule Acl.UserGroups.Config do
     "http://data.vlaanderen.be/ns/besluit#Bestuurseenheid",
     "http://xmlns.com/foaf/0.1/Person",
     "http://xmlns.com/foaf/0.1/OnlineAccount",
-    "http://www.w3.org/2004/02/skos/core#Concept"
+    "http://www.w3.org/2004/02/skos/core#Concept",
+    "http://www.w3.org/ns/org#Organization",
+    "http://lblod.data.gift/vocabularies/organisatie/TypeVestiging",
+    "http://lblod.data.gift/vocabularies/organisatie/BestuurseenheidClassificatieCode",
+    "http://lblod.data.gift/vocabularies/organisatie/OrganisatieStatusCode",
+    "http://www.w3.org/2004/02/skos/core#ConceptScheme",
+    "http://publications.europa.eu/ontology/euvoc#Country",
+    "http://www.w3.org/ns/prov#Location",
   ]
 
   @bpmn_element_type [
