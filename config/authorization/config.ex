@@ -69,53 +69,49 @@ defmodule Acl.UserGroups.Config do
   @file_type [
     "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject"
   ]
-
-  defp access_by_role(group_string) do
-    %AccessByQuery {
+    defp is_authenticated() do
+    %AccessByQuery{
       vars: [],
-      query: sparql_query_for_access_role(group_string)
-    }
+      query: "PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
+        PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
+        SELECT DISTINCT ?session_group ?session_role WHERE {
+          <SESSION_ID> ext:sessionGroup/mu:uuid ?session_group;
+                       ext:sessionRole ?session_role.
+        }"
+      }
   end
-
-  defp sparql_query_for_access_role(group_string) do
-    "PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
-    PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
-    SELECT distinct ?session_group ?session_role WHERE {
-      <SESSION_ID> ext:sessionGroup/mu:uuid ?session_group;
-                   ext:sessionRole ?session_role.
-      FILTER( ?session_role = \"#{group_string}\" )
-    }"
-  end
-
   def user_groups do
     [
-      %GroupSpec {
-        name: "antwerp-editor",
-        useage: [:read, :write, :read_for_write],
-        access: access_by_role("ABBOpenProcesHuisAntwerp-editor"),
+      
+      # shared data
+      %GroupSpec{
+        name: "shared",
+        useage: [:write, :read_for_write],
+        access: is_authenticated(),
         graphs: [
-          %GraphSpec {
-            graph: "http://mu.semte.ch/graphs/antwerpen",
-            constraint: %ResourceConstraint {
-              resource_types: @bpmn_element_type ++ @file_type
-            }
-          }
-        ]
-      },
+                  %GraphSpec{
+                    graph: "http://mu.semte.ch/graphs/shared",
+                    constraint: %ResourceConstraint{
+                      resource_types: @bpmn_element_type ++ @file_type } },
+                      ] },
+        # // ORGANIZATION DATA
+      %GroupSpec{
+        name: "org",
+        useage: [:read, :write, :read_for_write],
+        access: %AccessByQuery{
+          vars: ["session_group"],
+          query: "PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
+                  PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
+                  SELECT DISTINCT ?session_group WHERE {
+                    <SESSION_ID> ext:sessionGroup/mu:uuid ?session_group;
+                                 ext:sessionRole \"LoketLB-ContactOrganisatiegegevensGebruiker\".
+                    }" },
+        graphs: [ %GraphSpec{
+                    graph: "http://mu.semte.ch/graphs/organizations/",
+                    constraint: %ResourceConstraint{
+                      resource_types: @bpmn_element_type ++ @file_type } },
+                      ] },
 
-      %GroupSpec {
-        name: "leuven-editor",
-        useage: [:read, :write, :read_for_write],
-        access: access_by_role("ABBOpenProcesHuisLeuven-editor"),
-        graphs: [
-          %GraphSpec {
-            graph: "http://mu.semte.ch/graphs/leuven",
-            constraint: %ResourceConstraint {
-              resource_types: @bpmn_element_type ++ @file_type
-            }
-          }
-        ]
-      },
 
       # // PUBLIC
       %GroupSpec {
@@ -126,17 +122,12 @@ defmodule Acl.UserGroups.Config do
           %GraphSpec {
             graph: "http://mu.semte.ch/graphs/public",
             constraint: %ResourceConstraint {
-              resource_types: @public_type
+              resource_types: @public_type ++ @bpmn_element_type ++ @file_type
             }
           },
+          
           %GraphSpec {
-            graph: "http://mu.semte.ch/graphs/antwerpen",
-            constraint: %ResourceConstraint {
-              resource_types: @bpmn_element_type ++ @file_type
-            }
-          },
-          %GraphSpec {
-            graph: "http://mu.semte.ch/graphs/leuven",
+            graph: "http://mu.semte.ch/graphs/shared",
             constraint: %ResourceConstraint {
               resource_types: @bpmn_element_type ++ @file_type
             }
