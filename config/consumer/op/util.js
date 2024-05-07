@@ -103,7 +103,7 @@ async function insertIntoPublicGraph(lib, statements) {
 
 async function insertIntoSpecificGraphs(lib, statementsWithGraphs) {
 
-  for( let graph in statementsWithGraphs) {
+  for (let graph in statementsWithGraphs) {
     console.log(`Inserting ${statementsWithGraphs[graph].length} statements into ${graph} graph`);
     await batchedDbUpdate(
       lib.muAuthSudo.updateSudo,
@@ -117,7 +117,7 @@ async function insertIntoSpecificGraphs(lib, statementsWithGraphs) {
       SLEEP_TIME_AFTER_FAILED_DB_OPERATION,
       'INSERT');
   }
-  
+
 }
 
 async function deleteFromPublicGraph(lib, statements) {
@@ -137,9 +137,9 @@ async function deleteFromPublicGraph(lib, statements) {
 }
 
 async function deleteFromSpecificGraphs(lib, statementsWithGraphs) {
-  
 
-  for( let graph in statementsWithGraphs) {
+
+  for (let graph in statementsWithGraphs) {
     console.log(`Deleting ${statementsWithGraphs[graph].length} statements from ${graph} graph`);
     await batchedDbUpdate(
       lib.muAuthSudo.updateSudo,
@@ -153,7 +153,7 @@ async function deleteFromSpecificGraphs(lib, statementsWithGraphs) {
       SLEEP_TIME_AFTER_FAILED_DB_OPERATION,
       'DELETE');
   }
-  
+
 }
 
 async function moveToPublic(muUpdate, endpoint) {
@@ -298,7 +298,7 @@ async function moveToOrganizationsGraph(muUpdate, endpoint) {
         ?account a foaf:OnlineAccount;
                 mu:uuid ?uuidAccount;
                 foaf:accountServiceHomepage <https://github.com/lblod/mock-login-service>;
-                ext:sessionRole "LoketLB-ContactOrganisatiegegevensGebruiker" . 
+                ext:sessionRole "LoketLB-OpenProcesHuisGebruiker" . 
       }
       GRAPH ?g {
         ?persoon a foaf:Person;
@@ -310,7 +310,7 @@ async function moveToOrganizationsGraph(muUpdate, endpoint) {
         ?account a foaf:OnlineAccount;
                 mu:uuid ?uuidAccount;
                 foaf:accountServiceHomepage <https://github.com/lblod/mock-login-service>;
-                ext:sessionRole "LoketLB-ContactOrganisatiegegevensGebruiker" . 
+                ext:sessionRole "LoketLB-OpenProcesHuisGebruiker" . 
       }
     }
     WHERE {
