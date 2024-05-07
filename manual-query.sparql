@@ -21,6 +21,26 @@ PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
 PREFIX string: <http://www.w3.org/2000/10/swap/string#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
+
+INSERT {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?bestuurseenheid dcterms:identifier ?ovoNummer
+  }
+}
+where {
+  graph ?g {
+    ?identifier skos:notation "OVO-nummer";
+     generiek:gestructureerdeIdentificator ?gestructureerdeIdentificator.
+     
+    ?gestructureerdeIdentificator generiek:lokaleIdentificator ?ovoNummer. 
+    ?bestuurseenheid adms:identifier ?identifier.  
+  }
+
+
+}
+
+;
+
 INSERT {
   GRAPH <http://mu.semte.ch/graphs/public> {
     ?bestuurseenheid dcterms:identifier ?ovoNummer
