@@ -18,7 +18,6 @@ defmodule Acl.UserGroups.Config do
     "http://www.w3.org/ns/org#Organization",
     "http://www.w3.org/ns/org#Site",
     "http://schema.org/ContactPoint",
-    "http://lblod.data.gift/vocabularies/organisatie/",
     "http://lblod.data.gift/vocabularies/organisatie/TypeVestiging",
     "http://lblod.data.gift/vocabularies/organisatie/BestuurseenheidClassificatieCode",
     "http://lblod.data.gift/vocabularies/organisatie/OrganisatieStatusCode",
