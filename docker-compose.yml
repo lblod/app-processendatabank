@@ -8,7 +8,14 @@ x-logging: &default-logging
 
 services:
   frontend:
-    image: lblod/frontend-openproceshuis:latest # FIXME latest in docker compose dev, released here
+    image: lblod/frontend-openproceshuis:0.1.0
+    environment:
+      EMBER_OAUTH_API_REDIRECT_URL: "https://openproceshuis.lblod.info/authorization/callback"
+      EMBER_OAUTH_API_KEY: "aaf8877c-0975-4003-8db8-a9986355b80b"
+      EMBER_OAUTH_API_BASE_URL: "https://authenticatie-ti.vlaanderen.be/op/v1/auth"
+      EMBER_OAUTH_API_LOGOUT_URL: "https://authenticatie-ti.vlaanderen.be/op/v1/logout"
+      EMBER_OAUTH_API_SCOPE: "openid rrn profile vo abb_loketLB"
+      EMBER_OAUTH_SWITCH_URL: "https://openproceshuis.lblod.info/switch-login"
     volumes:
       - ./config/frontend/add-x-frame-options-header.conf:/config/add-x-frame-options.conf
     labels:
@@ -42,15 +49,15 @@ services:
       - "logging=true"
     image: semtech/mu-authorization:0.6.0-beta.5
     environment:
-      MU_SPARQL_ENDPOINT: "http://triplestore:8890/sparql"
+      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
     volumes:
       - ./config/authorization:/config
     restart: always
-  triplestore:
+  virtuoso:
     logging: *default-logging
     labels:
       - "logging=true"
-    image: redpencil/virtuoso:1.2.0-rc.1
+    image: tenforce/virtuoso:1.3.2-virtuoso7.2.5.1
     environment:
       SPARQL_UPDATE: "true"
       DEFAULT_GRAPH: "http://mu.semte.ch/application"
@@ -64,7 +71,7 @@ services:
       - "logging=true"
     image: semtech/mu-migrations-service:0.9.0
     links:
-      - triplestore:database
+      - virtuoso:database
     volumes:
       - ./config/migrations:/data/migrations
     restart: always
@@ -89,7 +96,7 @@ services:
     restart: always
     logging: *default-logging
   deltanotifier:
-    image: semtech/mu-delta-notifier
+    image: semtech/mu-delta-notifier:0.2.0
     volumes:
       - ./config/delta:/config
     labels:
@@ -147,3 +154,53 @@ services:
     environment:
       - discovery.type=single-node
     restart: always
+
+  ################################################################################
+  # OP PUBLIC CONSUMER
+  ################################################################################
+  op-consumer:
+    image: lblod/delta-consumer:latest
+    environment:
+      DCR_SYNC_BASE_URL: "https://organisaties.abb.lblod.info/"
+      DCR_SERVICE_NAME: "op-consumer"
+      DCR_SYNC_FILES_PATH: "/sync/organizations-public-info/files"
+      DCR_SYNC_DATASET_SUBJECT: "http://data.lblod.info/datasets/delta-producer/dumps/OrganizationsPublicInfoCacheGraphDump"
+      DCR_INITIAL_SYNC_JOB_OPERATION: "http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/op"
+      DCR_DELTA_SYNC_JOB_OPERATION: "http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/opDeltaFileSyncing"
+      DCR_JOB_CREATOR_URI: "http://data.lblod.info/services/id/op-consumer"
+      DCR_KEEP_DELTA_FILES: "true"
+      DCR_DELTA_FILE_FOLDER: "/consumer-files"
+      DCR_DISABLE_DELTA_INGEST: "false"
+      DCR_ENABLE_DELTA_CONTEXT: "true"
+      DCR_BATCH_SIZE: 1000
+      SLEEP_BETWEEN_BATCHES: 100
+      BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES: "true"
+      INGEST_GRAPH: "http://mu.semte.ch/graphs/ingest"
+
+    volumes:
+      - ./config/consumer/op:/config/triples-dispatching/custom-dispatching
+      - ./data/files/consumer-files/op:/consumer-files/
+    links:
+      - virtuoso:database
+    restart: always
+    logging: *default-logging
+  reasoner:
+    image: eyereasoner/reasoning-service:increased-stack-limit
+    volumes:
+      - ./config/reasoner:/config
+    restart: always
+    labels:
+      - "logging=true"
+    logging: *default-logging
+
+  ### ACM/IDM related; login
+  login:
+    image: lblod/acmidm-login-service:0.9.2
+    environment:
+      MU_APPLICATION_AUTH_USERID_CLAIM: "vo_id"
+      MU_APPLICATION_AUTH_ROLE_CLAIM: "abb_loketLB_rol_3d"
+      MU_APPLICATION_GRAPH: "http://mu.semte.ch/graphs/public"
+      MU_APPLICATION_AUTH_DISCOVERY_URL: "https://authenticatie-ti.vlaanderen.be/op"
+      MU_APPLICATION_AUTH_CLIENT_ID: "aaf8877c-0975-4003-8db8-a9986355b80b"
+      MU_APPLICATION_AUTH_REDIRECT_URI: "https://openproceshuis.lblod.info/authorization/callback"
+      MU_APPLICATION_AUTH_CLIENT_SECRET: "secret"
