@@ -16,6 +16,8 @@ defmodule Acl.UserGroups.Config do
     "http://xmlns.com/foaf/0.1/OnlineAccount",
     "http://www.w3.org/2004/02/skos/core#Concept",
     "http://www.w3.org/ns/org#Organization",
+    "http://www.w3.org/ns/org#Site",
+    "http://schema.org/ContactPoint",
     "http://lblod.data.gift/vocabularies/organisatie/TypeVestiging",
     "http://lblod.data.gift/vocabularies/organisatie/BestuurseenheidClassificatieCode",
     "http://lblod.data.gift/vocabularies/organisatie/OrganisatieStatusCode",

@@ -258,6 +258,32 @@ async function moveToOrganizationsGraph(muUpdate, endpoint) {
     }
   `, undefined, endpoint)
 
+  // move primary sites
+  await muUpdate(`
+    ${prefixes}
+    DELETE {
+      GRAPH <${LANDING_ZONE_GRAPH}> {
+        ?primarySite ?pp ?po.
+        ?addr ?ap ?ao.
+        
+      }
+    }
+    INSERT {
+      GRAPH <http://mu.semte.ch/graphs/public> {
+       ?primarySite ?pp ?po.
+        ?addr ?ap ?ao.
+      }
+    }
+    WHERE {
+      GRAPH <${LANDING_ZONE_GRAPH}> {
+           ?s a <http://data.vlaanderen.be/ns/besluit#Bestuurseenheid>;
+              <http://www.w3.org/ns/org#hasPrimarySite> ?primarySite.
+           ?primarySite <http://www.w3.org/ns/org#siteAddress> ?addr; ?pp ?po.
+           ?addr ?ap ?ao.
+      }
+    }
+  `, undefined, endpoint);
+
   //Move worships to assure everyone gets also the type besturseenheid and organization
   await muUpdate(`
     ${prefixes}
@@ -282,7 +308,9 @@ async function moveToOrganizationsGraph(muUpdate, endpoint) {
         VALUES ?type { <http://data.lblod.info/vocabularies/erediensten/BestuurVanDeEredienst> <http://data.lblod.info/vocabularies/erediensten/CentraalBestuurVanDeEredienst> }
       }
     }
-  `, undefined, endpoint)
+  `, undefined, endpoint);
+
+
 
   //Create mock users
   await muUpdate(`
