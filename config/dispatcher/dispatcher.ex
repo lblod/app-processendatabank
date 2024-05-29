@@ -77,6 +77,10 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://cache/groups/"
   end
 
+  match "/sites/*path", %{ accept: [:json], layer: :api} do
+    Proxy.forward conn, path, "http://cache/sites/"
+  end
+
   match "/mock/sessions/*path", %{ accept: [:any], layer: :api} do
     Proxy.forward conn, path, "http://mock-login/sessions/"
   end
