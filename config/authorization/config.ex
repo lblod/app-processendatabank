@@ -84,7 +84,7 @@ defmodule Acl.UserGroups.Config do
   end
   def user_groups do
     [
-      
+
       # shared data
       %GroupSpec{
         name: "shared",
@@ -127,7 +127,7 @@ defmodule Acl.UserGroups.Config do
               resource_types: @public_type ++ @bpmn_element_type ++ @file_type
             }
           },
-          
+
           %GraphSpec {
             graph: "http://mu.semte.ch/graphs/shared",
             constraint: %ResourceConstraint {
