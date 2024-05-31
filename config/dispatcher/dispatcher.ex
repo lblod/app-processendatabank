@@ -82,6 +82,13 @@ defmodule Dispatcher do
   match "/mock/sessions/*path", %{ accept: [:any], layer: :api} do
     Proxy.forward conn, path, "http://mock-login/sessions/"
   end
+  ###############################################################
+  # sparql endpoint
+  ###############################################################
+
+  post "/sparql/*path", %{ layer: :api, accept: %{ sparql_json: true } } do
+    Proxy.forward conn, path, "http://database:8890/sparql/"
+  end
 
   ###############################################################
   # SEARCH
