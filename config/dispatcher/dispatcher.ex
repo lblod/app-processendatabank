@@ -32,12 +32,10 @@ defmodule Dispatcher do
   ###############################################################
 
   get "/files/:id/download", %{ accept: %{ bpmn_converted: true }, layer: :api_services } do
-    IO.inspect( conn, label: "BPMN converted" )
     Proxy.forward conn, [], "http://bpmn/" <> id <> "/download"
   end
 
   get "/files/:id/download", %{ accept: %{ bpmn_original: true }, layer: :api_services } do
-    IO.inspect( conn, label: "BPMN original" )
     Proxy.forward conn, [], "http://file/files/" <> id <> "/download"
   end
 
