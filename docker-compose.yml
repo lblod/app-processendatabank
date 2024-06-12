@@ -183,6 +183,8 @@ services:
     links:
       - virtuoso:database
     restart: always
+    labels:
+      - "logging=true"
     logging: *default-logging
   reasoner:
     image: eyereasoner/reasoning-service:increased-stack-limit
@@ -204,3 +206,7 @@ services:
       MU_APPLICATION_AUTH_CLIENT_ID: "aaf8877c-0975-4003-8db8-a9986355b80b"
       MU_APPLICATION_AUTH_REDIRECT_URI: "https://openproceshuis.lblod.info/authorization/callback"
       MU_APPLICATION_AUTH_CLIENT_SECRET: "secret"
+    restart: always
+    labels:
+      - "logging=true"
+    logging: *default-logging
