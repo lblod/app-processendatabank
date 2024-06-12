@@ -26,6 +26,11 @@ defmodule Acl.UserGroups.Config do
     "http://www.w3.org/ns/prov#Location",
   ]
 
+  @process_type [
+    "https://data.vlaanderen.be/ns/proces#Proces",
+    "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject"
+  ]
+
   @bpmn_element_type [
     "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Activity",
     "https://www.irit.fr/recherches/MELODI/ontologies/BBO#BoundaryEvent",
@@ -68,10 +73,7 @@ defmodule Acl.UserGroups.Config do
     "https://www.teamingai-project.eg/BBOExtension#Participant"
   ]
 
-  @file_type [
-    "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject"
-  ]
-    defp is_authenticated() do
+  defp is_authenticated() do
     %AccessByQuery{
       vars: [],
       query: "PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
@@ -82,38 +84,46 @@ defmodule Acl.UserGroups.Config do
         }"
       }
   end
+
   def user_groups do
     [
-
-      # shared data
-      %GroupSpec{
+      # SHARED DATA
+      %GroupSpec {
         name: "shared",
         useage: [:write, :read_for_write],
         access: is_authenticated(),
         graphs: [
-                  %GraphSpec{
-                    graph: "http://mu.semte.ch/graphs/shared",
-                    constraint: %ResourceConstraint{
-                      resource_types: @bpmn_element_type ++ @file_type } },
-                      ] },
-        # // ORGANIZATION DATA
-      %GroupSpec{
+          %GraphSpec {
+            graph: "http://mu.semte.ch/graphs/shared",
+            constraint: %ResourceConstraint {
+              resource_types: @bpmn_element_type ++ @process_type
+            }
+          },
+        ]
+      },
+
+      # ORGANIZATION DATA
+      %GroupSpec {
         name: "org",
         useage: [:read, :write, :read_for_write],
-        access: %AccessByQuery{
+        access: %AccessByQuery {
           vars: ["session_group"],
           query: "PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
                   PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
                   SELECT DISTINCT ?session_group WHERE {
                     <SESSION_ID> ext:sessionGroup/mu:uuid ?session_group;
                                  ext:sessionRole \"LoketLB-OpenProcesHuisGebruiker\".
-                    }" },
-        graphs: [ %GraphSpec{
-                    graph: "http://mu.semte.ch/graphs/organizations/",
-                    constraint: %ResourceConstraint{
-                      resource_types: @bpmn_element_type ++ @file_type } },
-                      ] },
-
+                  }"
+        },
+        graphs: [
+          %GraphSpec {
+            graph: "http://mu.semte.ch/graphs/organizations/",
+            constraint: %ResourceConstraint {
+              resource_types: @bpmn_element_type ++ @process_type
+            }
+          },
+        ]
+      },
 
       # // PUBLIC
       %GroupSpec {
@@ -124,14 +134,13 @@ defmodule Acl.UserGroups.Config do
           %GraphSpec {
             graph: "http://mu.semte.ch/graphs/public",
             constraint: %ResourceConstraint {
-              resource_types: @public_type ++ @bpmn_element_type ++ @file_type
+              resource_types: @public_type ++ @bpmn_element_type ++ @process_type
             }
           },
-
           %GraphSpec {
             graph: "http://mu.semte.ch/graphs/shared",
             constraint: %ResourceConstraint {
-              resource_types: @bpmn_element_type ++ @file_type
+              resource_types: @bpmn_element_type ++ @process_type
             }
           }
         ]
@@ -145,4 +154,5 @@ defmodule Acl.UserGroups.Config do
       }
     ]
   end
+
 end

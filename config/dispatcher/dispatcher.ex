@@ -15,6 +15,10 @@ defmodule Dispatcher do
 
   define_layers [ :api_services, :api, :frontend, :not_found ]
 
+  match "/processes",  %{ accept: [:json], layer: :api } do
+    Proxy.forward conn, [], "http://cache/processes/"
+  end
+
   match "/bpmn-elements",  %{ accept: [:json], layer: :api } do
     Proxy.forward conn, [], "http://cache/bpmn-elements/"
   end
