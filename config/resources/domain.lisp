@@ -17,6 +17,8 @@
   :class (s-prefix "proces:Proces")
   :properties `((:title :string ,(s-prefix "dct:title"))
                 (:description :string ,(s-prefix "dct:description"))
+                (:created :datetime ,(s-prefix "dct:created"))
+                (:modified :datetime ,(s-prefix "dct:modified"))
                 (:status :url ,(s-prefix "adms:status")))
   :has-one `((group :via ,(s-prefix "dct:publisher")
                     :as "publisher"))
