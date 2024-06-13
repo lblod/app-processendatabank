@@ -55,7 +55,7 @@
   :has-one `((bpmnElementType :via ,(s-prefix "dct:type")
                               :as "type")
              (bpmnProcess :via ,(s-prefix "teamingAI:belongsToProcess")
-                          :as "process"))
+                          :as "bpmn-process"))
   :on-path "bpmn-elements")
 
 (define-resource bpmnElementType ()
@@ -68,7 +68,7 @@
 (define-resource bpmnProcess ()
   :class (s-prefix "bbo:Process")
   :has-one `((file :via ,(s-prefix "prov:wasDerivedFrom")
-                    :as "derivation"))
+                    :as "bpmn-file"))
   :resource-base (s-url "http://data.lblod.info/bpmn-processes/")
   :on-path "bpmn-processes")
 
