@@ -14,7 +14,7 @@ services:
       EMBER_OAUTH_API_KEY: "aaf8877c-0975-4003-8db8-a9986355b80b"
       EMBER_OAUTH_API_BASE_URL: "https://authenticatie-ti.vlaanderen.be/op/v1/auth"
       EMBER_OAUTH_API_LOGOUT_URL: "https://authenticatie-ti.vlaanderen.be/op/v1/logout"
-      EMBER_OAUTH_API_SCOPE: "openid rrn profile vo abb_loketLB"
+      EMBER_OAUTH_API_SCOPE: "openid rrn profile vo abb_openproceshuis"
       EMBER_OAUTH_SWITCH_URL: "https://openproceshuis.lblod.info/switch-login"
     volumes:
       - ./config/frontend/add-x-frame-options-header.conf:/config/add-x-frame-options.conf
@@ -200,7 +200,7 @@ services:
     image: lblod/acmidm-login-service:0.9.2
     environment:
       MU_APPLICATION_AUTH_USERID_CLAIM: "vo_id"
-      MU_APPLICATION_AUTH_ROLE_CLAIM: "abb_loketLB_rol_3d"
+      MU_APPLICATION_AUTH_ROLE_CLAIM: "abb_openproceshuis_rol_3d"
       MU_APPLICATION_GRAPH: "http://mu.semte.ch/graphs/public"
       MU_APPLICATION_AUTH_DISCOVERY_URL: "https://authenticatie-ti.vlaanderen.be/op"
       MU_APPLICATION_AUTH_CLIENT_ID: "aaf8877c-0975-4003-8db8-a9986355b80b"
