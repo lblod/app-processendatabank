@@ -1,6 +1,3 @@
-  # Run `docker-compose restart dispatcher` after updating
-  # this file.
-
 defmodule Dispatcher do
   use Matcher
   define_accept_types [
@@ -9,11 +6,10 @@ defmodule Dispatcher do
     upload: ["multipart/form-data"],
     sparql_json: ["application/sparql-results+json"],
     bpmn_converted: ["image/png", "image/svg+xml", "application/pdf"],
-    bpmn_original: ["text/xml", "application/xml"],
     any: [ "*/*" ],
   ]
 
-  define_layers [ :api_services, :api, :frontend, :not_found ]
+  define_layers [ :api, :frontend, :not_found ]
 
   match "/processes/*path",  %{ accept: [:json], layer: :api } do
     Proxy.forward conn, path, "http://cache/processes/"
@@ -35,27 +31,19 @@ defmodule Dispatcher do
   # files
   ###############################################################
 
-  get "/files/:id/download", %{ accept: %{ bpmn_converted: true }, layer: :api_services } do
-    Proxy.forward conn, [], "http://bpmn/" <> id <> "/download"
-  end
-
-  get "/files/:id/download", %{ accept: %{ bpmn_original: true }, layer: :api_services } do
+  get "/files/:id/download", %{ accept: [:any], layer: :api } do
     Proxy.forward conn, [], "http://file/files/" <> id <> "/download"
   end
 
-  post "/files/*path", %{ layer: :api_services } do
+  get "/files/:id/converted/download", %{ accept: [:bpmn_converted], layer: :api } do
+    Proxy.forward conn, [], "http://bpmn/" <> id <> "/download"
+  end
+
+  post "/files/*path", %{ accept: [:json], layer: :api } do
     Proxy.forward conn, path, "http://file/files/"
   end
 
-  delete "/files/*path", %{ accept: [ :json ], layer: :api_services } do
-    Proxy.forward conn, path, "http://file/files/"
-  end
-
-  get "/files/*path", %{ accept: [ :json ], layer: :api_services } do
-    Proxy.forward conn, path, "http://cache/files/"
-  end
-
-  patch "/files/*path", %{ accept: [ :json ], layer: :api_services } do
+  match "/files/*path", %{ accept: [:json], layer: :api } do
     Proxy.forward conn, path, "http://cache/files/"
   end
 
@@ -63,7 +51,7 @@ defmodule Dispatcher do
   # login
   ###############################################################
 
-  match "/sessions/*path" do
+  match "/sessions/*path", %{ accept: [:json], layer: :api} do
     Proxy.forward conn, path, "http://login/sessions/"
   end
 
@@ -86,19 +74,20 @@ defmodule Dispatcher do
   match "/mock/sessions/*path", %{ accept: [:any], layer: :api} do
     Proxy.forward conn, path, "http://mock-login/sessions/"
   end
+
   ###############################################################
   # sparql endpoint
   ###############################################################
 
-  post "/sparql/*path", %{ layer: :api, accept: %{ sparql_json: true } } do
+  post "/sparql/*path", %{ accept: [:sparql_json], layer: :api } do
     Proxy.forward conn, path, "http://database:8890/sparql/"
   end
 
   ###############################################################
-  # SEARCH
+  # search
   ###############################################################
 
-  match "/search/*path", %{  accept: %{ json: true }, layer: :api} do
+  match "/search/*path", %{  accept: [:json], layer: :api} do
     Proxy.forward conn, path, "http://search/"
   end
 
@@ -106,19 +95,15 @@ defmodule Dispatcher do
   # frontend
   ###############################################################
 
-  match "/assets/*path", %{ layer: :api } do
+  match "/assets/*path", %{ accept: [:any], layer: :api } do
     Proxy.forward conn, path, "http://frontend/assets/"
   end
 
-  match "/@appuniversum/*path", %{ layer: :api } do
+  match "/@appuniversum/*path", %{ accept: [:any], layer: :api } do
     Proxy.forward conn, path, "http://frontend/@appuniversum/"
   end
 
-  match "/*path", %{ accept: [:html], layer: :api } do
-    Proxy.forward conn, [], "http://frontend/index.html"
-  end
-
-  match "/*_path", %{ layer: :frontend } do
+  match "/*_path", %{ accept: [:html], layer: :api } do
     Proxy.forward conn, [], "http://frontend/index.html"
   end
 
