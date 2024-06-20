@@ -39,9 +39,9 @@
                 (:status :url ,(s-prefix "adms:status")))
   :has-one `((file :via ,(s-prefix "nie:dataSource")
                    :inverse t
-                   :as "download")
-             (process :via ,(s-prefix "nie:isPartOf")
-                      :as "process"))
+                   :as "download"))
+  :has-many `((process :via ,(s-prefix "nie:isPartOf")
+                       :as "processes"))
   :resource-base (s-url "http://data.lblod.info/files/")
   :features `(include-uri)
   :on-path "files")
