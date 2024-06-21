@@ -13,10 +13,24 @@
 
 ;; -------------------------------------------------------------------------------------
 
+(define-resource process()
+  :class (s-prefix "proces:Proces")
+  :properties `((:title :string ,(s-prefix "dct:title"))
+                (:description :string ,(s-prefix "dct:description"))
+                (:created :datetime ,(s-prefix "dct:created"))
+                (:modified :datetime ,(s-prefix "dct:modified"))
+                (:status :url ,(s-prefix "adms:status")))
+  :has-one `((group :via ,(s-prefix "dct:publisher")
+                    :as "publisher"))
+  :has-many `((file :via ,(s-prefix "nie:isPartOf")
+                    :inverse t
+                    :as "files"))
+  :resource-base (s-url "http://data.lblod.info/processes/")
+  :on-path "processes")
+
 (define-resource file ()
   :class (s-prefix "nfo:FileDataObject")
   :properties `((:name :string ,(s-prefix "nfo:fileName"))
-                (:description :string ,(s-prefix "dct:description"))
                 (:format :string ,(s-prefix "dct:format"))
                 (:size :number ,(s-prefix "nfo:fileSize"))
                 (:extension :string ,(s-prefix "dbpedia:fileExtension"))
@@ -25,20 +39,23 @@
                 (:status :url ,(s-prefix "adms:status")))
   :has-one `((file :via ,(s-prefix "nie:dataSource")
                    :inverse t
-                   :as "download")
-             (group :via ,(s-prefix "schema:publisher")
-                    :as "publisher"))
+                   :as "download"))
+  :has-many `((process :via ,(s-prefix "nie:isPartOf")
+                       :as "processes"))
   :resource-base (s-url "http://data.lblod.info/files/")
   :features `(include-uri)
   :on-path "files")
 
+;; -------------------------------------------------------------------------------------
+;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
+;; -------------------------------------------------------------------------------------
+
 (define-resource bpmnElement ()
   :properties `((:name :string ,(s-prefix "bbo:name")))
-  :has-many `((process :via ,(s-prefix "teamingAI:belongsToProcess")
-                       :as "processes"))
   :has-one `((bpmnElementType :via ,(s-prefix "dct:type")
-                              :as "type"))
-  :resource-base (s-url "http://data.lblod.info/bpmn-elements/")
+                              :as "type")
+             (bpmnProcess :via ,(s-prefix "teamingAI:belongsToProcess")
+                          :as "bpmn-process"))
   :on-path "bpmn-elements")
 
 (define-resource bpmnElementType ()
@@ -48,16 +65,12 @@
   :resource-base (s-url "http://lblod.data.gift/concepts/")
   :on-path "bpmn-element-types")
 
-;; -------------------------------------------------------------------------------------
-;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
-;; -------------------------------------------------------------------------------------
-
-(define-resource process ()
+(define-resource bpmnProcess ()
   :class (s-prefix "bbo:Process")
-  :has-many `((file :via ,(s-prefix "prov:wasDerivedFrom")
-                    :as "derivations"))
-  :resource-base (s-url "http://data.lblod.info/processes/")
-  :on-path "processes")
+  :has-one `((file :via ,(s-prefix "prov:wasDerivedFrom")
+                    :as "bpmn-file"))
+  :resource-base (s-url "http://data.lblod.info/bpmn-processes/")
+  :on-path "bpmn-processes")
 
 (define-resource task (bpmnElement)
   :class (s-prefix "bbo:Task")
