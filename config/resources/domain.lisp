@@ -61,7 +61,8 @@
 (define-resource bpmnElementType ()
   :class (s-prefix "skos:Concept")
   :properties `((:label :language-string ,(s-prefix "skos:prefLabel"))
-                (:key :language-string ,(s-prefix "skos:hiddenLabel")))
+                (:key :language-string ,(s-prefix "skos:hiddenLabel"))
+                (:scheme :url ,(s-prefix "skos:inScheme")))
   :resource-base (s-url "http://lblod.data.gift/concepts/")
   :on-path "bpmn-element-types")
 
