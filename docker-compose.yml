@@ -16,6 +16,9 @@ services:
       EMBER_OAUTH_API_LOGOUT_URL: "https://authenticatie-ti.vlaanderen.be/op/v1/logout"
       EMBER_OAUTH_API_SCOPE: "openid rrn profile vo abb_openproceshuis"
       EMBER_OAUTH_SWITCH_URL: "https://openproceshuis.lblod.info/switch-login"
+      EMBER_ANALYTICS_APP_DOMAIN: "openproceshuis.lblod.info" # Prod: openproceshuis.vlaanderen.be
+      EMBER_ANALYTICS_API_HOST: "https://plausible.lblod.info"
+
     volumes:
       - ./config/frontend/add-x-frame-options-header.conf:/config/add-x-frame-options.conf
     labels:
