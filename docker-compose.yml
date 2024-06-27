@@ -122,7 +122,7 @@ services:
     logging: *default-logging
     labels:
       - "logging=true"
-    image: lblod/bpmn-service
+    image: lblod/bpmn-service:1.0.0
     volumes:
       - ./data/files:/share
     restart: always
