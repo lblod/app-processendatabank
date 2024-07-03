@@ -6,34 +6,43 @@ Open Proces Huis is one of many applications developed under the [Agentschap Bin
 
 In addition to the aforementioned services, a range of others are also essential to the stack. All of them are listed in [this overview](#overview-of-services), and can of course also be found in [docker-compose.yml](./docker-compose.yml).
 
-## Requirements and assumptions
-
-This project was tested on Ubuntu 20.04, but should work on most systems that run docker and docker-compose. A linux based system is recommended, but we welcome any feedback you might have when running this system on macOS or windows.
-
-- a recent version of [docker needs to be installed](https://docs.docker.com/get-docker/)
-- a recent version of [docker-compose needs to be installed](https://docs.docker.com/compose/install/)
-- some basic shell experience is recommended
-
 ## Getting started
 
-1. make sure all [requirements](#Requirements-and-assumptions) are met
-2. clone this repository
+### First run
+
+1. Clone this repository
 
 ```bash
-git clone https://github.com/MartijnBogaert/app-openproceshuis
+git clone https://github.com/lblod/app-openproceshuis.git
 ```
 
-3. run the project
+2. Run the project
 
 ```bash
-cd /path/to/mu-project
+cd /path/to/project
 ```
 
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up
 ```
 
-You can shut down using `docker-compose stop` and remove everything using `docker-compose rm`.
+3. Wait for the op-consumer to finish initial ingest
+
+```bash
+docker compose logs -f op-consumer
+```
+
+> When the logs show `delta-sync-queue: Remaining number of tasks 0`, you can move on.
+
+4. In your browser, go to [localhost:8890/sparql](http://localhost:8890/sparql) and run the SPARQL query found in [manual-query-reasoning-service.sparql](./manual-query-reasoning-service.sparql).
+
+### Usage
+
+- You can access the frontend in your browser by going to [localhost](http://localhost/).
+- You can log in using a mock account by going to [localhost/mock-login](http://localhost/mock-login).
+- You can shut everything down by running `docker compose down`.
+- When restarting the project not having emptied the `data/` folder, you can ignore steps 3 and 4 under [First run](#first-run).
+- You can empty the database and file storage by running `sudo rm -rf data/` (restarting the project will require steps 3 and 4 under [First run](#first-run)).
 
 ## Overview of services
 
