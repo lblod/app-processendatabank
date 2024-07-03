@@ -56,6 +56,10 @@ All data is stored as triples in the [Virtuoso](https://github.com/tenforce/dock
 
 > The `BpmnElement` class is in fact only an interface for all true BPMN element classes available. These are mapped onto RDF resources that comply with the [_BPMN Based Ontology (BBO)_](https://www.irit.fr/recherches/MELODI/ontologies/BBO/index-en.html).
 
+## Dispatching
+
+Different services from the stack handle different HTTP requests. The [mu-dispatcher](https://github.com/mu-semtech/mu-dispatcher) service makes sure each request gets dispatched to the correct service. The exact dispatching rules are described in [`dispatcher.ex`](./config/dispatcher/dispatcher.ex).
+
 ## Overview of services
 
 - [frontend-openproceshuis](https://github.com/lblod/frontend-openproceshuis)
