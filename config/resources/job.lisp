@@ -1,0 +1,13 @@
+(in-package :mu-cl-resources)
+
+(define-resource job()
+  :class (s-prefix "cogs:Job")
+  :properties `((:status :url ,(s-prefix "adms:status"))
+                (:created :datetime ,(s-prefix "dct:created"))
+                (:modified :datetime ,(s-prefix "dct:modified"))
+                (:resource :url ,(s-prefix "ext:relatedTo"))
+                (:operation :url ,(s-prefix "task:operation")))
+  :has-one `((group :via ,(s-prefix "dct:creator")
+                    :as "creator"))
+  :resource-base (s-url "http://redpencil.data.gift/id/job/")
+  :on-path "jobs")

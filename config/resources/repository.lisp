@@ -19,3 +19,5 @@
 (add-prefix "skos" "http://www.w3.org/2004/02/skos/core#")
 (add-prefix "adms" "http://www.w3.org/ns/adms#")
 (add-prefix "proces" "https://data.vlaanderen.be/ns/proces#")
+(add-prefix "cogs" "http://vocab.deri.ie/cogs#")
+(add-prefix "task" "http://redpencil.data.gift/vocabularies/tasks/")
