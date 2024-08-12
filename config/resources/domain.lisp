@@ -10,6 +10,7 @@
 (defparameter *supply-cache-headers-p* t)
 
 (read-domain-file "auth.json")
+(read-domain-file "job.lisp")
 
 ;; -------------------------------------------------------------------------------------
 

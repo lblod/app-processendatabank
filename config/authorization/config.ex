@@ -125,7 +125,7 @@ defmodule Acl.UserGroups.Config do
         ]
       },
 
-      # // PUBLIC
+      # PUBLIC
       %GroupSpec {
         name: "public",
         useage: [:read],
@@ -142,11 +142,19 @@ defmodule Acl.UserGroups.Config do
             constraint: %ResourceConstraint {
               resource_types: @bpmn_element_type ++ @process_type
             }
+          },
+          %GraphSpec {
+            graph: "http://mu.semte.ch/graphs/bpmn-job",
+            constraint: %ResourceConstraint {
+              resource_types: [
+                "http://vocab.deri.ie/cogs#Job"
+              ]
+            }
           }
         ]
       },
 
-      # // CLEANUP
+      # CLEANUP
       %GraphCleanup {
         originating_graph: "http://mu.semte.ch/application",
         useage: [:write],
