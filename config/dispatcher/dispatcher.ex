@@ -5,7 +5,6 @@ defmodule Dispatcher do
     json: ["application/json", "application/vnd.api+json"],
     upload: ["multipart/form-data"],
     sparql_json: ["application/sparql-results+json"],
-    bpmn_converted: ["image/png", "image/svg+xml", "application/pdf"],
     any: [ "*/*" ],
   ]
 
@@ -33,10 +32,6 @@ defmodule Dispatcher do
 
   get "/files/:id/download", %{ accept: [:any], layer: :api } do
     Proxy.forward conn, [], "http://file/files/" <> id <> "/download"
-  end
-
-  get "/files/:id/converted/download", %{ accept: [:bpmn_converted], layer: :api } do
-    Proxy.forward conn, [], "http://bpmn/" <> id <> "/download"
   end
 
   post "/files/*path", %{ accept: [:json], layer: :api } do
