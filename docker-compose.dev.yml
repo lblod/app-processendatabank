@@ -12,3 +12,7 @@ services:
     links:
       - database:database
     restart: "no"
+  frontend:
+    image: lblod/frontend-openproceshuis:latest
+  bpmn:
+    image: lblod/openproceshuis-bpmn-service:latest
