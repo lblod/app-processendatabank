@@ -1,43 +1,44 @@
 ;;;;;;;;;;;;;;;;;;;
-;;; delta messenger
+;;; Delta messenger
+
 (in-package :delta-messenger)
 
-;; (push (make-instance 'delta-logging-handler) *delta-handlers*) ;; enable if delta messages should be logged on terminal
+(add-delta-logger)
 (add-delta-messenger "http://deltanotifier/")
-(setf *log-delta-messenger-message-bus-processing* nil) ;; set to t for extra messages for debugging delta messenger
 
 ;;;;;;;;;;;;;;;;;
-;;; configuration
+;;; Configuration
+
 (in-package :client)
-(setf *log-sparql-query-roundtrip* nil) ; change nil to t for logging requests to virtuoso (and the response)
+(setf *log-sparql-query-roundtrip* nil)
 (setf *backend* "http://virtuoso:8890/sparql")
 
 (in-package :server)
-(setf *log-incoming-requests-p* nil) ; change nil to t for logging all incoming requests
+(setf *log-incoming-requests-p* nil)
 
 ;;;;;;;;;;;;;;;;
-;;; prefix types
+;;; Prefix types
+
 (in-package :type-cache)
 
-(add-type-for-prefix "http://mu.semte.ch/sessions/" "http://mu.semte.ch/vocabularies/session/Session") ; each session URI will be handled for updates as if it had this mussession:Session type
+(add-type-for-prefix "http://mu.semte.ch/sessions/" "http://mu.semte.ch/vocabularies/session/Session")
 
 ;;;;;;;;;;;;;;;;;
-;;; access rights
+;;; Access rights
 
 (in-package :acl)
 
-;; these three reset the configuration, they are likely not necessary
 (defparameter *access-specifications* nil)
 (defparameter *graphs* nil)
 (defparameter *rights* nil)
 
-;; Prefixes used in the constraints below (not in the SPARQL queries)
+;;;;;;;;;;;;;;;;
+;;; Prefixes
+
 (define-prefixes
-  ;; Core
   :mu "http://mu.semte.ch/vocabularies/core/"
   :session "http://mu.semte.ch/vocabularies/session/"
   :ext "http://mu.semte.ch/vocabularies/ext/"
-  ;; Custom prefix URIs here, prefix casing is ignored
   :besluit "http://data.vlaanderen.be/ns/besluit#"
   :organisatie "http://lblod.data.gift/vocabularies/organisatie/"
   :euvoc "http://publications.europa.eu/ontology/euvoc#"
@@ -54,7 +55,7 @@
 
 
 ;;;;;;;;;;;;;
-;; User roles
+;;; User roles
 
 (supply-allowed-group "public")
 
@@ -76,32 +77,28 @@
           }")
 
 (grant (read)
-       :to-graph public ;; see define-graph below
+       :to-graph public
        :for-allowed-group "public")
+
 (grant (read)
        :to-graph shared
        :for-allowed-group "public")
+
 (grant (read)
        :to-graph job
        :for-allowed-group "public")
 
 (grant (read write)
-       :to organizations
-       :for "org")
+       :to-graph organizations
+       :for-allowed-group "org")
 
 (grant (read write)
-       :to shared
-       :for "authenticated")
+       :to-graph shared
+       :for-allowed-group "authenticated")
 
 
 ;;;;;;;;;
-;; Graphs
-;;
-;; These are the graph specifications known in the system.  No
-;; guarantees are given as to what content is readable from a graph.  If
-;; two graphs are nearly identitacl and have the same name, perhaps the
-;; specifications can be folded too.  This could help when building
-;; indexes.
+;;; Graphs
 
 (define-graph shared ("http://mu.semte.ch/graphs/shared")
   ;; bpmn-element-type
@@ -255,14 +252,3 @@
 
 (define-graph job ("http://mu.semte.ch/graphs/bpmn-job")
   ("cogs:Job" -> _))
-
-;; Example:
-;; (define-graph company ("http://mu.semte.ch/graphs/companies/")
-;;   ("foaf:OnlineAccount"
-;;    -> "foaf:accountName"
-;;    -> "foaf:accountServiceHomepage")
-;;   ("foaf:Group"
-;;    -> "foaf:name"
-;;    -> "foaf:member"))
-
-
