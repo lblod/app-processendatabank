@@ -3,8 +3,8 @@
 
 (in-package :delta-messenger)
 
-(add-delta-logger)
 (add-delta-messenger "http://deltanotifier/")
+(setf *log-delta-messenger-message-bus-processing* nil)
 
 ;;;;;;;;;;;;;;;;;
 ;;; Configuration
