@@ -50,11 +50,10 @@ services:
     logging: *default-logging
     labels:
       - "logging=true"
-    image: semtech/mu-authorization:0.6.0-beta.5
-    environment:
-      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
+    image: semtech/sparql-parser:0.0.8
     volumes:
       - ./config/authorization:/config
+      - ./data/authorization:/data
     restart: always
   virtuoso:
     logging: *default-logging
