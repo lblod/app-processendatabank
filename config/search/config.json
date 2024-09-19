@@ -73,6 +73,55 @@
             }
           }
         }
+      },
+      "mappings": {
+        "properties": {
+          "name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "normalizer": "custom_sort_normalizer"
+              }
+            }
+          },
+          "type.label": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "normalizer": "custom_sort_normalizer"
+              }
+            }
+          },
+          "type.key": {
+            "type": "keyword"
+          },
+          "bpmn-process.bpmn-file.name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "normalizer": "custom_sort_normalizer"
+              }
+            }
+          },
+          "bpmn-process.bpmn-file.status": {
+            "type": "keyword"
+          },
+          "bpmn-process.bpmn-file.processes.title": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "normalizer": "custom_sort_normalizer"
+              }
+            }
+          },
+          "bpmn-process.bpmn-file.processes.status": {
+            "type": "keyword"
+          }
+        }
       }
     }
   ]
