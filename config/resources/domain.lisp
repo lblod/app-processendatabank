@@ -118,7 +118,7 @@
   :on-path "exclusive-gateways")
 
 (define-resource inclusiveGateway (bpmnElement)
-  :class (s-prefix "bbo:ExclusiveGateway")
+  :class (s-prefix "bbo:InclusiveGateway")
   :properties `((:defaultElement :string ,(s-prefix "bbo:has_defaultElement"))
                 (:outgoing :string ,(s-prefix "bbo:has_outgoing"))
                 (:incoming :string ,(s-prefix "bbo:has_incoming")))
