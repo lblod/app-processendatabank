@@ -3,6 +3,10 @@
   "automatic_index_updates": true,
   "persist_indexes": true,
   "number_of_threads": 4,
+  "eager_indexing_groups": [
+    [{ "name": "public", "variables": [] }],
+    [{ "name": "clean", "variables": [] }]
+  ],
   "default_settings": {
     "analysis": {
       "normalizer": {
