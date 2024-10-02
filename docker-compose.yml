@@ -123,6 +123,7 @@ services:
       - "logging=true"
     image: lblod/openproceshuis-bpmn-service:2.0.1
     volumes:
+      - ./config/bpmn:/config
       - ./data/files:/share
     restart: always
   accountdetail:
