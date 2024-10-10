@@ -91,8 +91,6 @@ defmodule Dispatcher do
   ###############################################################
 
   match "/search/*path", %{  accept: [:json], layer: :api} do
-    # All data is public --> force mu-search to always use same index
-    conn = Plug.Conn.put_req_header(conn, "mu-auth-allowed-groups", "[{\"variables\":[],\"name\":\"public\"},{\"variables\":[],\"name\":\"clean\"}]")
     Proxy.forward conn, path, "http://search/"
   end
 
