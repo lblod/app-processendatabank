@@ -1,5 +1,4 @@
 {
-  "enable_raw_dsl_endpoint": true,
   "automatic_index_updates": true,
   "persist_indexes": true,
   "number_of_threads": 4,
