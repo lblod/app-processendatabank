@@ -1,6 +1,7 @@
 {
   "automatic_index_updates": true,
   "persist_indexes": true,
+  "update_wait_interval_minutes": 0.2,
   "number_of_threads": 4,
   "eager_indexing_groups": [
     [{ "name": "public", "variables": [] }],
