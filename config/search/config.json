@@ -1,58 +1,31 @@
 {
   "automatic_index_updates": true,
   "persist_indexes": true,
+  "update_wait_interval_minutes": 0.1,
   "number_of_threads": 4,
   "eager_indexing_groups": [
-    [
-      {
-        "variables": [],
-        "name": "antwerp-editor"
-      },
-      {
-        "variables": [],
-        "name": "clean"
-      },
-      {
-        "variables": [],
-        "name": "public"
-      }
-    ],
-    [
-      {
-        "variables": [],
-        "name": "leuven-editor"
-      },
-      {
-        "variables": [],
-        "name": "clean"
-      },
-      {
-        "variables": [],
-        "name": "public"
-      }
-    ],
-    [
-      {
-        "variables": [],
-        "name": "clean"
-      },
-      {
-        "variables": [],
-        "name": "public"
-      }
-    ]
+    [{ "name": "public", "variables": [] }],
+    [{ "name": "clean", "variables": [] }]
   ],
   "default_settings": {
     "analysis": {
+      "char_filter": {
+        "remove_special_characters": {
+          "type": "pattern_replace",
+          "pattern": "[:/.-]",
+          "replacement": ""
+        }
+      },
       "normalizer": {
         "custom_sort_normalizer": {
           "type": "custom",
           "char_filter": [],
-          "filter": [
-            "lowercase",
-            "trim",
-            "asciifolding"
-          ]
+          "filter": ["lowercase", "trim", "asciifolding"]
+        },
+        "custom_uri_normalizer": {
+          "type": "custom",
+          "char_filter": ["remove_special_characters"],
+          "filter": ["lowercase", "asciifolding"]
         }
       }
     }
@@ -62,74 +35,70 @@
       "type": "bpmn-element",
       "on_path": "bpmn-elements",
       "rdf_type": [
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Activity",
+        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Task",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#BoundaryEvent",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#BusinessRuleTask",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#CallableElement",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#CatchEvent",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#EndEvent",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Error",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ErrorEventDefinition",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Event",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#EventDefinition",
+        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Error",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ExclusiveGateway",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#FlowElement",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#FlowElementsContainer",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#FlowNode",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Gateway",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#InclusiveGateway",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#IntermediateThrowEvent",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ManualTask",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#MessageEventDefinition",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ParallelGateway",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Process",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Property",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ReceiveTask",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#RootElement",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ScriptTask",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#SendTask",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#SequenceFlow",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ServiceTask",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#StartEvent",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#SubProcess",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Task",
-        "https://www.irit.fr/recherches/MELODI/ontologies/BBO#ThrowEvent",
         "https://www.irit.fr/recherches/MELODI/ontologies/BBO#UserTask",
+        "https://www.teamingai-project.eg/BBOExtension#Association",
         "https://www.teamingai-project.eg/BBOExtension#Collaboration",
+        "https://www.teamingai-project.eg/BBOExtension#DataInputAssociation",
         "https://www.teamingai-project.eg/BBOExtension#DataObject",
         "https://www.teamingai-project.eg/BBOExtension#DataObjectReference",
+        "https://www.teamingai-project.eg/BBOExtension#DataOutputAssociation",
+        "https://www.teamingai-project.eg/BBOExtension#DataStoreReference",
         "https://www.teamingai-project.eg/BBOExtension#Lane",
         "https://www.teamingai-project.eg/BBOExtension#LaneSet",
-        "https://www.teamingai-project.eg/BBOExtension#Participant"
+        "https://www.teamingai-project.eg/BBOExtension#MessageFlow",
+        "https://www.teamingai-project.eg/BBOExtension#Participant",
+        "https://www.teamingai-project.eg/BBOExtension#TextAnnotation"
       ],
       "properties": {
-        "name": [
-          "https://www.irit.fr/recherches/MELODI/ontologies/BBO#name"
-        ],
-        "classification": [
-          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
-        ],
-        "processes": {
+        "name": "https://www.irit.fr/recherches/MELODI/ontologies/BBO#name",
+        "type": {
+          "via": "http://purl.org/dc/terms/type",
+          "rdf_type": "http://www.w3.org/2004/02/skos/core#Concept",
+          "properties": {
+            "label": "http://www.w3.org/2004/02/skos/core#prefLabel",
+            "key": "http://www.w3.org/2004/02/skos/core#hiddenLabel"
+          }
+        },
+        "bpmn-process": {
           "via": "https://www.teamingai-project.eu/belongsToProcess",
           "rdf_type": "https://www.irit.fr/recherches/MELODI/ontologies/BBO#Process",
           "properties": {
-            "name": [
-              "http://www.w3.org/ns/prov#wasDerivedFrom",
-              "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName"
-            ],
-            "created": [
-              "http://www.w3.org/ns/prov#wasDerivedFrom",
-              "http://purl.org/dc/terms/created"
-            ],
-            "modified": [
-              "http://www.w3.org/ns/prov#wasDerivedFrom",
-              "http://purl.org/dc/terms/modified"
-            ],
-            "fileId": [
-              "http://www.w3.org/ns/prov#wasDerivedFrom",
-              "^http://www.semanticdesktop.org/ontologies/2007/01/19/nie#dataSource",
-              "http://mu.semte.ch/vocabularies/core/uuid"
-            ]
+            "bpmn-file": {
+              "via": "http://www.w3.org/ns/prov#wasDerivedFrom",
+              "rdf_type": "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject",
+              "properties": {
+                "name": "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName",
+                "status": "http://www.w3.org/ns/adms#status",
+                "processes": {
+                  "via": "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#isPartOf",
+                  "rdf_type": "https://data.vlaanderen.be/ns/proces#Proces",
+                  "properties": {
+                    "title": "http://purl.org/dc/terms/title",
+                    "status": "http://www.w3.org/ns/adms#status"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -138,44 +107,49 @@
           "name": {
             "type": "text",
             "fields": {
-              "field": {
+              "keyword": {
                 "type": "keyword",
                 "normalizer": "custom_sort_normalizer"
               }
             }
           },
-          "fileId": {
+          "type.label": {
             "type": "text",
             "fields": {
-              "field": {
+              "keyword": {
                 "type": "keyword",
                 "normalizer": "custom_sort_normalizer"
               }
             }
           },
-          "classification": {
+          "type.key": {
+            "type": "keyword"
+          },
+          "bpmn-process.bpmn-file.name": {
             "type": "text",
             "fields": {
-              "field": {
+              "keyword": {
                 "type": "keyword",
                 "normalizer": "custom_sort_normalizer"
               }
             }
           },
-          "processes.name": {
+          "bpmn-process.bpmn-file.status": {
+            "type": "keyword",
+            "normalizer": "custom_uri_normalizer"
+          },
+          "bpmn-process.bpmn-file.processes.title": {
             "type": "text",
             "fields": {
-              "field": {
+              "keyword": {
                 "type": "keyword",
                 "normalizer": "custom_sort_normalizer"
               }
             }
           },
-          "processes.created": {
-            "type": "date"
-          },
-          "processes.modified": {
-            "type": "date"
+          "bpmn-process.bpmn-file.processes.status": {
+            "type": "keyword",
+            "normalizer": "custom_uri_normalizer"
           }
         }
       }
