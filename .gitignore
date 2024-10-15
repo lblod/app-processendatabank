@@ -7,4 +7,5 @@ docker-compose.override.yml
 .env
 /data/files/*
 /data/elasticsearch/*
-/config/search/update-handler.store
+/config/search/dev/update-handler.store
+/config/search/prd/update-handler.store
