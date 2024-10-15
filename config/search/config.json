@@ -9,11 +9,23 @@
   ],
   "default_settings": {
     "analysis": {
+      "char_filter": {
+        "remove_special_characters": {
+          "type": "pattern_replace",
+          "pattern": "[:/.-]",
+          "replacement": ""
+        }
+      },
       "normalizer": {
         "custom_sort_normalizer": {
           "type": "custom",
           "char_filter": [],
           "filter": ["lowercase", "trim", "asciifolding"]
+        },
+        "custom_uri_normalizer": {
+          "type": "custom",
+          "char_filter": ["remove_special_characters"],
+          "filter": ["lowercase", "asciifolding"]
         }
       }
     }
@@ -123,7 +135,8 @@
             }
           },
           "bpmn-process.bpmn-file.status": {
-            "type": "keyword"
+            "type": "keyword",
+            "normalizer": "custom_uri_normalizer"
           },
           "bpmn-process.bpmn-file.processes.title": {
             "type": "text",
@@ -135,7 +148,8 @@
             }
           },
           "bpmn-process.bpmn-file.processes.status": {
-            "type": "keyword"
+            "type": "keyword",
+            "normalizer": "custom_uri_normalizer"
           }
         }
       }
