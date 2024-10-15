@@ -146,7 +146,7 @@ services:
       - "logging=true"
     logging: *default-logging
     volumes:
-      - ./config/search:/config
+      - ./config/search/prd:/config
   elasticsearch:
     labels:
       - "logging=true"
