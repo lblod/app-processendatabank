@@ -60,6 +60,10 @@ All data is stored as triples in the [Virtuoso](https://github.com/tenforce/dock
 
 Different services from the stack handle different HTTP requests. The [mu-dispatcher](https://github.com/mu-semtech/mu-dispatcher) service makes sure each request gets dispatched to the correct service. The exact dispatching rules are described in [`dispatcher.ex`](./config/dispatcher/dispatcher.ex).
 
+## Mu-search
+
+Organizations typically have multiple processes, with each process covering one or more BPMN files, and each BPMN file holding multiple process steps. This obviously results in lots of `BpmnElement` resources being stored in the triplestore. Also, since all data is public, retrieving a list of process steps, forces the query engine to go over all organizational graphs, which naturally leads to long waiting times for users. To make matters worse, the [frontend](https://github.com/lblod/frontend-openproceshuis)'s process steps route introduces filters (e.g. filtering out archived process's process steps) that translate to SPARQL queries with very long RDF paths, which the query engine needs to traverse for every `BpmnElement` is has found. In light of user experience, it was thus decided to make use of [mu-search](https://github.com/mu-semtech/mu-search) for the retrieval of process steps.
+
 ## Overview of services
 
 - [frontend-openproceshuis](https://github.com/lblod/frontend-openproceshuis)
