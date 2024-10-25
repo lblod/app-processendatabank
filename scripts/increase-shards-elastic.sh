@@ -3,7 +3,7 @@
 ELASTICSEARCH_ENDPOINT="localhost:9200"
 CLUSTER_SETTINGS='{
   "persistent": {
-    "cluster.max_shards_per_node": "4000"
+    "cluster.max_shards_per_node": "8000"
   }
 }'
 
