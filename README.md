@@ -62,7 +62,27 @@ Different services from the stack handle different HTTP requests. The [mu-dispat
 
 ## Mu-search
 
-Organizations typically have multiple processes, with each process covering one or more BPMN files, and each BPMN file holding multiple process steps. This obviously results in lots of `BpmnElement` resources being stored in the triplestore. Also, since all data is public, retrieving a list of process steps, forces the query engine to go over all organizational graphs, which naturally leads to long waiting times for users. To make matters worse, the [frontend](https://github.com/lblod/frontend-openproceshuis)'s process steps route introduces filters (e.g. filtering out archived process's process steps) that translate to SPARQL queries with very long RDF paths, which the query engine needs to traverse for every `BpmnElement` is has found. In light of user experience, it was thus decided to make use of [mu-search](https://github.com/mu-semtech/mu-search) for the retrieval of process steps.
+Organizations typically have multiple processes, with each process covering one or more BPMN files, and each BPMN file holding multiple process steps. This obviously results in lots of `BpmnElement` resources being stored in the triplestore. Also, since all data is public, retrieving a list of process steps, forces the query engine to go over all organizational graphs, which naturally leads to long waiting times for users. To make matters worse, the [frontend](https://github.com/lblod/frontend-openproceshuis)'s process steps route introduces filters (e.g. filtering out archived process's process steps) that translate to SPARQL queries with very long RDF paths, which the query engine needs to traverse for every `BpmnElement` it has found. In light of user experience, it was thus decided to make use of [mu-search](https://github.com/mu-semtech/mu-search) for the retrieval of process steps.
+
+> In essence, mu-search serves as a bridge between a triplestore and an elasticsearch cluster. The triplestore still serves as the storage medium for the original linked data, but part of that data is also indexed by an elasticsearch cluster to allow for better retrieval performance, as well as having more options regarding search queries. Which part of the original data should be indexed, is defined in a configuration file.
+
+### Configuration
+
+The [OPH mu-search configuration file](./config/search/dev/config.json) on the one hand determines how process steps and the necessary attributes should be stored, and on the other hand define which indexes should be created on start-up.
+
+#### Types
+
+Each element found in a BPMN process is considered a process step. In other words, multiple RDF types fall under the `BpmnElement` denominator. The configuration's `types` section defines that any resource of a given RDF type (these are all BBO types) can be considered a `bpmn-element` and indexed as such. Based on what the frontend's process steps route needs, a series of properties is subsequently defined. This not only includes _direct_ properties, but also nested ones:
+
+- `name`
+- `type.label`
+- `type.key`
+- `bpmn-process.bpmn-file.name`
+- `bpmn-process.bpmn-file.status`
+- `bpmn-process.bpmn-file.processes.title`
+- `bpmn-process.bpmn-file.processes.status`
+
+#### Indexes
 
 ## Overview of services
 
