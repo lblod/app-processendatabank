@@ -1,0 +1,11 @@
+PREFIX ext:<http://mu.semte.ch/vocabularies/ext/>
+
+INSERT DATA {
+  GRAPH <http://data.lblod.info/id/account/5b863804e864c3cdc2989b2729e68680> {
+    <http://data.lblod.info/id/account/5b863804e864c3cdc2989b2729e68680> ext:sessionRole "LoketLB-admin" .
+  }
+
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    <http://data.lblod.info/id/account/5b863804e864c3cdc2989b2729e68680> ext:sessionRole "LoketLB-admin" .
+  }
+}
