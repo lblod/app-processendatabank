@@ -1,3 +1,9 @@
+# USER
+# - firstName: Autonome verzorginstelling
+# - familyName: abc
+# GROUP
+# - name: abc
+
 PREFIX ext:<http://mu.semte.ch/vocabularies/ext/>
 
 INSERT DATA {

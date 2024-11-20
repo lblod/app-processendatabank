@@ -1,0 +1,17 @@
+# USER
+# - firstName: Autonome verzorginstelling
+# - familyName: AZ Lokeren AV
+# GROUP
+# - name: AZ Lokeren AV
+
+PREFIX ext:<http://mu.semte.ch/vocabularies/ext/>
+
+INSERT DATA {
+  GRAPH <http://data.lblod.info/id/account/23596595695463e99a7f8aa72495470c> {
+    <http://data.lblod.info/id/account/23596595695463e99a7f8aa72495470c> ext:sessionRole "LoketLB-admin" .
+  }
+
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    <http://data.lblod.info/id/account/23596595695463e99a7f8aa72495470c> ext:sessionRole "LoketLB-admin" .
+  }
+}
