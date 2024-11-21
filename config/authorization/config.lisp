@@ -60,18 +60,13 @@
 (supply-allowed-group "public")
 
 (supply-allowed-group "org"
-  :parameters ("session_group")
   :query "PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
           PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
           SELECT DISTINCT ?session_group WHERE {
-            {
-              <SESSION_ID> ext:sessionGroup/mu:uuid ?session_group;
-                           ext:sessionRole \"LoketLB-OpenProcesHuisGebruiker\".
-            } UNION {
-              <SESSION_ID> ext:originalSessionGroup/mu:uuid ?session_group;
-                           ext:originalSessionRole \"LoketLB-OpenProcesHuisGebruiker\".
-            }
-          }")
+            <SESSION_ID> ext:sessionGroup/mu:uuid ?session_group;
+                         ext:sessionRole \"LoketLB-OpenProcesHuisGebruiker\".
+          }"
+  :parameters ("session_group"))
 
 (supply-allowed-group "authenticated"
   :query "PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
@@ -80,20 +75,6 @@
             <SESSION_ID> ext:sessionGroup/mu:uuid ?session_group;
                          ext:sessionRole ?session_role.
           }")
-
-(supply-allowed-group "admin"
-  :query "PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
-          SELECT DISTINCT ?session_role WHERE {
-            VALUES ?session_role {
-              \"LoketLB-admin\"
-            }
-            {
-              <SESSION_ID> ext:sessionRole ?session_role.
-            } UNION {
-              <SESSION_ID> ext:originalSessionRole ?session_role.
-            }
-          }
-          LIMIT 1")
 
 (grant (read)
        :to-graph public
@@ -114,10 +95,6 @@
 (grant (read write)
        :to-graph shared
        :for-allowed-group "authenticated")
-
-(grant (read write)
-       :to-graph sessions
-       :for-allowed-group "admin")
 
 
 ;;;;;;;;;
@@ -275,6 +252,3 @@
 
 (define-graph job ("http://mu.semte.ch/graphs/bpmn-job")
   ("cogs:Job" -> _))
-
-(define-graph sessions ("http://mu.semte.ch/graphs/sessions")
-  ("session:Session" -> _))

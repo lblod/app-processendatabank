@@ -78,10 +78,6 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://mock-login/sessions/"
   end
 
-  match "/impersonations/*path", %{ accept: [:json], layer: :api} do
-    Proxy.forward conn, path, "http://impersonation/impersonations/"
-  end
-
   ###############################################################
   # sparql endpoint
   ###############################################################
