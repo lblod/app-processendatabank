@@ -213,5 +213,3 @@ services:
     labels:
       - "logging=true"
     logging: *default-logging
-  impersonation:
-    image: lblod/impersonation-service
