@@ -1,5 +1,4 @@
-import { generateReportFromData } from "../helpers.js";
-import { querySudo } from "@lblod/mu-auth-sudo";
+import { generateReportFromData, batchedQuery } from "../helpers.js";
 
 export default {
   cronPattern: "0 3 * * *",
@@ -33,7 +32,7 @@ export default {
       }
       ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status
       `;
-    const queryResponse = await querySudo(queryString);
+    const queryResponse = await batchedQuery(queryString);
 
     const data = queryResponse.results.bindings.map((process) => ({
       Bestuur: process.groupName.value,
