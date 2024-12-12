@@ -43,8 +43,8 @@ export default {
       Gearchiveerd:
         process.status?.value ===
         "http://lblod.data.gift/concepts/concept-status/gearchiveerd"
-          ? "ja"
-          : "nee",
+          ? "Ja"
+          : "Nee",
     }));
 
     await generateReportFromData(
