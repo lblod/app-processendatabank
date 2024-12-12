@@ -122,7 +122,7 @@
 
 (grant (read)
        :to-graph reports
-       :for-allowed-group "public")
+       :for-allowed-group "admin")
 
 ;;;;;;;;;
 ;;; Graphs

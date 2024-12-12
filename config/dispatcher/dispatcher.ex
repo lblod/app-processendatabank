@@ -54,8 +54,13 @@ defmodule Dispatcher do
   # reports
   ###############################################################
 
-  post "/reports",  %{ accept: [:json], layer: :api } do
-    Proxy.forward conn, [], "http://report-generation/reports/"
+  post "/reports", %{ accept: [:json], layer: :api } do
+    allowed_groups = Plug.Conn.get_req_header(conn, "mu-auth-allowed-groups")
+    if Enum.any?(allowed_groups, fn group -> group =~ ~r/"name":"admin"/ end) do
+      Proxy.forward(conn, [], "http://report-generation/reports/")
+    else
+      Plug.Conn.send_resp(conn, 403, "{\"error\":\"Forbidden\"}")
+    end
   end
 
   match "/reports/*path", %{ accept: [:json], layer: :api } do
