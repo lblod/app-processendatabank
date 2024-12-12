@@ -36,20 +36,20 @@ export default {
     const queryResponse = await querySudo(queryString);
 
     const data = queryResponse.results.bindings.map((process) => ({
-      bestuur: process.groupName.value,
-      proces: process.title.value,
-      aangemaakt: formatDate(process.created.value),
-      aangepast: formatDate(process.modified.value),
-      gearchiveerd:
+      Bestuur: process.groupName.value,
+      Proces: process.title.value,
+      Aangemaakt: formatDate(process.created.value),
+      Aangepast: formatDate(process.modified.value),
+      Gearchiveerd:
         process.status?.value ===
         "http://lblod.data.gift/concepts/concept-status/gearchiveerd"
-          ? "yes"
-          : "no",
+          ? "ja"
+          : "nee",
     }));
 
     await generateReportFromData(
       data,
-      ["bestuur", "proces", "aangemaakt", "aangepast", "gearchiveerd"],
+      ["Bestuur", "Proces", "Aangemaakt", "Aangepast", "Gearchiveerd"],
       reportInfo
     );
   },
