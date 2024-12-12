@@ -1,4 +1,4 @@
 import ProcessesReport from "./processes-report";
-import ProcessesCountReport from "./processes-count-report";
+import ProcessCountsReport from "./process-counts-report";
 
-export default [ProcessesReport, ProcessesCountReport];
+export default [ProcessesReport, ProcessCountsReport];

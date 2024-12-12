@@ -1,11 +1,13 @@
 import { generateReportFromData, batchedQuery } from "../helpers.js";
 
+const reportName = "Alle processen";
+
 export default {
   cronPattern: "0 3 * * *",
-  name: "processesReport",
+  name: reportName,
   execute: async () => {
     const reportInfo = {
-      title: "Processenrapport",
+      title: reportName,
       description: "Lijst van alle processen en hun besturen",
       filePrefix: "report-processes",
     };

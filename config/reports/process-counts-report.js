@@ -1,14 +1,16 @@
 import { generateReportFromData } from "../helpers.js";
 import { querySudo } from "@lblod/mu-auth-sudo";
 
+const reportName = "Procesaantallen";
+
 export default {
   cronPattern: "0 3 * * *",
-  name: "processesCountReport",
+  name: reportName,
   execute: async () => {
     const reportInfo = {
-      title: "Processentellingsrapport",
+      title: reportName,
       description: "Aantal processen per bestuur",
-      filePrefix: "report-processes-count",
+      filePrefix: "report-process-counts",
     };
 
     const queryString = `
