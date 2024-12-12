@@ -7,7 +7,7 @@ export default {
     const reportInfo = {
       title: "Processenrapport",
       description: "Lijst van alle processen en hun besturen",
-      filePrefix: "processen",
+      filePrefix: "report-processes",
     };
 
     const queryString = `
@@ -37,8 +37,8 @@ export default {
     const data = queryResponse.results.bindings.map((process) => ({
       Bestuur: process.groupName.value,
       Proces: process.title.value,
-      Aangemaakt: formatDate(process.created.value),
-      Aangepast: formatDate(process.modified.value),
+      "Aangemaakt op": formatDate(process.created.value),
+      "Aangepast op": formatDate(process.modified.value),
       Gearchiveerd:
         process.status?.value ===
         "http://lblod.data.gift/concepts/concept-status/gearchiveerd"
@@ -48,7 +48,7 @@ export default {
 
     await generateReportFromData(
       data,
-      ["Bestuur", "Proces", "Aangemaakt", "Aangepast", "Gearchiveerd"],
+      ["Bestuur", "Proces", "Aangemaakt op", "Aangepast op", "Gearchiveerd"],
       reportInfo
     );
   },
@@ -58,7 +58,7 @@ function formatDate(isoString) {
   const date = new Date(isoString);
 
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
