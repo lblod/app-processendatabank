@@ -3,6 +3,7 @@
 
 (in-package :delta-messenger)
 
+(setf *delta-handlers* nil)
 (add-delta-logger)
 (add-delta-messenger "http://deltanotifier/")
 
@@ -10,11 +11,11 @@
 ;;; Configuration
 
 (in-package :client)
-(setf *log-sparql-query-roundtrip* nil)
+(setf *log-sparql-query-roundtrip* t)
 (setf *backend* "http://virtuoso:8890/sparql")
 
 (in-package :server)
-(setf *log-incoming-requests-p* nil)
+(setf *log-incoming-requests-p* t)
 
 ;;;;;;;;;;;;;;;;
 ;;; Prefix types

@@ -1,0 +1,11 @@
+@prefix mu: <http://mu.semte.ch/vocabularies/core/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix besluit: <http://data.vlaanderen.be/ns/besluit#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+<http://data.lblod.info/id/bestuurseenheden/3b29ce9c-47d4-4245-8dca-1e42ed03bc04>
+  mu:uuid "3b29ce9c-47d4-4245-8dca-1e42ed03bc04" ;
+  rdf:type besluit:Bestuurseenheid ;
+  skos:prefLabel "Agentschap Binnenlands Bestuur" ;
+  dct:identifier "OVO001835" .
