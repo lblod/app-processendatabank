@@ -59,6 +59,7 @@ defmodule Dispatcher do
   ###############################################################
 
   post "/reports", %{ accept: [:json], layer: :api } do
+    # Only admins are allowed to regenerate reports
     allowed_groups = Plug.Conn.get_req_header(conn, "mu-auth-allowed-groups")
     if Enum.any?(allowed_groups, fn group -> group =~ ~r/"name":"admin"/ end) do
       Proxy.forward(conn, [], "http://report-generation/reports/")
