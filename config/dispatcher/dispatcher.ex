@@ -55,6 +55,18 @@ defmodule Dispatcher do
   end
 
   ###############################################################
+  # reports
+  ###############################################################
+
+  post "/reports", %{ accept: [:json], layer: :api } do
+    Proxy.forward(conn, [], "http://report-generation/reports/")
+  end
+
+  match "/reports/*path", %{ accept: [:json], layer: :api } do
+    Proxy.forward conn, path, "http://resource/reports/"
+  end
+
+  ###############################################################
   # login
   ###############################################################
 

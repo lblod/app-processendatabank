@@ -52,7 +52,8 @@
   :foaf "http://xmlns.com/foaf/0.1/"
   :proces "https://data.vlaanderen.be/ns/proces#"
   :bbo "https://www.irit.fr/recherches/MELODI/ontologies/BBO#"
-  :bboext "https://www.teamingai-project.eg/BBOExtension#")
+  :bboext "https://www.teamingai-project.eg/BBOExtension#"
+  :reporting "http://lblod.data.gift/vocabularies/reporting/")
 
 
 ;;;;;;;;;;;;;
@@ -120,6 +121,9 @@
        :to-graph sessions
        :for-allowed-group "admin")
 
+(grant (read)
+       :to-graph reports
+       :for-allowed-group "admin")
 
 ;;;;;;;;;
 ;;; Graphs
@@ -279,3 +283,8 @@
 
 (define-graph sessions ("http://mu.semte.ch/graphs/sessions")
   ("session:Session" -> _))
+
+(define-graph reports ("http://mu.semte.ch/graphs/reports")
+  ("reporting:Report" -> _)
+  ("nfo:FileDataObject" -> _)
+)
