@@ -11,6 +11,8 @@
 
 (read-domain-file "auth.json")
 (read-domain-file "job.lisp")
+(read-domain-file "file.lisp")
+(read-domain-file "report.lisp")
 
 ;; -------------------------------------------------------------------------------------
 
@@ -29,24 +31,6 @@
                     :as "files"))
   :resource-base (s-url "http://data.lblod.info/processes/")
   :on-path "processes")
-
-(define-resource file ()
-  :class (s-prefix "nfo:FileDataObject")
-  :properties `((:name :string ,(s-prefix "nfo:fileName"))
-                (:format :string ,(s-prefix "dct:format"))
-                (:size :number ,(s-prefix "nfo:fileSize"))
-                (:extension :string ,(s-prefix "dbpedia:fileExtension"))
-                (:created :datetime ,(s-prefix "dct:created"))
-                (:modified :datetime ,(s-prefix "dct:modified"))
-                (:status :url ,(s-prefix "adms:status")))
-  :has-one `((file :via ,(s-prefix "nie:dataSource")
-                   :inverse t
-                   :as "download"))
-  :has-many `((process :via ,(s-prefix "nie:isPartOf")
-                       :as "processes"))
-  :resource-base (s-url "http://data.lblod.info/files/")
-  :features `(include-uri)
-  :on-path "files")
 
 ;; -------------------------------------------------------------------------------------
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
