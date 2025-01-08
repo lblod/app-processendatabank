@@ -22,6 +22,10 @@ defmodule Dispatcher do
     Proxy.forward conn, [], "http://cache/bpmn-element-types/"
   end
 
+  match "/administrative-unit-classification-codes", %{ accept: [:json], layer: :api } do
+    Proxy.forward conn, [], "http://cache/administrative-unit-classification-codes/"
+  end
+
   post "/bpmn",  %{ accept: [:any], layer: :api } do
     Proxy.forward conn, [], "http://bpmn/"
   end
@@ -48,6 +52,18 @@ defmodule Dispatcher do
 
   match "/jobs/*path", %{ accept: [:json], layer: :api } do
     Proxy.forward conn, path, "http://resource/jobs/"
+  end
+
+  ###############################################################
+  # reports
+  ###############################################################
+
+  post "/reports", %{ accept: [:json], layer: :api } do
+    Proxy.forward(conn, [], "http://report-generation/reports/")
+  end
+
+  match "/reports/*path", %{ accept: [:json], layer: :api } do
+    Proxy.forward conn, path, "http://resource/reports/"
   end
 
   ###############################################################
