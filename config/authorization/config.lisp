@@ -53,7 +53,8 @@
   :proces "https://data.vlaanderen.be/ns/proces#"
   :bbo "https://www.irit.fr/recherches/MELODI/ontologies/BBO#"
   :bboext "https://www.teamingai-project.eg/BBOExtension#"
-  :reporting "http://lblod.data.gift/vocabularies/reporting/")
+  :reporting "http://lblod.data.gift/vocabularies/reporting/"
+  :ipdc "https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#")
 
 
 ;;;;;;;;;;;;;
@@ -171,7 +172,8 @@
   ("bboext:Participant" -> _)
   ;; process-type
   ("proces:Proces" -> _)
-  ("nfo:FileDataObject" -> _))
+  ("nfo:FileDataObject" -> _)
+  ("ipdc:InstancePublicService" -> _))
 
 (define-graph organizations ("http://mu.semte.ch/graphs/organizations/")
   ;; bpmn-element-type
@@ -216,7 +218,8 @@
   ("bboext:Participant" -> _)
   ;; process-type
   ("proces:Proces" -> _)
-  ("nfo:FileDataObject" -> _))
+  ("nfo:FileDataObject" -> _)
+  ("ipdc:InstancePublicService" -> _))
 
 (define-graph public ("http://mu.semte.ch/graphs/public")
   ;; bpmn-element-type
@@ -262,6 +265,7 @@
   ;; process-type
   ("proces:Proces" -> _)
   ("nfo:FileDataObject" -> _)
+  ("ipdc:InstancePublicService" -> _)
   ;; public-type
   ("org:Role" -> _)
   ("besluit:Bestuurseenheid" -> _)
@@ -286,5 +290,4 @@
 
 (define-graph reports ("http://mu.semte.ch/graphs/reports")
   ("reporting:Report" -> _)
-  ("nfo:FileDataObject" -> _)
-)
+  ("nfo:FileDataObject" -> _))
