@@ -13,6 +13,7 @@
 (read-domain-file "job.lisp")
 (read-domain-file "file.lisp")
 (read-domain-file "report.lisp")
+(read-domain-file "ipdc.lisp")
 
 ;; -------------------------------------------------------------------------------------
 
@@ -28,7 +29,9 @@
                     :as "publisher"))
   :has-many `((file :via ,(s-prefix "nie:isPartOf")
                     :inverse t
-                    :as "files"))
+                    :as "files")
+              (ipdcInstance :via ,(s-prefix "prov:derivation")
+                            :as "ipdc-instances"))
   :resource-base (s-url "http://data.lblod.info/processes/")
   :on-path "processes")
 
