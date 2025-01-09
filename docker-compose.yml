@@ -219,6 +219,23 @@ services:
     image: lblod/impersonation-service
 
   ################################################################################
+  # IPDC PROXY
+  ################################################################################
+  ipdc-proxy:
+    image: lblod/api-proxy-service:1.0.2
+    links:
+      - virtuoso:database
+    environment:
+      API_URL: "https://api.ipdc.tni-vlaanderen.be"
+      API_KEY: "secret"
+      REQUIRED_ROLES: ""
+      ALLOWED_ORIGIN: "*"
+    restart: always
+    labels:
+      - "logging=true"
+    logging: *default-logging
+
+  ################################################################################
   # REPORTING
   ################################################################################
   report-generation:
@@ -231,6 +248,7 @@ services:
     volumes:
       - ./data/files:/share
       - ./config/reports:/config
+    restart: always
     labels:
       - "logging=true"
     logging: *default-logging

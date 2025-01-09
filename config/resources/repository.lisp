@@ -23,3 +23,4 @@
 (add-prefix "task" "http://redpencil.data.gift/vocabularies/tasks/")
 (add-prefix "schema" "https://schema.org/")
 (add-prefix "reporting" "http://lblod.data.gift/vocabularies/reporting/")
+(add-prefix "ipdc" "https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#")
