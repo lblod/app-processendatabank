@@ -30,8 +30,8 @@
   :has-many `((file :via ,(s-prefix "nie:isPartOf")
                     :inverse t
                     :as "files")
-              (ipdcInstance :via ,(s-prefix "prov:derivation")
-                            :as "ipdc-instances"))
+              (ipdcProduct :via ,(s-prefix "prov:derivation")
+                            :as "ipdc-products"))
   :resource-base (s-url "http://data.lblod.info/processes/")
   :on-path "processes")
 

@@ -173,7 +173,8 @@
   ;; process-type
   ("proces:Proces" -> _)
   ("nfo:FileDataObject" -> _)
-  ("ipdc:InstancePublicService" -> _))
+  ("ipdc:InstancePublicService" -> _)
+  ("ipdc:ConceptualPublicService" -> _))
 
 (define-graph organizations ("http://mu.semte.ch/graphs/organizations/")
   ;; bpmn-element-type
@@ -219,7 +220,8 @@
   ;; process-type
   ("proces:Proces" -> _)
   ("nfo:FileDataObject" -> _)
-  ("ipdc:InstancePublicService" -> _))
+  ("ipdc:InstancePublicService" -> _)
+  ("ipdc:ConceptualPublicService" -> _))
 
 (define-graph public ("http://mu.semte.ch/graphs/public")
   ;; bpmn-element-type
@@ -266,6 +268,7 @@
   ("proces:Proces" -> _)
   ("nfo:FileDataObject" -> _)
   ("ipdc:InstancePublicService" -> _)
+  ("ipdc:ConceptualPublicService" -> _)
   ;; public-type
   ("org:Role" -> _)
   ("besluit:Bestuurseenheid" -> _)
