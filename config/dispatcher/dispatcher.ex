@@ -30,6 +30,10 @@ defmodule Dispatcher do
     Proxy.forward conn, [], "http://bpmn/"
   end
 
+  match "/visio",  %{ accept: [:any], layer: :api } do
+    Proxy.forward conn, [], "http://visio/"
+  end
+
   match "/ipdc-instances", %{ accept: [:json], layer: :api } do
     Proxy.forward conn, [], "http://cache/ipdc-instances/"
   end
