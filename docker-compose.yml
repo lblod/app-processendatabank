@@ -126,6 +126,14 @@ services:
       - ./config/bpmn:/config
       - ./data/files:/share
     restart: always
+  visio:
+    logging: *default-logging
+    labels:
+      - "logging=true"
+    image: lblod/openproceshuis-visio-service:feature-visio # TODO: change to tag when available
+    volumes:
+      - ./data/files:/share
+    restart: always
   accountdetail:
     image: lblod/account-detail-service:0.1.0
     labels:

@@ -19,3 +19,5 @@ services:
     image: lblod/frontend-openproceshuis:latest
   bpmn:
     image: lblod/openproceshuis-bpmn-service:latest
+  visio:
+    image: lblod/openproceshuis-visio-service:feature-visio # TODO: change to latest when available
