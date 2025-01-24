@@ -58,7 +58,7 @@
 (define-resource bpmnProcess ()
   :class (s-prefix "bbo:Process")
   :has-one `((file :via ,(s-prefix "prov:wasDerivedFrom")
-                    :as "bpmn-file"))
+                   :as "bpmn-file"))
   :resource-base (s-url "http://data.lblod.info/bpmn-processes/")
   :on-path "bpmn-processes")
 

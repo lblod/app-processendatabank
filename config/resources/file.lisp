@@ -11,9 +11,14 @@
                 (:status :url ,(s-prefix "adms:status")))
   :has-one `((file :via ,(s-prefix "nie:dataSource")
                    :inverse t
-                   :as "download"))
+                   :as "download")
+             (file :via ,(s-prefix "prov:wasDerivedFrom")
+                   :as "vsdx-file"))
   :has-many `((process :via ,(s-prefix "nie:isPartOf")
-                       :as "processes"))
+                       :as "processes")
+              (file :via ,(s-prefix "prov:wasDerivedFrom")
+                    :inverse t
+                    :as "bpmn-files"))
   :resource-base (s-url "http://data.lblod.info/files/")
   :features `(include-uri)
   :on-path "files")
