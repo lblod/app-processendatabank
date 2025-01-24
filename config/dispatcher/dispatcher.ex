@@ -34,8 +34,20 @@ defmodule Dispatcher do
     Proxy.forward conn, [], "http://visio/"
   end
 
+  ###############################################################
+  # ipdc
+  ###############################################################
+
   match "/ipdc-instances", %{ accept: [:json], layer: :api } do
     Proxy.forward conn, [], "http://cache/ipdc-instances/"
+  end
+
+  match "/ipdc-concepts", %{ accept: [:json], layer: :api } do
+    Proxy.forward conn, [], "http://cache/ipdc-concepts/"
+  end
+
+  get "/ipdc-products", %{ accept: [:json], layer: :api } do
+    Proxy.forward conn, [], "http://cache/ipdc-products/"
   end
 
   ###############################################################
