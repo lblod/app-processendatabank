@@ -50,7 +50,7 @@ services:
     logging: *default-logging
     labels:
       - "logging=true"
-    image: semtech/sparql-parser:0.0.8
+    image: semtech/sparql-parser:0.0.13
     volumes:
       - ./config/authorization:/config
       - ./data/authorization:/data
