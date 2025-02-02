@@ -1,0 +1,32 @@
+PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
+PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>
+PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
+
+
+DELETE {
+GRAPH ?g {
+  ?file ext:pdfDownloadQuantity ?pdf .
+  ?file ext:pngDownloadQuantity ?png .
+  ?file ext:svgDownloadQuantity ?svg .
+  ?file ext:bpmnDownloadQuantity ?bpmn .
+}
+}
+
+INSERT {
+GRAPH ?g {
+  ?file ext:pdfDownloadQuantity 0 .
+  ?file ext:pngDownloadQuantity 0 .
+  ?file ext:svgDownloadQuantity 0 .
+  ?file ext:bpmnDownloadQuantity 0 .
+}
+}
+
+WHERE {
+GRAPH ?g {
+  ?file a nfo:FileDataObject .
+  FILTER NOT EXISTS { ?file ext:pdfDownloadQuantity ?pdf }
+  FILTER NOT EXISTS { ?file ext:pngDownloadQuantity ?png }
+  FILTER NOT EXISTS { ?file ext:svgDownloadQuantity ?svg }
+  FILTER NOT EXISTS { ?file ext:bpmnDownloadQuantity ?bpmn }
+}
+}
