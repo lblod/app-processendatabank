@@ -8,11 +8,7 @@
                 (:extension :string ,(s-prefix "dbpedia:fileExtension"))
                 (:created :datetime ,(s-prefix "dct:created"))
                 (:modified :datetime ,(s-prefix "dct:modified"))
-                (:status :url ,(s-prefix "adms:status"))
-                (:pdf-download-quantity :number ,(s-prefix "ext:pdfDownloadQuantity"))
-                (:png-download-quantity :number ,(s-prefix "ext:pngDownloadQuantity"))
-                (:svg-download-quantity :number ,(s-prefix "ext:svgDownloadQuantity"))
-                (:bpmn-download-quantity :number ,(s-prefix "ext:bpmnDownloadQuantity")))
+                (:status :url ,(s-prefix "adms:status")))
   :has-one `((file :via ,(s-prefix "nie:dataSource")
                    :inverse t
                    :as "download")
