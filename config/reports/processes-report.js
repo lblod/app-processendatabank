@@ -3,7 +3,7 @@ import { generateReportFromData, batchedQuery } from "../helpers.js";
 const reportName = "Alle processen";
 
 export default {
-  cronPattern: "* 3 * * *",
+  cronPattern: "0 3 * * *",
   name: reportName,
   execute: async () => {
     const reportInfo = {
