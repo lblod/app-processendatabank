@@ -50,7 +50,7 @@ services:
     logging: *default-logging
     labels:
       - "logging=true"
-    image: semtech/sparql-parser:0.0.8
+    image: semtech/sparql-parser:0.0.13
     volumes:
       - ./config/authorization:/config
       - ./data/authorization:/data
@@ -81,7 +81,7 @@ services:
     logging: *default-logging
     labels:
       - "logging=true"
-    image: semtech/mu-cl-resources:1.23.0
+    image: semtech/mu-cl-resources:feature-unions-for-optional-deletes
     environment:
       CACHE_CLEAR_PATH: "http://cache/.mu/clear-keys"
     links:
