@@ -3,7 +3,7 @@ import { generateReportFromData, batchedQuery } from "../helpers.js";
 const reportName = "Alle processen";
 
 export default {
-  cronPattern: "0 3 * * *",
+  cronPattern: "* 3 * * *",
   name: reportName,
   execute: async () => {
     const reportInfo = {
@@ -18,6 +18,7 @@ export default {
       PREFIX proces: <https://data.vlaanderen.be/ns/proces#>
       PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX adms: <http://www.w3.org/ns/adms#>
+      PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
 
       SELECT DISTINCT *
       WHERE {
@@ -31,9 +32,15 @@ export default {
                  dct:modified ?modified .
 
         OPTIONAL { ?process adms:status ?status }
-      }
-      ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status
-      `;
+        OPTIONAL { ?process ext:bpmnDownloads ?bpmnDownloads }
+        OPTIONAL { ?process ext:pngDownloads ?pngDownloads }
+        OPTIONAL { ?process ext:svgDownloads ?svgDownloads }
+        OPTIONAL { ?process ext:pdfDownloads ?pdfDownloads }
+
+}
+      ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status, ?pdfDownloads, ?svgDownloads, ?pngDownloads, ?bpmnDownloads
+       
+    `;
     const queryResponse = await batchedQuery(queryString);
 
     const data = queryResponse.results.bindings.map((process) => ({
@@ -46,11 +53,25 @@ export default {
         "http://lblod.data.gift/concepts/concept-status/gearchiveerd"
           ? "Ja"
           : "Nee",
+      pdfDownloads: process.pdfDownloads?.value,
+      svgDownloads: process.svgDownloads?.value,
+      pngDownloads: process.pngDownloads?.value,
+      bpmnDownoalds: process.bpmnDownoalds?.value,
     }));
 
     await generateReportFromData(
       data,
-      ["Bestuur", "Proces", "Aangemaakt op", "Aangepast op", "Gearchiveerd"],
+      [
+        "Bestuur",
+        "Proces",
+        "Aangemaakt op",
+        "Aangepast op",
+        "Gearchiveerd",
+        "bpmnDownloads",
+        "pdfDownloads",
+        "svgDownloads",
+        "pngDownloads",
+      ],
       reportInfo
     );
   },
