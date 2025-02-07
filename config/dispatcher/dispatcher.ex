@@ -30,8 +30,8 @@ defmodule Dispatcher do
     Proxy.forward conn, [], "http://bpmn/"
   end
 
-  post "/visio",  %{ accept: [:any], layer: :api } do
-    Proxy.forward conn, [], "http://visio/"
+  get "/visio/*path",  %{ accept: [:any], layer: :api } do
+    Proxy.forward conn, path, "http://visio/"
   end
 
   ###############################################################
