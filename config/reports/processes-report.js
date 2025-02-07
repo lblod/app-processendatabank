@@ -32,13 +32,14 @@ export default {
                  dct:modified ?modified .
 
         OPTIONAL { ?process adms:status ?status }
+        OPTIONAL { ?process ext:processViews ?processViews }
         OPTIONAL { ?process ext:bpmnDownloads ?bpmnDownloads }
         OPTIONAL { ?process ext:pngDownloads ?pngDownloads }
         OPTIONAL { ?process ext:svgDownloads ?svgDownloads }
         OPTIONAL { ?process ext:pdfDownloads ?pdfDownloads }
 
 }
-      ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status, ?pdfDownloads, ?svgDownloads, ?pngDownloads, ?bpmnDownloads
+      ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status, ?pdfDownloads, ?svgDownloads, ?pngDownloads, ?bpmnDownloads, ?processViews
        
     `;
     const queryResponse = await batchedQuery(queryString);
@@ -53,10 +54,11 @@ export default {
         "http://lblod.data.gift/concepts/concept-status/gearchiveerd"
           ? "Ja"
           : "Nee",
+      "Aantal weergaven": process.processViews?.value,
+      bpmnDownloads: process.bpmnDownloads?.value,
       pdfDownloads: process.pdfDownloads?.value,
       svgDownloads: process.svgDownloads?.value,
       pngDownloads: process.pngDownloads?.value,
-      bpmnDownoalds: process.bpmnDownoalds?.value,
     }));
 
     await generateReportFromData(
@@ -67,6 +69,7 @@ export default {
         "Aangemaakt op",
         "Aangepast op",
         "Gearchiveerd",
+        "Aantal weergaven",
         "bpmnDownloads",
         "pdfDownloads",
         "svgDownloads",
