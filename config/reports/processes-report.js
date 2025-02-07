@@ -54,11 +54,17 @@ export default {
         "http://lblod.data.gift/concepts/concept-status/gearchiveerd"
           ? "Ja"
           : "Nee",
-      "Aantal weergaven": process.processViews?.value,
-      bpmnDownloads: process.bpmnDownloads?.value,
-      pdfDownloads: process.pdfDownloads?.value,
-      svgDownloads: process.svgDownloads?.value,
-      pngDownloads: process.pngDownloads?.value,
+      "Aantal weergaven": process.processViews?.value || 0,
+      "Totaal aantal downloads": [
+        process.bpmnDownloads?.value,
+        process.pdfDownloads?.value,
+        process.svgDownloads?.value,
+        process.pngDownloads?.value,
+      ].reduce((total, download) => total + parseInt(download, 10), 0),
+      "Aantal downloads (bpmn)": process.bpmnDownloads?.value || 0,
+      "Aantal downloads (pdf)": process.pdfDownloads?.value || 0,
+      "Aantal downloads (svg)": process.svgDownloads?.value || 0,
+      "Aantal downloads (png)": process.pngDownloads?.value || 0,
     }));
 
     await generateReportFromData(
@@ -70,10 +76,11 @@ export default {
         "Aangepast op",
         "Gearchiveerd",
         "Aantal weergaven",
-        "bpmnDownloads",
-        "pdfDownloads",
-        "svgDownloads",
-        "pngDownloads",
+        "Totaal aantal downloads",
+        "Aantal downloads (bpmn)",
+        "Aantal downloads (pdf)",
+        "Aantal downloads (svg)",
+        "Aantal downloads (png)",
       ],
       reportInfo
     );
