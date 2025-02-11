@@ -54,17 +54,21 @@ export default {
         "http://lblod.data.gift/concepts/concept-status/gearchiveerd"
           ? "Ja"
           : "Nee",
-      "Aantal weergaven": process.processViews?.value || 0,
-      "Totaal aantal downloads": [
-        process.bpmnDownloads?.value,
-        process.pdfDownloads?.value,
-        process.svgDownloads?.value,
-        process.pngDownloads?.value,
-      ].reduce((total, download) => total + parseInt(download, 10), 0),
-      "Aantal downloads (bpmn)": process.bpmnDownloads?.value || 0,
-      "Aantal downloads (pdf)": process.pdfDownloads?.value || 0,
-      "Aantal downloads (svg)": process.svgDownloads?.value || 0,
-      "Aantal downloads (png)": process.pngDownloads?.value || 0,
+      "Aantal weergaven": process.processViews?.value,
+      "Totaal aantal downloads": String(
+        [
+          process.bpmnDownloads,
+          process.pdfDownloads,
+          process.svgDownloads,
+          process.pngDownloads,
+        ]
+          .map((download) => Number(download?.value) || 0) // Convert SPARQL values to numbers -> sum them up -> return as string
+          .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+      ),
+      "Aantal downloads (bpmn)": process.bpmnDownloads?.value,
+      "Aantal downloads (pdf)": process.pdfDownloads?.value,
+      "Aantal downloads (svg)": process.svgDownloads?.value,
+      "Aantal downloads (png)": process.pngDownloads?.value,
     }));
 
     await generateReportFromData(
