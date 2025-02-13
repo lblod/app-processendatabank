@@ -29,14 +29,15 @@ export default {
                  dct:publisher ?group ;
                  dct:title ?title ;
                  dct:created ?created ;
-                 dct:modified ?modified .
+                 dct:modified ?modified ;
+                 ext:hasStatistics ?stats
 
         OPTIONAL { ?process adms:status ?status }
-        OPTIONAL { ?process ext:processViews ?processViews }
-        OPTIONAL { ?process ext:bpmnDownloads ?bpmnDownloads }
-        OPTIONAL { ?process ext:pngDownloads ?pngDownloads }
-        OPTIONAL { ?process ext:svgDownloads ?svgDownloads }
-        OPTIONAL { ?process ext:pdfDownloads ?pdfDownloads }
+        OPTIONAL { ?stats ext:processViews ?processViews }
+        OPTIONAL { ?stats ext:bpmnDownloads ?bpmnDownloads }
+        OPTIONAL { ?stats ext:pngDownloads ?pngDownloads }
+        OPTIONAL { ?stats ext:svgDownloads ?svgDownloads }
+        OPTIONAL { ?stats ext:pdfDownloads ?pdfDownloads }
 
 }
       ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status, ?pdfDownloads, ?svgDownloads, ?pngDownloads, ?bpmnDownloads, ?processViews
