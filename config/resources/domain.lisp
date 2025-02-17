@@ -26,14 +26,15 @@
                 (:modified :datetime ,(s-prefix "dct:modified"))
                 (:status :url ,(s-prefix "adms:status")))
   :has-one `((group :via ,(s-prefix "dct:publisher")
-                    :as "publisher"))
+                    :as "publisher")
+            (processStatistic :via ,(s-prefix "ext:hasStatistics")
+                              :as "process-statistics"))
   :has-many `((file :via ,(s-prefix "nie:isPartOf")
                     :inverse t
                     :as "files")
               (ipdcProduct :via ,(s-prefix "prov:derivation")
                             :as "ipdc-products")
-              (processStatistic :via ,(s-prefix "ext:hasStatistics")
-                                 :as "process-statistics"))
+             )
   :resource-base (s-url "http://data.lblod.info/processes/")
   :on-path "processes")
 
