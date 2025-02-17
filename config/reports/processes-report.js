@@ -18,6 +18,7 @@ export default {
       PREFIX proces: <https://data.vlaanderen.be/ns/proces#>
       PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX adms: <http://www.w3.org/ns/adms#>
+      PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
 
       SELECT DISTINCT *
       WHERE {
@@ -28,12 +29,20 @@ export default {
                  dct:publisher ?group ;
                  dct:title ?title ;
                  dct:created ?created ;
-                 dct:modified ?modified .
+                 dct:modified ?modified ;
+                 ext:hasStatistics ?stats
 
         OPTIONAL { ?process adms:status ?status }
-      }
-      ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status
-      `;
+        OPTIONAL { ?stats ext:processViews ?processViews }
+        OPTIONAL { ?stats ext:bpmnDownloads ?bpmnDownloads }
+        OPTIONAL { ?stats ext:pngDownloads ?pngDownloads }
+        OPTIONAL { ?stats ext:svgDownloads ?svgDownloads }
+        OPTIONAL { ?stats ext:pdfDownloads ?pdfDownloads }
+
+}
+      ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status, ?pdfDownloads, ?svgDownloads, ?pngDownloads, ?bpmnDownloads, ?processViews
+       
+    `;
     const queryResponse = await batchedQuery(queryString);
 
     const data = queryResponse.results.bindings.map((process) => ({
@@ -46,11 +55,38 @@ export default {
         "http://lblod.data.gift/concepts/concept-status/gearchiveerd"
           ? "Ja"
           : "Nee",
+      "Aantal weergaven": process.processViews?.value,
+      "Totaal aantal downloads": String(
+        [
+          process.bpmnDownloads,
+          process.pdfDownloads,
+          process.svgDownloads,
+          process.pngDownloads,
+        ]
+          .map((download) => Number(download?.value) || 0) // Convert SPARQL values to numbers -> sum them up -> return as string
+          .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+      ),
+      "Aantal downloads (bpmn)": process.bpmnDownloads?.value || "0",
+      "Aantal downloads (pdf)": process.pdfDownloads?.value || "0",
+      "Aantal downloads (svg)": process.svgDownloads?.value || "0",
+      "Aantal downloads (png)": process.pngDownloads?.value || "0",
     }));
 
     await generateReportFromData(
       data,
-      ["Bestuur", "Proces", "Aangemaakt op", "Aangepast op", "Gearchiveerd"],
+      [
+        "Bestuur",
+        "Proces",
+        "Aangemaakt op",
+        "Aangepast op",
+        "Gearchiveerd",
+        "Aantal weergaven",
+        "Totaal aantal downloads",
+        "Aantal downloads (bpmn)",
+        "Aantal downloads (pdf)",
+        "Aantal downloads (svg)",
+        "Aantal downloads (png)",
+      ],
       reportInfo
     );
   },

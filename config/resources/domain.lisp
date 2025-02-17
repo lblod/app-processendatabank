@@ -26,14 +26,30 @@
                 (:modified :datetime ,(s-prefix "dct:modified"))
                 (:status :url ,(s-prefix "adms:status")))
   :has-one `((group :via ,(s-prefix "dct:publisher")
-                    :as "publisher"))
+                    :as "publisher")
+            (processStatistic :via ,(s-prefix "ext:hasStatistics")
+                              :as "process-statistics"))
   :has-many `((file :via ,(s-prefix "nie:isPartOf")
                     :inverse t
                     :as "files")
               (ipdcProduct :via ,(s-prefix "prov:derivation")
-                            :as "ipdc-products"))
+                            :as "ipdc-products")
+             )
   :resource-base (s-url "http://data.lblod.info/processes/")
   :on-path "processes")
+
+(define-resource processStatistic()
+  :class (s-prefix "ext:ProcessStatistic")
+  :properties `((:pdf-downloads :number ,(s-prefix "ext:pdfDownloads"))
+                (:png-downloads :number ,(s-prefix "ext:pngDownloads"))
+                (:svg-downloads :number ,(s-prefix "ext:svgDownloads"))
+                (:bpmn-downloads :number ,(s-prefix "ext:bpmnDownloads"))
+                (:process-views :number ,(s-prefix "ext:processViews")))
+  :has-one `((process :via ,(s-prefix "ext:hasStatistics")
+                      :inverse t
+                      :as "process"))
+  :resource-base (s-url "http://data.lblod.info/process-statistics/")
+  :on-path "process-statistics")
 
 ;; -------------------------------------------------------------------------------------
 ;; BPMN Based Ontology (BBO) (See https://www.irit.fr/recherches/MELODI/ontologies/BBO)
