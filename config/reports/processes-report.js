@@ -29,7 +29,7 @@ export default {
                  dct:publisher ?group ;
                  dct:title ?title ;
                  dct:created ?created ;
-                 dct:modified ?modified ;
+                 dct:modified ?modified .
                  
         OPTIONAL { ?process ext:hasStatistics ?stats }
         OPTIONAL { ?process adms:status ?status }
