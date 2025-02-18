@@ -30,8 +30,8 @@ export default {
                  dct:title ?title ;
                  dct:created ?created ;
                  dct:modified ?modified ;
-                 ext:hasStatistics ?stats
-
+                 
+        OPTIONAL { ?process ext:hasStatistics ?stats }
         OPTIONAL { ?process adms:status ?status }
         OPTIONAL { ?stats ext:processViews ?processViews }
         OPTIONAL { ?stats ext:bpmnDownloads ?bpmnDownloads }
