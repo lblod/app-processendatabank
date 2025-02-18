@@ -31,13 +31,15 @@ export default {
                  dct:created ?created ;
                  dct:modified ?modified .
                  
-        OPTIONAL { ?process ext:hasStatistics ?stats }
         OPTIONAL { ?process adms:status ?status }
-        OPTIONAL { ?stats ext:processViews ?processViews }
-        OPTIONAL { ?stats ext:bpmnDownloads ?bpmnDownloads }
-        OPTIONAL { ?stats ext:pngDownloads ?pngDownloads }
-        OPTIONAL { ?stats ext:svgDownloads ?svgDownloads }
-        OPTIONAL { ?stats ext:pdfDownloads ?pdfDownloads }
+        OPTIONAL { 
+          ?process ext:hasStatistics ?stats .
+          OPTIONAL { ?stats ext:processViews ?processViews }
+          OPTIONAL { ?stats ext:bpmnDownloads ?bpmnDownloads }
+          OPTIONAL { ?stats ext:pngDownloads ?pngDownloads }
+          OPTIONAL { ?stats ext:svgDownloads ?svgDownloads }
+          OPTIONAL { ?stats ext:pdfDownloads ?pdfDownloads }
+        }
 
 }
       ORDER BY LCASE(?groupName), LCASE(?title), ?created, ?modified, ?status, ?pdfDownloads, ?svgDownloads, ?pngDownloads, ?bpmnDownloads, ?processViews
