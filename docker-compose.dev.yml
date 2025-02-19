@@ -11,9 +11,14 @@ services:
     volumes:
       - ./config/search/dev:/config
   mock-login:
-    image: lblod/mock-login-service:latest
+    image: lblod/mock-login-service:0.7.0
     links:
       - database:database
+    restart: "no"
+  mock-bestuurseenheid-generator:
+    image: lblod/update-bestuurseenheid-mock-login-service:0.5.0
+    volumes:
+      - ./config/mock-login:/config
     restart: "no"
   op-public-consumer:
     restart: "no"
