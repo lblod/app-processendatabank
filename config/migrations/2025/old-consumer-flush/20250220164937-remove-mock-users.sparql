@@ -1,0 +1,31 @@
+PREFIX adms: <http://www.w3.org/ns/adms#>
+PREFIX generiek: <https://data.vlaanderen.be/ns/generiek#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+DELETE WHERE {
+  GRAPH ?g {
+    ?s a generiek:GestructureerdeIdentificator ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH ?g {
+    ?s a adms:Identifier ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH ?g {
+    ?s a foaf:OnlineAccount ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH ?g {
+    ?s a foaf:Person ;
+      ?p ?o .
+  }
+}
