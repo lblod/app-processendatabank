@@ -16,33 +16,52 @@ In addition to the aforementioned services, a range of others are also essential
 git clone https://github.com/lblod/app-openproceshuis.git
 ```
 
-2. Run the project
+2. Add the following to `docker-compose.override.yml`
 
-```bash
-cd /path/to/project
+```yml
+services:
+  op-public-consumer:
+    environment:
+      DCR_LANDING_ZONE_DATABASE: "virtuoso" # Only on first run
+      DCR_REMAPPING_DATABASE: "virtuoso" # Only on first run
+      DCR_DISABLE_DELTA_INGEST: "true" # Only on first run
 ```
 
-```bash
-docker compose -f docker-compose.yml -f docker-compose.dev.yml up
-```
-
-3. Wait for the op-consumer to finish initial ingest
+3. Run and wait for the migrations to finish
 
 ```bash
-docker compose logs -f op-consumer
+docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.override.yml up -d migrations
 ```
 
-> When the logs show `delta-sync-queue: Remaining number of tasks 0`, you can move on.
+4. Run and wait for the OP consumer to finish
 
-4. In your browser, go to [localhost:8890/sparql](http://localhost:8890/sparql) and run the SPARQL query found in [`manual-query-reasoning-service.sparql`](./manual-query-reasoning-service.sparql).
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.override.yml up -d database op-public-consumer
+```
+
+5. Update `docker-compose.override.yml`
+
+```yml
+services:
+  # op-public-consumer:
+  #   environment:
+  #     DCR_LANDING_ZONE_DATABASE: "virtuoso" # Only on first run
+  #     DCR_REMAPPING_DATABASE: "virtuoso" # Only on first run
+  #     DCR_DISABLE_DELTA_INGEST: "true" # Only on first run
+```
+
+6. Start the (complete) application
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.override.yml up -d
+```
+
+> On consequent runs, only this last step should be performed.
 
 ### Usage
 
 - You can access the frontend in your browser by going to [localhost](http://localhost/).
 - You can log in using a mock account by going to [localhost/mock-login](http://localhost/mock-login).
-- You can shut everything down by running `docker compose down`.
-- When restarting the project not having emptied the `data/` folder, you can ignore steps 3 and 4 under [First run](#first-run).
-- You can empty the database and file storage by running `sudo rm -rf data/` (restarting the project will require steps 3 and 4 under [First run](#first-run)).
 
 ## Data domain
 
@@ -99,17 +118,21 @@ At the time of writing, 3541 indeces were necessary for the production-intended 
 - [frontend-openproceshuis](https://github.com/lblod/frontend-openproceshuis)
 - [mu-identifier](https://github.com/mu-semtech/mu-identifier)
 - [mu-dispatcher](https://github.com/mu-semtech/mu-dispatcher)
-- [mu-authorization](https://github.com/mu-semtech/mu-authorization)
+- [sparql-parser](https://github.com/mu-semtech/sparql-parser)
 - [virtuoso](https://github.com/tenforce/docker-virtuoso)
 - [mu-migrations-service](https://github.com/mu-semtech/mu-migrations-service)
 - [mu-cl-resources](https://github.com/mu-semtech/mu-cl-resources)
 - [mu-cache](https://github.com/mu-semtech/mu-cache)
 - [delta-notifier](https://github.com/mu-semtech/delta-notifier)
 - [file-service](https://github.com/mu-semtech/file-service)
-- [bpmn-service](https://github.com/lblod/bpmn-service)
+- [bpmn-service](https://github.com/lblod/openproceshuis-bpmn-service)
+- [visio-service](https://github.com/lblod/openproceshuis-visio-service)
 - [account-detail-service](https://github.com/lblod/account-detail-service)
 - [mu-search](https://github.com/mu-semtech/mu-search)
 - [mu-search-elastic-backend](https://github.com/mu-semtech/mu-search-elastic-backend)
 - [delta-consumer](https://github.com/lblod/delta-consumer)
-- [reasoning-service](https://github.com/eyereasoner/reasoning-service)
 - [acmidm-login-service](https://github.com/lblod/acmidm-login-service)
+- [api-proxy-service](https://github.com/lblod/api-proxy-service)
+- [loket-report-generation-service](https://github.com/lblod/loket-report-generation-service)
+- [mock-login-service](https://github.com/lblod/mock-login-service)
+- [update-bestuurseenheid-mock-login-service](https://github.com/lblod/update-bestuurseenheid-mock-login-service)
