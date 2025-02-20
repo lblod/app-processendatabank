@@ -1,0 +1,137 @@
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX code: <http://lblod.data.gift/vocabularies/organisatie/>
+PREFIX ere: <http://data.lblod.info/vocabularies/erediensten/>
+PREFIX euvoc: <http://publications.europa.eu/ontology/euvoc#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX schema: <http://schema.org/>
+PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a code:BestuurseenheidClassificatieCode ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a ext:BestuursorgaanClassificatieCode ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a code:BestuursorgaanClassificatieCode ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a code:TypeVestiging ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a besluit:Bestuurseenheid ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a euvoc:Country ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a prov:Location ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a org:ChangeEvent ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a code:VeranderingsgebeurtenisResultaat ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a code:Veranderingsgebeurtenis ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a code:OrganisatieStatusCode ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a code:TypeEredienst ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a org:Site ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a schema:ContactPoint ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a ere:BestuurVanDeEredienst ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a ere:CentraalBestuurVanDeEredienst ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a foaf:OnlineAccount ;
+      ?p ?o .
+  }
+} ;
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?s a foaf:Person ;
+      ?p ?o .
+  }
+}

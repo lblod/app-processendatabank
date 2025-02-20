@@ -1,0 +1,12 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/public> {
+    ?concept a skos:Concept ;
+      ?p ?o .
+    
+    FILTER NOT EXISTS {
+      ?concept skos:inScheme ?scheme .
+    }
+  }
+}
