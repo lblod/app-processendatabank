@@ -1,0 +1,34 @@
+PREFIX cogs: <http://vocab.deri.ie/cogs#>
+PREFIX task: <http://redpencil.data.gift/vocabularies/tasks/>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+
+# INITIAL SYNC JOBS
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/system/jobs> {
+    ?job a cogs:Job ;
+      task:operation <http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/op> ;
+      ?jp ?jo .
+
+    ?task a task:Task ;
+      dct:isPartOf ?job ;
+      ?tp ?to .
+  }
+}
+
+;
+
+# DELTA SYNC JOBS
+
+DELETE WHERE {
+  GRAPH <http://mu.semte.ch/graphs/system/jobs> {
+    ?job a cogs:Job ;
+      task:operation <http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/opDeltaFileSyncing> ;
+      ?jp ?jo .
+
+    ?task a task:Task ;
+      dct:isPartOf ?job ;
+      ?tp ?to .
+  }
+}
